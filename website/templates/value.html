@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        {% for row in rows %}
+        <input type="number" name = "cprice" disabled value="{{row["close"]}}">
+        {% endfor %}
+    </body>
+</html>

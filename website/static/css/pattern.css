@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Mochiy+Pop+P+One&display=swap');
+
+body {
+    background: linear-gradient(111deg, rgb(196, 240, 170) -60.93%, rgb(220, 240, 252) 63.25%, rgb(245, 232, 172) 180.51%), rgb(247, 251, 255);
+}
+
+a {
+    text-decoration: none;
+}
+
+.container{
+    padding: 20px;
+}
+
+
+.align-center {
+    text-align: center;
+}
+
+.stock-list {
+    padding: 1em;
+}
+
+.stock-list .card {
+    padding: 1em;
+    text-align: center;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(250, 147, 147);
+    box-sizing: border-box;
+    box-shadow: rgb(130 255 227 / 29%) -3px 3px 11px, rgb(73 102 255 / 22%) 3px -3px 13px;
+    border-radius: 30px;
+    
+}
+
+.stock-container {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.card .title {
+    font-family: 'Kanit', sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+    background: rgb(57, 197, 232);
+    box-shadow: rgb(0 0 0 / 15%) 0px 3px 0px 2px inset;
+    border-radius: 14px;
+    padding: 19px 12px 21px 17px;
+    
+}
+
+.card .symbol {
+    text-indent: 20px;
+    color: rgb(22, 73, 137);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 16px;
+
+    
+}
+
+.card img {
+    margin: 20px;
+    background-color: rgb(233, 234, 235);
+    position: relative;
+    width: 50%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 20px;
+    
+}
+
+
+@media (max-width: 720px) {
+    .card img {
+        
+        height: 150px;
+        width: 70%;
+    }
+}
+
+@media (max-width: 480px) {
+    .card img {
+        
+        height: 120px;
+        width: 70%;
+    }
+}
+

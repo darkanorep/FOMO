@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/update_profile.css">
+    </head>
+    <body>
+        <center>
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %} {% if category ==
+                'e' %}
+                <div id="alertdanger" role="alert">
+                  {{ message }}
+                </div>
+                {% else %}
+                <div id="alertsuccess" role="alert">
+                  {{ message }}
+                </div>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </center>
+        <div class="update-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Change Password</h2>
+                        <form method="POST" enctype="multipart/form-data">
+                            <div id = nw>
+                                <label >New Password</label>
+                                <br>
+                                <input type="password" class="password" name="password"></input>
+                                <br>
+                                <label id = nw >Confirm New Password</label>
+                                <br>
+                                <input type="password" class="password1" name="password1"></input>
+                                <br>
+                                <input type="submit" class="btn btn-success btn-block" value="Submit" onclick="notifySuccess()">
+                            </div>
+                        </form>
+                        <center>
+                            <a id="act">Change Password</a>
+                        </center>
+                    </div>
+                    <center><a href="/logout">Logout</a></center>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="../static/js/profile.js">
+    </script>
+    <script>
+        document.getElementById("alertdanger").style.color = "red";
+    </script>
+    <script>
+        document.getElementById("alertsuccess").style.color = "green";
+    </script>
+</html>
+{% endblock %}

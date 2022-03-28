@@ -1,0 +1,33 @@
+{% extends "admin_base.html" %}
+{% block title %}Stock Broker{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+    </head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Add Stock Broker</h2>
+                        <form method="post" action="/uploadbroker" enctype="multipart/form-data" >
+                            <input type="text" name="bname" placeholder="Stock Broker Name" required autofocus>
+                            <input type="file" name="blogo"  multiple required autofocus>
+                            <input type="text" name="bpair" placeholder="Pair" required autofocus>
+                            <input type="text" name="blink" placeholder="Stock Broker Link" required autofocus>
+                            <input type="submit" name="submit" class="btn btn-success" value="UPLOAD"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+
+
+
+ 

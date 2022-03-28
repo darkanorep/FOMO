@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}User{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/update_profile.css">
+    </head>
+    <body>
+        <center>
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %} {% if category ==
+                'e' %}
+                <div id="alertdanger" role="alert">
+                  {{ message }}
+                </div>
+                {% else %}
+                <div id="alertsuccess" role="alert">
+                  {{ message }}
+                </div>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </center>
+        <div class="container">
+            <div class="content">
+                {% for row in user %}
+                <p>Hi {{row["username"]}}!</p>
+                <br>
+                <h2>Account Summary</h2>
+                <div class="info">
+                    Email: {{row["email"]}}
+                    <br>
+                    Username: {{row["username"]}}
+                    <br>
+                    <a href="/changepass" style="text-decoration: none;">Change Password</a>
+                </div>
+                {% endfor %}
+                <hr>
+                <div class="cont">
+                    <div class="con">
+                        {% for row in blog %}
+                        <div class="card">
+                        
+                            <div class="tag">
+                                {{row["category"]}}
+                            </div>
+                            <div class="date">
+                                {{row["date"]}}
+                            </div>
+                            <div class="user">
+                                {{row["author"]}}
+                            </div>
+                            <div class="idea">
+                                {{row["blog"]}}
+                                <br>
+                            </div>
+                            <div class="img">
+                                <img src="/static/community/{{row['image']}}">
+                            </div>
+                            <div class="action">
+                                <a href="{{url_for('editpost',id=row['id'])}}" style="text-decoration: none;">
+                                    <button class="edit-button">Edit</button>
+                                </a>
+                                <a href="{{url_for('auth.delete_blog',id=row['id'])}}" style="text-decoration: none;">
+                                    <button class="edit-button">Delete</button>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        document.getElementById("alertdanger").style.color = "red";
+    </script>
+    <script>
+        document.getElementById("alertsuccess").style.color = "green";
+    </script>
+</html>
+{% endblock %}

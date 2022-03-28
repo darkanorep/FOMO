@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block title %}Log In{% endblock %} 
+
+{% block content %}
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/css/login.css"></link>
+</head>
+<body>
+  <div class="login-form">
+    <h1>Login</h1>
+    <div class="container">
+      <div class="main">
+        <div class="content">
+          <h2>Log In</h2>
+          <form action =" "method="POST">
+            <input type="text" id="username" name="username" placeholder="Enter username" required autofocus="">
+            <input type="password" id="password" name="password" placeholder="Enter password" required autofocus="">
+            <button class="btn" type="submit">Log In</button>
+          </form>
+          <p><a href=forgot style="text-decoration: none;" >Forgot password?</a></p>
+          <hr>
+          <p class="account">Not a member? <a href=signup style="text-decoration: none;" >Register</a></p>
+        </div>
+        <div class="form-img">
+          <img src="../static/login.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

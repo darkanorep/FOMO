@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% block title %}Verification{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+    </head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Verification</h2>
+                        <form method="post" action="/validate">
+                            <p>One time password has been sent to your email</p>
+                            Enter OTP:
+                            <input type="text" name="otp" placeholder="Please enter OTP" required autofocus></input>
+                            <input type="submit" name="submit" class="btn btn-success" value="Submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+
+
+
+ 

@@ -1,0 +1,34 @@
+{% extends "admin_base.html" %}
+{% block title %}User{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div class="container">
+            <div class="col-md-offset-3 col-md-5">
+                <form method="POST" action="/useradd">
+                    <h2 class="page-header text-primary text-center">Add Record</h2>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" name="password" required></input>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="text" class="form-control" name="password1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success btn-block" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+ 

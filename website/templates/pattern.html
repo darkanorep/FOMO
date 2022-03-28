@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block title %}Pattern{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/pattern.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <a href="{{url_for('auth.handbook')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+        <section class="stock-list">
+            <div class="header">
+                <center><h1>Pattern</h1></center>
+            </div>
+            <select name="search_filter" id="search_filter" class="select">
+                <option value="">All</option>';
+                {% for row in rows %}
+                    <option value="{{row["name"]}}">{{row["name"]}}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="hidden_value" id="hidden_value" />
+            <br>
+            <br>
+            <table class="stock-container">
+                
+            </table>
+        </section>
+    </div>
+</body>
+<script>
+    $(document).ready(function(){
+        load_data();
+        function load_data(query='')
+        {
+            $.ajax({
+                url:"/fetchpattern",
+                method:"POST",
+                data:{query:query},
+                success:function(data)
+                { 
+                    $('table').html(data);
+                    $('table').append(data.htmlresponse);
+                }
+            })
+        }
+         
+        $('#search_filter').change(function(){
+            $('#hidden_value').val($('#search_filter').val());
+            var query = $('#hidden_value').val(); 
+            load_data(query);
+        });
+        
+    });
+</script>
+</html>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "admin_base.html" %}
+{% block title %}Candlesticks{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+</head>
+<body>
+    <h2 class="header" >System Candlesticks</h2>
+    <a class="btn btn-success" href=/archived_candlestick>Go to Archived</a></p>
+    <table class="table">
+        <thead >
+            <tr>
+                <th>Name</th>
+                <th>Meaning</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                    
+            <tr style="text-align:center">
+                <td>{{row["name"]}}</td>  
+                <td>
+                    <p>{{row["description"]}}</p>
+                </td>
+                <td> <img class = "img" id="img" src="/static/{{row['image']}}"></td>  
+                <td>
+                    <a href="{{url_for('candlestickupdate',id=row['id'])}}" style="text-decoration: none;">
+                        <button class="edit-button">Edit<i class='bx bxs-edit-alt'></i></button>
+                    </a>
+                    <a href="{{url_for('candlestickarchived',name=row['name'])}}" style="text-decoration: none;">
+                        <button class="archive-button">Archive<i class='bx bxs-archive-in'></i></button>
+                    </a>
+                    <!--<a href="{{url_for('auth.delete_candlestick',id=row['id'])}}" style="text-decoration: none;">
+                        <button class="delete-button">Delete</button>
+                    </a>-->
+                </td>
+            {% endfor %}
+        </tbody>
+    </table>
+        <div>
+            <td>
+                <center><a href="{{url_for('auth.add_candlestick')}}" class="btn btn-success">Add Candlestick</a></center>
+            </td>
+        </div> 
+</body>
+</html>
+{% endblock %}
+ 

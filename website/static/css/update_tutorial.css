@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.update-form {
+    position: relative;
+    background: #ffffff;
+    display: grid;
+    align-items: center;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+
+}
+
+.update-form h2{
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #272346;
+}
+
+.add-form .main {
+    margin: 10px 0;
+}
+
+.content {
+    flex-basis: 100%;
+    padding: 3em 3em;
+    background: #ffffff;
+    box-shadow:  2px 9px 49px -17px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.btn{
+    text-align: center
+}
+
+.btn,
+button,
+input {
+    border-radius: 35px;
+
+}
+.btn:hover,
+button:hover{
+    transition: 0.5s ease;
+}
+*{
+    text-decoration: none;
+}
+
+.update-form form {
+    margin: 10px 0;
+}
+
+.update-form input {
+    outline: none;
+    margin-bottom: 15px;
+    font-stretch: 20px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 14px 20px;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5;
+    background: #f7fafc;
+    transition: 0.3s ease;
+}
+
+.update-form input:focus {
+    background: transparent;
+    border: 1px solid #af5353;
+}
+
+.update-form button {
+    font-size: 18px;
+    color: #fff;
+    width: 50%;
+    background: #af5353;
+    border: none;
+    padding: 14px 15px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.update-form button:hover{
+    background: #66af53;
+}
+
+
+p.account, p.account a {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+p.account a:hover{
+    text-decoration: underline;
+}
+
+.textarea {
+    background-color: #a7a7a7;
+    color: #000000;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    outline: none;
+    font-family: "Heebo", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s;
+    resize:vertical;
+}
+  
+.textarea:hover {
+    cursor: pointer;
+    background-color: #eeeeee;
+}
+  
+.textarea:focus {
+    cursor: text;
+    color: #333333;
+    background-color: white;
+    border-color: #333333;
+}
+
+@media(max-width: 736px) {
+    .update-form .main{
+        flex-direction: column;
+    }
+    .update-form form {
+        margin: 30px;
+        margin-bottom: 10px;
+    }
+    .content {
+        order: 1;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px
+    }
+}

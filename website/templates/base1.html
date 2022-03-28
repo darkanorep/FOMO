@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/user.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+  </head>
+  <body onload="myFunction()">
+    <div id="loading"></div>
+    <div class="sidebar close">
+      <ul class="nav-links">
+        <li>
+          <a href="{{url_for('auth.user')}}">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="link_name" href="{{url_for('auth.user')}}">Home</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{{url_for('auth.user')}}">Home</a></li>
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+              <a href="{{url_for('auth.assets')}}">
+                <i class='bx bx-line-chart' ></i>
+                <span class="link_name">Assets</span>
+              </a>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name" href="{{url_for('auth.assets')}}">Stocks</a></li>
+            <!--<li><a href="/assets/amc">AMC</a></li>-->
+          </ul>
+        </li>
+        <li>
+          <div class="iocn-link">
+            <a href="{{url_for('auth.tutorial')}}">
+              <i class='bx bx-collection' ></i>
+              <span class="link_name">Handbook</span>
+            </a>
+            <i class='bx bxs-chevron-down arrow' ></i>
+          </div>
+          <ul class="sub-menu">
+            <li><a class="link_name">Handbook</a></li>
+            <li><a href="{{url_for('auth.tutorial')}}">Tutorials</a></li>
+            <li><a href="{{url_for('auth.terms')}}">Terms</a></li>
+            <li><a href="{{url_for('auth.pattern')}}">Patterns</a></li>
+            <li><a href="{{url_for('auth.candlestick')}}">Candlesticks</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="{{url_for('auth.calculator')}}">
+            <i class='bx bx-pie-chart-alt-2' ></i>
+            <span class="link_name" >Calculator</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{{url_for('auth.calculator')}}">Calculator</a></li>
+          </ul>
+        </li>
+        <!--<li>
+          <a href="{{'post'}}">
+            <i class='bx bx-message-alt-dots'></i>
+            <span class="link_name" >Community</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="#">Community</a></li>
+          </ul>
+        </li>-->
+        <li>
+          <div class="profile-details">
+            <div class="">
+              <!--<img src="image/profile.jpg" alt="profileImg">-->
+            </div>
+          </a>
+          </div>
+          <div class="profile-details">
+            <a href="/profile">
+              <i class='bx bxs-user-circle'></i>
+            <span class="link_name" >Logout</span>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="/logout">Sign Out</a></li>
+            </ul>
+          </div>
+        </li>
+  </ul>
+    </div>
+    <section class="home-section">
+      <div class="home-content">
+        <i class='bx bx-menu' ></i>
+        <div>{% block content %} {% endblock %}</div>
+      </div>
+    </section>
+    <script>
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+      arrow[i].addEventListener("click", (e)=>{
+     let arrowParent = e.target.parentElement.parentElement;
+     arrowParent.classList.toggle("showMenu");
+      });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("close");
+    });
+    
+    </script>
+    <script>
+      // $(document).ready(function(){
+        // 	$('div#loading').removeAttr('id');
+      // });
+      var preloader = document.getElementById("loading");
+      // window.addEventListener('load', function(){
+      // 	preloader.style.display = 'none';
+      // 	})
+  
+      function myFunction(){
+        preloader.style.display = 'none';
+      };
+    </script>
+  </body>
+</html>

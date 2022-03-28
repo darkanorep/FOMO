@@ -1,0 +1,13 @@
+{% for row in candlestick %}
+<div class="card">
+    <br>
+    <div class="title">{{row["name"]}}</div>
+    <br>
+    <div>
+        <img class="image" src="/static/{{row['image']}}">
+    </div>
+    <div class="symbol">
+        <p>{{row["description"]}}</p>
+    </div>
+</div>
+{% endfor %} 

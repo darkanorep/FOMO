@@ -1,0 +1,52 @@
+{% extends "admin_base.html" %}
+{% block title %}User{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Record</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="col-md-offset-1 col-md-10">
+            <h2 class="page-header text-primary text-center">System Users</h2>
+            <table class="table table-bordered">
+                <thead >
+                    <tr>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Password1</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for row in rows %}
+                    
+                        <tr style="text-align:center"> 
+                            <td>{{row["email"]}}</td>  
+                            <td>{{row["password"]}}</td>  
+                            <td>{{row["password1"]}}</td>
+                            <td class="action text-center">
+                            <a style="text-align:center"><a href="{{url_for('auth.userupdate',id=row['id'])}}" class="btn btn-primary">Edit</a>
+                            <a style="text-align:center"><a href="{{url_for('auth.user_delete',id=row['id'])}}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                            
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <td>
+                    <center><a href="{{url_for('auth.user_add')}}" class="btn btn-success">Add Record</a></center>
+                </td>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+ 

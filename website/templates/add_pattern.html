@@ -1,0 +1,32 @@
+{% extends "admin_base.html" %}
+{% block title %}Pattern{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+    </head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Add Patterns</h2>
+                        <form method="post" action="/uploadpattern" enctype="multipart/form-data" >
+                            <input type="text" name="name" placeholder="Pattern Name" required autofocus>
+                            <textarea type="text"  class="textarea" name="description" placeholder="Description" required autofocus></textarea>
+                            <input type="file" name="image"  multiple required autofocus>
+                            <input type="submit" name="submit" class="btn btn-success" value="UPLOAD"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+
+
+
+ 

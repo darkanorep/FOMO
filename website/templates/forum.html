@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Mochiy+Pop+P+One&display=swap');
+        
+        .cont {
+            padding: 5px;
+            
+        }
+
+        .con{
+            height:100%;
+            background:rgb(170, 169, 169);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        .card {
+            border: 1px solid rgb(0, 0, 0);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr;
+            padding: 10px;
+            background: rgb(255, 255, 255);
+            border-radius: 5px;
+            grid-template-areas:
+                "tag tag tag"
+                "img img img"
+                "user user date"
+                "idea idea idea"
+        }
+
+        i {
+            font-size: 20px;
+
+        }
+
+        .tag {
+            grid-area: tag;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        .img {
+            grid-area: img;
+            border: 2px solid rgb(0, 0, 0);
+
+        }
+
+        .card img {
+            width: 100%;
+            height: 300px;
+        }
+
+        .user {
+            grid-area: user;
+            padding: 10px;
+            text-align: left;
+            font-family: 'Kanit', sans-serif;
+            
+        }
+
+        .date {
+            grid-area: date;
+            padding: 10px;
+            text-align: right;
+            font-size: 14px;
+            font-family: 'Kanit', sans-serif;
+            
+        }
+
+
+        .idea {
+            grid-area: idea;
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        @media screen and (max-width: 720px) {
+            .con {
+                padding: 5px;
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                "tag"
+                "img"
+                "user"
+                "idea"
+                
+            }
+
+            .card {
+                padding: 10px
+            }
+
+            i {
+                grid-area: user;
+                font-size: 18px;
+
+            }
+
+            .user {
+                font-family: 'Kanit', sans-serif;
+            }
+
+
+            .date {
+                grid-area: user;
+                padding-top: 30px;
+                font-size: 12px;
+                text-align: left;
+            }
+
+            .idea {
+                padding: 10px;
+            }
+
+            .card img {
+            width: 100%;
+            height: 180px;
+        }
+
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="con">
+            {% for row in blog %}
+                <div class="card">
+                    <div class="tag">
+                        {{row["category"]}}
+                    </div>
+                    <div class="img">
+                        <a href="/blog/{{row['id']}}" style="text-decoration: none;">
+                            <img class= "stock-logo" src="/static/community/{{row['image']}}">
+                        </a>
+                    </div>
+                    <div class="user">
+                        <i class='bx bxs-user-circle'></i>{{row["author"]}}
+                    </div>
+                    <div class="date">
+                        {{row["date"]}}
+                    </div>
+                    <div class="idea">
+                        {{row["blog"]}}
+                        <br>
+                        <a href="/blog/{{row['id']}}" style="text-decoration: none;">Read More..</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

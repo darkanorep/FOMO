@@ -1,0 +1,37 @@
+.container {
+    display: grid;
+    height: 100vh;
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "ticker ticker ticker"
+        "news news today"
+    
+}
+
+header{
+    grid-area: ticker;
+}
+
+.ticker {
+    grid-area: ticker;
+}
+.news {
+    grid-area: news;
+}
+
+.today {
+    grid-area: today;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: 
+                            "ticker"
+                            "today"
+                            "news"
+    }
+}

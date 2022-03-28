@@ -1,0 +1,223 @@
+{% extends "base.html" %} 
+{% block title %}Community{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="#">
+    <style>
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                "tag tag"
+                "user user"
+                "img img"
+                "idea idea"
+                "form form"
+                 
+        }
+
+
+        hr {
+            margin: 10px;
+            background: black;
+            border: 3px solid rgb(0, 0, 0);
+            border-radius: 3px;
+        }
+
+        .tag {
+            grid-area: tag;
+            padding-bottom: 20px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+
+        .user {
+            grid-area: user;
+        }
+
+        .date {
+            font-size:14px;
+            padding-left: 15px;
+            grid-area: user;
+            text-align: left;
+            padding-top: 20px;
+        }
+
+        .img {
+            grid-area: img;
+
+        }
+
+        .idea {
+            font-size: 22px;
+            grid-area: idea;
+            padding: 10px;
+            padding-bottom: 20px;
+        }
+
+        .wrapper img {
+            width: 100%;
+            height: 650px;
+        }
+
+        form {
+            grid-area: form;
+            height: 50px;
+            display: grid;
+            grid-template-columns: .9fr .1fr;
+            grid-gap: 5px;
+            grid-template-areas:
+                "comment submit"
+            
+        }
+
+        .comment {
+            grid-area: comment;
+            padding: 5px;
+
+        }
+
+        .submit {
+            grid-area: submit;
+        }
+
+        .comwrapper {
+            padding: 10px;
+            background: gray;
+        }
+
+        .comsection {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-row-gap: 20px;
+            
+        }
+
+        .card {
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgb(255, 255, 255);
+            display: grid;
+        }
+
+        .comment_date {
+            font-size: 12px;
+            padding-left: 15px;
+        }
+
+        .comments {
+            font-size: 18px;
+            padding-left: 15px;
+        }
+
+        @media (max-width: 420px) {
+            .comment{
+                width: 100%;
+            }
+
+            .wrapper img {
+                width: 100%;
+                height: 180px;
+            }
+
+            .comment_author {
+                font-size: 16px;
+            }
+
+            .comment_date {
+                font-size: 10px;
+                padding-left: 5px;
+            }
+
+            .comments {
+                font-size: 14px;
+                padding-left: 5px;
+            }
+            
+        }
+        
+    </style>
+</head>
+    <body>
+        <center>
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %} {% if category ==
+                'e' %}
+                <div id="alertdanger" role="alert">
+                  {{ message }}
+                </div>
+                {% else %}
+                <div id="alertsuccess" role="alert">
+                  {{ message }}
+                </div>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </center>
+        <div class="container">
+            <a href="{{url_for('auth.community')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+            <div class="wrapper">
+                {% for row in blog %}
+                    <div class="tag">
+                        {{row["category"]}}
+                    </div>
+                    <div class="user">
+                        <i class='bx bxs-user-circle'></i>{{row["author"]}}
+                    </div>
+                    <br>
+                    <div class="date">
+                        {{row["date"]}}
+                    </div>
+                    <br>
+                    <div class="idea">
+                        {{row["blog"]}}
+                        <hr>
+                    </div>
+                    <br>
+                    <div class="img">
+                        <img class="img" src="/static/community/{{row['image']}}">
+                    </div>
+                    <form method="post" action="/comment/{{row['id']}}" enctype="multipart/form-data">
+                        <input type="text" class="comment" name="comment" placeholder="Write a comment" autofocus required></input>
+                        <input type="submit" class="submit" name="submit" class="btn btn-success" value="Comment"/>
+                    </form>
+                {% endfor %}
+            </div>
+            <div class="comwrapper">
+                <div class="comsection">
+                    {% for row in comment %}
+                        <div class="card">
+                            <div class="comment_author">
+                                <i class='bx bxs-user-circle'></i>{{row["comment_author"]}}
+                            </div>
+                            <div class="comment_date">
+                                {{row["date"]}}
+                            </div>
+                            <div class="comments">
+                                {{row["comment"]}}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        document.getElementById("alertdanger").style.color = "red";
+    </script>
+    <script>
+        document.getElementById("alertsuccess").style.color = "green";
+    </script>
+</html>
+{% endblock %}

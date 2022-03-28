@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Handbook{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/handbook.css"></link>
+    </head>
+    <body>
+        <div class="container">
+            <center><h1>Handbook Section</h1></center>
+            <di class="card-container">
+                <div class="card">
+                    <a href="{{url_for('auth.tutorial')}}"><img src="../static/tutorial.png" alt=""></a>
+
+                    <a href="{{url_for('auth.tutorial')}}" style="text-decoration: none;"><h2>Tutorials</h2></a>
+                    <a href="{{url_for('auth.tutorial')}}" style="text-decoration: none;">Read more</a>
+                </div>
+                <div class="card">
+                    <a href="{{url_for('auth.candlestick')}}"><img src="../static/candlestick.png" alt=""></a>
+
+                    <a href="{{url_for('auth.candlestick')}}" style="text-decoration: none;"><h2>Type of Candlestick</h2></a>
+                    <a href="{{url_for('auth.candlestick')}}" style="text-decoration: none;">Read more</a>
+                </div>
+                <div class="card">
+                    <a href="{{url_for('auth.pattern')}}"><img src="../static/pattern.png" alt=""></a>
+
+                    <a href="{{url_for('auth.pattern')}}" style="text-decoration: none;"><h2>Candlestick Patterns</h2></a>
+                    <a href="{{url_for('auth.pattern')}}" style="text-decoration: none;">Read more</a>
+                </div>
+                <div class="card">
+                    <a href="{{url_for('auth.terms')}}"><img src="../static/terms.png" alt=""></a>
+                    
+                    <a href="{{url_for('auth.terms')}}" style="text-decoration: none;"><h2>Stock Market Terms</h2></a>
+                    <a href="{{url_for('auth.terms')}}" style="text-decoration: none;">Read more</a>
+                </div>
+            </di>
+        </div>
+    </body>
+</html>
+{% endblock %}
+ 

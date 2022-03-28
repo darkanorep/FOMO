@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="../static/css/base.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body onload="myFunction()">
+  <div id="loading"></div>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bx-candles' ></i>
+        <div class="logo_name">FOMO</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <hr>
+      <li>
+        <a href="{{url_for('auth.user')}}">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="{{url_for('auth.assets')}}">
+        <i class='bx bx-line-chart' ></i>
+         <span class="links_name">Stocks</span>
+       </a>
+       <span class="tooltip">Stocks</span>
+      </li>
+      <li>
+       <a href="{{url_for('auth.handbook')}}">
+        <i class='bx bx-book-reader' ></i>
+         <span class="links_name">Handbook</span>
+       </a>
+       <span class="tooltip">Handbook</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.community')}}">
+          <i class='bx bxs-comment-edit'></i>
+          <span class="links_name">Community</span>
+        </a>
+        <span class="tooltip">Community</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.calculator')}}">
+          <i class='bx bxs-calculator' ></i>
+          <span class="links_name">Calculator</span>
+        </a>
+       <span class="tooltip">Calculator</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.portfolio')}}">
+          <i class='bx bx-pie-chart-alt-2' ></i>
+          <span class="links_name">Portfolio</span>
+        </a>
+       <span class="tooltip">Portfolio</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.profile')}}">
+          <i class='bx bxs-user-circle'></i>
+          <span class="links_name">Profile</span>
+        </a>
+       <span class="tooltip">Profile</span>
+      </li>
+      <li class="profile">
+         <li class="profile">
+          <a href="/logout">
+            <i class='bx bx-power-off' ></i>
+            <span class="links_name">Logout</span>
+          </a>
+      </li>
+     </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <div>
+      <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+      {% block content %} {% endblock %}
+    </div>
+  </section>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();//calling the function(optional)
+    });
+
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+      sidebar.classList.toggle("open");
+      menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+    if(sidebar.classList.contains("open")){
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    }else {
+      closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+    }
+    }
+  </script>
+  <script>
+    var preloader = document.getElementById("loading");
+      // window.addEventListener('load', function(){
+      // 	preloader.style.display = 'none';
+      // 	})
+  
+    function myFunction(){
+      preloader.style.display = 'none';
+    };
+  </script>
+</body>
+</html>

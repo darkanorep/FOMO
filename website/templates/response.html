@@ -1,0 +1,12 @@
+{% for row in rows %}
+    <div class="card">
+        <div class="symbol">{{row["symbol"]}}</div>
+        <div class="image"><img src="/static/{{row['logo']}}"></div>
+        <div>
+            <a href="{{row["symbol"]}}" style="text-decoration: none;">
+            <button class="more-button">Details</button>
+            </a>
+        </div>
+    </div>
+{% endfor %}
+ 

@@ -1,0 +1,110 @@
+{% extends "base.html" %} 
+{% block title %}Community{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/css/community.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+    <body>
+        <center>
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %} {% if category ==
+                'e' %}
+                <div id="alertdanger" role="alert">
+                  {{ message }}
+                </div>
+                {% else %}
+                <div id="alertsuccess" role="alert">
+                  {{ message }}
+                </div>
+            {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </center>
+        <div class="main">
+            <div class="box">
+                <a class="button" href="#divOne"><textarea type="text" placeholder="What's on your mind?" disabled></textarea></a>
+            </div>
+            <div class="overlay" id="divOne">
+                <div class="wrapper">
+                    <h2>Write Post</h2><a class="close" href="#">&times;</a>
+                    <div class="content">
+                        <div class="container">
+                            <form method="post" action="/write" enctype="multipart/form-data">
+                                <textarea type="text" name="blog" placeholder="What's on your mind?" required autofocus></textarea>
+                                <section>
+                                    <label>Category</label>
+                                    <select name="category_filter" id="category_filter" class="select" required>
+                                        <option value="">-Select Stocks-</option>';
+                                        {% for row in symbol %}
+                                            <option value="{{row["symbol"]}}">{{row["symbol"]}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="symbol" id="category" required/>
+                                </section>
+                                <input type="file" name="image"  multiple required autofocus>
+                                <center><input type="submit" name="submit" class="btn btn-success" value="Post"/></center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <section>
+                <h1>Ideas</h1>
+                <select name="search_filter" id="search_filter" class="select">
+                    <option value="">All</option>';
+                    {% for row in symbol %}
+                        <option value="{{row["symbol"]}}">{{row["symbol"]}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="hidden_value" id="hidden_value"/>
+                <main></main>
+            </section>
+        </div>
+    </body>
+    <script>
+        document.getElementById("alertdanger").style.color = "red";
+    </script>
+    <script>
+        document.getElementById("alertsuccess").style.color = "green";
+    </script>
+    <script>
+        $('#category_filter').change(function(){
+                $('#category').val($('#category_filter').val());
+                var query = $('#category').val(); 
+                load_data(query);
+            });
+    </script>
+    <script>
+        $(document).ready(function(){
+            load_data();
+            function load_data(query='')
+            {
+                $.ajax({
+                    url:"/fetchforum",
+                    method:"POST",
+                    data:{query:query},
+                    success:function(data)
+                    { 
+                        $('main').html(data);
+                        $('main').append(data.htmlresponse);
+                    }
+                })
+            }
+         
+            $('#search_filter').change(function(){
+                $('#hidden_value').val($('#search_filter').val());
+                var query = $('#hidden_value').val(); 
+                load_data(query);
+            });
+             
+        });
+
+        $(".select option").each(function() {
+        $(this).siblings('[value="'+ this.value +'"]').remove();
+        });
+    </script>
+</html>
+{% endblock %}

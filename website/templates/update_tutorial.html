@@ -1,0 +1,83 @@
+{% extends "admin_base.html" %}
+{% block title %}Tutorial{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/update_tutorial.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="update-form">
+            <div class="container">
+                <div class="container">
+                    <div class="main">
+                        <div class="content">
+                            <h2>Update Tutorials</h2>
+                            <form method="post" action="/tutorialupdate/{{tut['id']}}" enctype="multipart/form-data" >
+                                <div id='stepForm'>
+
+                                <textarea id="stepTut" hidden>{{ stepsTut }}</textarea>
+                                <textarea type="text" class="textarea" name="numberOfStep" id='numberOfStep' value='0' hidden></textarea>
+                                <input type="text" name="name" placeholder="Tutorial Name" value="{{ tut['name'] }}" required autofocus>   
+                                   
+                                </div>
+                                <input type="file" name="image" enctype="multipart/form-data">
+                                <input type="button" name="test" class="btn" value="ADD STEP" onclick='addStep()'/>
+                                <input type="button" name="test" class="btn" value="REMOVE STEP" id="removebtn" onclick='removeStep()'/>
+                                <input type="submit" name="submit" class="btn" value="UPDATE"/>                        
+                            </form>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </body>
+    <script>
+
+        var currentNumberOfButton = 0;
+
+        var stepTutJSONString = $('#stepTut')[0].value;
+        var steps = JSON.parse(stepTutJSONString);
+
+        for (var i=0; i < steps.length; i++) {
+            currentNumberOfButton++;
+            $( "#numberOfStep").val(currentNumberOfButton);
+            var buttonStep ='<textarea type="text" class="textarea" name="step'+currentNumberOfButton+'"  id="step'+currentNumberOfButton+'" placeholder="Step '+currentNumberOfButton+'" required autofocus>'+steps[i].stepDetail+'</textarea>';
+            $( "#stepForm" ).append( buttonStep );
+            isRemoveButtonHidden();
+        }
+                                
+        function addStep(){
+            currentNumberOfButton++;
+            $( "#numberOfStep").val(currentNumberOfButton);
+            var buttonStep ='<textarea type="text" class="textarea" name="step'+currentNumberOfButton+'"  id="step'+currentNumberOfButton+'" placeholder="Step '+currentNumberOfButton+'" required autofocus></textarea>';
+            $( "#stepForm" ).append( buttonStep );
+            isRemoveButtonHidden();
+        }
+        
+        function removeStep(){
+            console.log('Test');
+            $( '#step'+currentNumberOfButton ).remove();
+            currentNumberOfButton--;
+            $( "#numberOfStep").val(currentNumberOfButton);
+            isRemoveButtonHidden();
+        }
+        
+        function isRemoveButtonHidden(){
+            if (currentNumberOfButton==1){
+                $( "#removebtn").hide();
+                
+            }else{
+                $( "#removebtn").show();
+            }
+        }
+
+    </script>
+</html>
+{% endblock %}
+
+
+
+ 

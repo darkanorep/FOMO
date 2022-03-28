@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block title %}Signup{% endblock %} 
+
+{% block content %}
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/css/signup.css"></link>
+</head>
+<body>
+  <div class="login-form">
+    <h1>Sign Up</h1>
+    <div class="container">
+      <div class="main">
+        <div class="content">
+          <h2>Register</h2>
+          <form action ="/signup" method="POST">
+            <input type="email" id="email" name="email" placeholder="Enter email" required autofocus/>
+            <input type="text" id="username" name="username" placeholder="Enter username" required autofocus/>
+            <input type="password" id="password" name="password" placeholder="Enter password" required autofocus/>
+            <input type="password" id="password1" name="password1" placeholder="Confirm password"/>
+            <button class="btn" type="submit">Register</button>
+          </form>
+          <p class="account">Already have an account? <a href=login style="text-decoration: none;">Log In</a></p>
+        </div>
+        <div class="form-img">
+          <img src="../static/signup.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

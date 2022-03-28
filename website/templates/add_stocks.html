@@ -1,0 +1,37 @@
+{% extends "admin_base.html" %}
+{% block title %}Stocks Lists{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+    </head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Add Stocks</h2>
+                        <form method="post" action="/uploadstocks" enctype="multipart/form-data" >
+                            <input type="text" name="name" placeholder="Stock Name" required autofocus></input>
+                            <input type="text" name="symbol" placeholder="Stock Symbol" required autofocus></input>
+                            <label>Stock Logo</label>
+                            <input type="file" name="logo"  multiple required autofocus></input>
+                            <input type="text" name="exchange" placeholder="Stock Exchange" required autofocus></input>
+                            <input type="text" name="sector" placeholder="Stock Sector" required autofocus></input>
+                            <input type="text" name="industry" placeholder="Stock Industry" required autofocus></input>
+                            <textarea type="text" class="textarea" name="profile" placeholder="Stock Profile" required autofocus></textarea>
+                            <input type="submit" name="submit" class="btn btn-success" value="UPLOAD"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+
+
+
+ 

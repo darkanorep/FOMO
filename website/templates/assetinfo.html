@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+{% block title %}{% for row in profile %}{{row["symbol"]}}{% endfor %}{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/amc.css"></link>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    </head>
+    <body>
+        <div class="container">
+            {% for row in profile %}
+                <a href="{{url_for('auth.assets')}}" style="text-decoration: none;">Stocks</a><i class='bx bx-chevron-right'></i>{{row["symbol"]}}
+            {% endfor %}
+            <div class="profile-wrapper">
+                <div class="profile">
+                    {% for row in profile %}
+                        <div class="stock-info-container">
+                            <img class= "stock-logo" src="/static/{{row['logo']}}">
+                            <h1 class="stock-name">{{row["name"]}} ({{row["symbol"]}})</h1>
+                            <h1 class="current-price">${{ current_price[0].text }}</h1>
+                            <h3 class="current-change">{{ current_change[0].text }} {{ current_changepercent[0].text }}</h3>
+                            <p class="closed-time">{{ closed_time[0].text }}</p>
+                        </div>
+                    {% endfor %}
+                    <P class="interpretation">
+                        {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD rate today is <b>${{ current_price[0].text }}</b> and has changed <b>{{ current_changepercent[0].text }}</b> from <b>${{ previousclose[0].text }}</b>.
+                    </P>
+                </div>
+                <div class="info-container">
+                    {% for row in profile %}
+                        <h2>{{row["symbol"]}} and Market Stats</h2>
+                    {% endfor %}
+                    <div class="info-content">
+                        <table>
+                            <tbody>
+                                <tr>
+                                {% for row in profile %}
+                                    <th>{{row["symbol"]}} Price</th>
+                                {% endfor %}
+                                <td>${{ current_price[0].text }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Trading Volume</th>
+                                    {% for row in info %}
+                                    <td>{{row["volume"]}}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>Previous Close</th>
+                                    <td>${{ previousclose[0].text }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Exchange</th>
+                                    {% for row in profile %}
+                                        <td>{{row["exchange"]}}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <th>IPO Date</th>
+                                    {% for row in h %}
+                                    <td>{{row["date"]}}</td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-wrapper">
+                <div class="chart">
+                    <div class="charts">
+                        <input type="radio" id="tabfree" name="charts" checked="checked">
+                        <label for="tabfree">Plotly</label>
+                        <div class="tab" id="jsonFormatGraph">
+                            <script class="tab">
+                                function drawPlotyGraph(graph) {
+                                    Plotly.plot('jsonFormatGraph' , graphs, {});
+                                }
+                                var graphs = {{ graphJSON | safe }};
+                                drawPlotyGraph(graphs);
+                            </script>
+                        </div>
+                        <input type="radio" id="tabsilver" name="charts">
+                        <label for="tabsilver">TradingView</label>
+                        <div class="tab">
+                            <div id="tradingview_8ec7b"></div>
+                            <div class="tradingview-widget-copyright"><a><span class="blue-text">{% for row in profile %}{{row["symbol"]}}{% endfor %} Chart</span></a></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                            <script type="text/javascript">
+                            new TradingView.widget({
+                                "width": 980,
+                                "height": 510,
+                                "symbol": "{% for row in profile %}{{row["symbol"]}}{% endfor %}",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "en",
+                                "toolbar_bg": "#f1f3f6",
+                                "enable_publishing": false,
+                                "hide_side_toolbar": false,
+                                "container_id": "tradingview_8ec7b"
+                            }
+                                );
+                                </script>
+                        </div>
+                    </div>
+                    <hr>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>1min</th>
+                                <th>5min</th>
+                                <th>1hr</th>
+                                <th>24hr</th>
+                                <th>7d</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id ="1min">{% for row in onemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="5min">{% for row in fivemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="1hr">{% for row in hour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="1d">{% for row in phour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="5d">{% for row in fivedays %}{{row["finalpchange"]}}%{% endfor %}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="seven-wrapper">
+                <div class="seven">
+                    <h3>7 day Price History of {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>{% for row in profile %}{{row["symbol"]}}{% endfor %} to USD</th>
+                                <th>24 hr Changes</th>
+                                <th>Change %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in hdata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>${{row["close"]}}</td>
+                                <td>{{row["change"]}}</td>
+                                <td>{{row["finalpchange"]}}%</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="stock-profile">
+                    {% for row in profile %}
+                        <h3>Sector: {{row["sector"]}}</h3>
+                        <h3>Industry: {{row["industry"]}}</h3>
+                        <p>{{row["profile"]}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="info-container">
+                {% for row in profile %}
+                    <h2>{{row["symbol"]}} Price Prediction</h2>
+                {% endfor %}
+        
+                <div class="prediction-wrapper">
+                    <div class="layer1">
+                        <div class="wrapper-24hr">
+                            <div class="card">
+                                <div class="prediction-24hr">
+                                    <h3>Period : 24 Hr.</h3>
+                                    <label>Prediction : </label>
+                                    {% for row in prediction %}${{row["prediction"]}}{% endfor %}
+                                </div>
+                                <div class="rscore-24hr">
+                                    <label>R2 Score : </label>
+                                    {% for row in prediction %}{{row["r2score"]}}{% endfor %}
+                                </div>
+                                <div class="data-24hr">
+                                    {% for row in profile %}
+                                    <img src="../static/datavisual/{{row["symbol"]}}24hr.png">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-1mo">
+                            <div class="card">
+                                <div class="prediction-1mo">
+                                    <h3>Period : 1 Month</h3>
+                                    <label>Prediction : </label>
+                                    {% for row in onemopred %}${{row["prediction"]}}{% endfor %}
+                                </div>
+                                <div class="rscore-1mo">
+                                    <label>R2 Score : </label>
+                                    {% for row in onemopred %}{{row["r2score"]}}{% endfor %}
+                                </div>
+                                <div class="data-1mo">
+                                    {% for row in profile %}
+                                    <img src="../static/datavisual/{{row["symbol"]}}1mo.png">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-3mo">
+                            <div class="card">
+                                <div class="prediction-3mo">
+                                    <h3>Period : 3 Months</h3>
+                                    <label>Prediction : </label>
+                                    {% for row in threemopred %}${{row["prediction"]}}{% endfor %}
+                                </div>
+                                <div class="rscore-3mo">
+                                    <label>R2 Score : </label>
+                                    {% for row in threemopred %}{{row["r2score"]}}{% endfor %}
+                                </div>
+                                <div class="data-3mo">
+                                    {% for row in profile %}
+                                    <img src="../static/datavisual/{{row["symbol"]}}3mo.png">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layer2">
+                        <div class="wrapper-6mo">
+                            <div class="card">
+                                <div class="prediction-6mo">
+                                    <h3>Period : 6 Months</h3>
+                                    <label>Prediction : </label>
+                                    {% for row in sixmopred %}${{row["prediction"]}}{% endfor %}
+                                </div>
+                                <div class="rscore-6mo">
+                                    <label>R2 Score : </label>
+                                    {% for row in sixmopred %}{{row["r2score"]}}{% endfor %}
+                                </div>
+                                <div class="data-6mo">
+                                    {% for row in profile %}
+                                    <img src="../static/datavisual/{{row["symbol"]}}6mo.png">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-1yr">
+                            <div class="card">
+                                <div class="prediction-1yr">
+                                    <h3>Period : 1 Year</h3>
+                                    <label>Prediction : </label>
+                                    {% for row in oneyrpred %}${{row["prediction"]}}{% endfor %}
+                                </div>
+                                <div class="rscore-1yr">
+                                    <label>R2 Score : </label>
+                                    {% for row in oneyrpred %}{{row["r2score"]}}{% endfor %}
+                                </div>
+                                <div class="data-1yr">
+                                    {% for row in profile %}
+                                    <img src="../static/datavisual/{{row["symbol"]}}1yr.png">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2>Available Market</h2>
+                <section class="product">
+                    <div class="container-fluid">
+                        <div class="slider-wrap">
+                            <div class="slider-main" id="slider-main">
+                                {% for row in market %}    
+                                <div class="item">
+                                    <div class="text">
+                                        <a href="{{row["blink"]}}" style="text-decoration: none;" target="_blank"><img class = "img" id="img" src="/static/{{row['blogo']}}"></a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <button type="button" class="slider-btn-next" onClick="prev()">Next</button>
+                        <button type="button" class="slider-btn-prev" onClick="next()">Previous</button>
+                    </div>
+                </section>
+            </div>
+            <!--<label><b>{% for row in profile %}{{row["symbol"]}}{% endfor %} Data</b></label>
+            <select name="search_filter" id="search_filter" class="select">
+                <option value="">-Select Data-</option>';
+                {% for row in interval %}
+                    <option value="{{row["interval"]}}">{{row["interval"]}}</option>
+                {% endfor %}
+                <optgroup label="MINUTES">
+                    <option value="1min">1 minute</option>
+                    <option value="5min">5 minutes</option>
+                    <option value="15min">15 minutes</option>
+                    <option value="30min">30 minutes</option>
+                </optgroup>
+                <optgroup label="HOURS">
+                    <option value="1hr">1 hour</option>
+                </optgroup>
+                <optgroup label="DAYS">
+                    <option value="1d">1 day</option>
+                    <option value="5d">5 day</option>
+                </optgroup>
+                <optgroup label="WEEKS">
+                    <option value="1wk">1 week</option>
+                </optgroup>
+                <optgroup label="MONTHS">
+                    <option value="1mo">1 month</option>
+                    <option value="3mo">3 months</option>
+                    <option value="6mo">6 months</option>
+                </optgroup>
+                <optgroup label="YEARS">
+                    <option value="1yr">1 year</option>
+                </optgroup>
+            </select>
+            <div class ="tableFixHead">
+                <section>
+                    <input type="hidden" name="hidden_value" id="hidden_value"/>
+                    <table id="mytable">
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody id="intervalData"></tbody>
+                    </table>
+                </section>
+            </div>-->
+            <!--<div>
+                {% for row in profile %}
+                <h2>{{row["symbol"]}} 1 Minute Data</h2>
+                {% endfor %}
+                <div class="tableFixHead">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in onemindata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>{{row["open"]}}</td>
+                                <td>{{row["close"]}}</td>
+                                <td>{{row["finalpchange"]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                {% for row in profile %}
+                <h2>{{row["symbol"]}} 5 Minutes Data</h2>
+                {% endfor %}
+                <div class="tableFixHead">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in fivemindata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>{{row["open"]}}</td>
+                                <td>{{row["close"]}}</td>
+                                <td>{{row["finalpchange"]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                {% for row in profile %}
+                <h2>{{row["symbol"]}} 15 Minutes Data</h2>
+                {% endfor %}
+                <div class="tableFixHead">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in fifteendata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>{{row["open"]}}</td>
+                                <td>{{row["close"]}}</td>
+                                <td>{{row["finalpchange"]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>-->
+            <div class="interval">
+                <div class="intervals">
+                    <input type="radio" id="tab1" name="intervals" checked="checked">
+                    <label for="tab1">1 Minute</label>
+                    <div class="tab">
+                        <div class="tableFixHead">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date:Time</th>
+                                        <th>Open</th>
+                                        <th>Close</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in onemindata %}
+                                    <tr>
+                                        <td>{{row["date"]}}</td>
+                                        <td>{{row["open"]}}</td>
+                                        <td>{{row["close"]}}</td>
+                                        <td>{{row["finalpchange"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <input type="radio" id="tab5" name="intervals">
+                    <label for="tab5">5 Minutes</label>
+                    <div class="tab">
+                        <div class="tableFixHead">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date:Time</th>
+                                        <th>Open</th>
+                                        <th>Close</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in fivemindata %}
+                                    <tr>
+                                        <td>{{row["date"]}}</td>
+                                        <td>{{row["open"]}}</td>
+                                        <td>{{row["close"]}}</td>
+                                        <td>{{row["finalpchange"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <input type="radio" id="tab15" name="intervals">
+                    <label for="tab15">15 Minutes</label>
+                    <div class="tab">
+                        <div class="tableFixHead">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date:Time</th>
+                                        <th>Open</th>
+                                        <th>Close</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in fifteendata %}
+                                    <tr>
+                                        <td>{{row["date"]}}</td>
+                                        <td>{{row["open"]}}</td>
+                                        <td>{{row["close"]}}</td>
+                                        <td>{{row["finalpchange"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <input type="radio" id="tab30" name="intervals">
+                    <label for="tab30">30 Minutes</label>
+                    <div class="tab">
+                        <div class="tableFixHead">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date:Time</th>
+                                        <th>Open</th>
+                                        <th>Close</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in thirtymindata %}
+                                    <tr>
+                                        <td>{{row["date"]}}</td>
+                                        <td>{{row["open"]}}</td>
+                                        <td>{{row["close"]}}</td>
+                                        <td>{{row["finalpchange"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <input type="radio" id="tab1hr" name="intervals">
+                    <label for="tab1hr">1 Hour</label>
+                    <div class="tab">
+                        <div class="tableFixHead">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date:Time</th>
+                                        <th>Open</th>
+                                        <th>Close</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in onehourdata %}
+                                    <tr>
+                                        <td>{{row["date"]}}</td>
+                                        <td>{{row["open"]}}</td>
+                                        <td>{{row["close"]}}</td>
+                                        <td>{{row["finalpchange"]}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div>
+                {% for row in profile %}
+                <h2>{{row["symbol"]}} 30 Minutes Data</h2>
+                {% endfor %}
+                <div class="tableFixHead">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in thirtymindata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>{{row["open"]}}</td>
+                                <td>{{row["close"]}}</td>
+                                <td>{{row["finalpchange"]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                {% for row in profile %}
+                <h2>{{row["symbol"]}} 1 Hour Data</h2>
+                {% endfor %}
+                <div class="tableFixHead">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date:Time</th>
+                                <th>Open</th>
+                                <th>Close</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in onehourdata %}
+                            <tr>
+                                <td>{{row["date"]}}</td>
+                                <td>{{row["open"]}}</td>
+                                <td>{{row["close"]}}</td>
+                                <td>{{row["finalpchange"]}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>-->
+            <div class="ideas">
+                <h1>{% for row in profile %}{{row["symbol"]}}{% endfor %} Ideas</h1>
+                <div class="ideas-container">
+                    <div class="ideas-content">
+                        {% for row in blog %}
+                            <div class="ideas-card">
+                                <div class="user">
+                                    <i class='bx bxs-user-circle'></i>{{row["author"]}}
+                                </div>
+                                <div class="date">
+                                    {{row["date"]}}
+                                </div>
+                                <div class="idea">
+                                    {{row["blog"]}}
+                                    <br>
+                                    <a href="/blog/{{row['id']}}" style="text-decoration: none;">Read More..</a>
+                                </div>
+                                <div class="ideas-img">
+                                    <img src="/static/community/{{row['image']}}">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="../static/js/assetinfo.js"></script>
+    <script>
+        var arr = ["item1", "item2", "item3"]
+        var sliderMain = document.getElementById("slider-main");
+        var item = sliderMain.getElementsByClassName("item");
+
+        function next() {
+            sliderMain.append(item[0]);
+            
+        }
+
+        function prev() {
+            sliderMain.prepend(item[item.length-1]);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+        $.getJSON("/fetchprice",
+        function getPrice(json) {
+
+            console.log(json)
+        });
+    })
+    </script>
+</html>
+{% endblock %}

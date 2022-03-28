@@ -1,0 +1,28 @@
+{% extends "base.html" %} 
+{% block title %}Post{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+</head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Write Post</h2>
+                        <form method="post" action="/editpost/{{data['id']}}" enctype="multipart/form-data">
+                            <textarea type="text" name="blog" placeholder="What's on your mind?" required autofocus>{{data['blog']}}</textarea>
+                            <input type="file" name="image"  multiple autofocus value="{{data['image']}}"></input>
+                            <input type="submit" name="submit" class="btn btn-success" value="Post"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </body>
+</html>
+{% endblock %}

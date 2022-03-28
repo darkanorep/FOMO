@@ -1,0 +1,37 @@
+{% extends "admin_base.html" %}
+{% block title %}Stock Broker{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/update_tutorial.css">
+    </head>
+    <body>
+        <div class="update-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Update Stock Broker</h2>
+                        <form method="POST" enctype="multipart/form-data" form action="/brokerupdate/{{data['id']}}">
+                            <label>Name</label>
+                            <input type="text" name="bname" value="{{data['bname']}}">
+                            <label>Logo</label>
+                            <input type="file" enctype="multipart/form-data" name="blogo"  value="{{data['blogo']}}"></input>
+                            <label>Pair</label>
+                            <input type="text" name="bpair" value="{{data['bpair']}}">
+                            <label>Link</label>
+                            <input type="text" name="blink" value="{{data['blink']}}">
+                            <input type="submit" class="btn btn-success btn-block" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}
+
+
+
+ 

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Mochiy+Pop+P+One&display=swap');
+
+body {
+    background: white;
+}
+
+.container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title"
+        "select"
+        "stock-container"     
+}
+
+.stock-list {
+    padding: 20px;
+}
+
+.stock-list .card {
+    background-color: #397d54;
+    border-radius: 10px;
+    padding: 1em;
+    box-shadow: 0px 10px 5px #b2bec3;
+    text-align: center;
+}
+
+.stock-list .card:hover {
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+}
+
+.stock-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+} 
+
+.card .symbol {
+    font-family: 'Kanit', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.card img {
+    background-color: rgb(233, 234, 235);
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.more-button {
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0px;
+    border-radius: 16px;
+    box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    opacity: 1;
+    outline: 0px;
+    transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+    height: 48px;
+    padding: 0px 24px;
+    background-color: rgb(232, 157, 57);
+    color: rgb(255, 255, 255);
+    width: 100%;
+}
+ 
+.more-button:active {
+    background-color: rgb(175, 116, 37);
+    box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+    transform: translateY(4px);
+}
+
+.stock-image {
+    width: 300px;
+    height: 150px;
+}
+
+@media screen and (max-width: 720px) {
+    .stock-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .stock-container {
+        grid-template-columns: 1fr 1fr;
+        
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .stock-container {
+        grid-template-columns: 1fr;
+    }
+}

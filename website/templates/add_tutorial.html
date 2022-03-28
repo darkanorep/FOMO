@@ -1,0 +1,41 @@
+{% extends "admin_base.html" %}
+{% block title %}Tutorial{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+    </head>
+    <body>
+        <div class="add-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Add Tutorials</h2>
+                        <form method="post" action="/uploadtutorial" enctype="multipart/form-data" >
+                            <div id='stepForm'>
+                                <input type="text" name="name" placeholder="Tutorial Name" required autofocus>
+                                <textarea type="text" class="textarea" name="numberOfStep" id='numberOfStep' value='1' hidden></textarea>
+                                <br>
+                                <textarea type="text" class="textarea" name="step1" placeholder="Step 1" id='step1' required autofocus></textarea>
+                            </div>
+                            <input type="file" name="image" enctype="multipart/form-data" multiple required >
+                            <input type="button" name="test" class="btn" value="ADD STEP" onclick='addStep()'/>
+                            <input type="button" name="test" class="btn" value="REMOVE STEP" id="removebtn" onclick='removeStep()'/>
+                            <input type="submit" name="submit" class="btn" value="ADD"/>                        
+                        </form>
+                    </div>
+                </div>
+            </div>     
+        </div>      
+    </body>
+    <script src="/static/js/addtutorial.js"></script>
+</html>
+{% endblock %}
+
+
+
+ 

@@ -1,0 +1,51 @@
+{% extends "admin_base.html" %}
+{% block title %}Stocks{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+</head>
+<body>
+    <h2 class="header" >Achived Stocks</h2>
+    <a class="btn btn-success" href=/admin_stocks>Go to Main</a></p>
+    <table class="table">
+        <thead >
+            <tr>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Logo</th>
+                <th>Sector</th>
+                <th>Industry</th>
+                <th>Profile</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                    
+            <tr style="text-align:center">
+                <td>{{row["name"]}}</td>  
+                <td>{{row["symbol"]}}</td>
+                <td> <img class = "img" id="img" src="/static/{{row['logo']}}"></td>  
+                <td>{{row["sector"]}}</td>
+                <td>{{row["industry"]}}</td>
+                <td>
+                    <p>{{row["profile"]}}</p>
+                </td>
+                <td>
+                    <a href="{{url_for('stocksrestore',symbol=row['symbol'])}}" style="text-decoration: none;">
+                        <button class="edit-button">Restore<i class='bx bxs-archive-out'></i></button>
+                    </a>
+                    <a href="{{url_for('auth.delete_archivedstocks',symbol=row['symbol'])}}" style="text-decoration: none;">
+                        <button class="delete-button">Delete<i class='bx bxs-trash-alt'></i></button>
+                    </a>
+                </td>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
+ 

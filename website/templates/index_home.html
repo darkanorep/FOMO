@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% block title %}FOMO: Stock Market Price Prediction{% endblock %} 
+
+{% block content %}
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"></link>
+</head>
+<body>
+    <div class="index_page">
+        <div class="top_block">
+            <div class="top_form">
+                <div class="top_form_content text_center">
+                    <div class="top_title">
+                        <span>fomo</span>
+                         - stock market price prediction 
+                    </div>
+                    <div class="top_seperator"></div>
+                    <div class="top_last">in the world of digital finance</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="login" class="w_button_login text-decoration-none">Login</a>
+                <a href="signup" class="w_button_signup text-decoration-none">Signup</a>
+            </div>
+        </div>
+        <div class="credits">
+            <div class="credit_name">
+                <span>Powered by</span>
+                <a href="https://finance.yahoo.com/" target="blank"><img src="../static/yahoo_finance.png" width="100px" height="50px"></a>
+            </div>
+        </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/update_tutorial.css">
+    </head>
+    <body>
+        <div class="update-form">
+            <div class="container">
+                <div class="main">
+                    <div class="content">
+                        <h2>Update Portfolio</h2>
+                        <form method="POST" form action="/editportfolio/{{data['id']}}">
+                            <label>Stock</label>
+                            <input type="text" name="symbol" value="{{data['symbol']}}" disabled>
+                            <label>Quantity</label>
+                            <br>
+                            <input type="number" name="quantity" value="{{data['quantity']}}"></input>
+                            <br>
+                            <label>Initial Value</label>
+                            <input type="float" name="initial_value" value="{{data['initial_value']}}"></input>
+                            
+                            <input type="submit" class="btn btn-success btn-block" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{% endblock %}

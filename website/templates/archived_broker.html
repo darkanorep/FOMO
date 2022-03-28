@@ -1,0 +1,44 @@
+{% extends "admin_base.html" %}
+{% block title %}Stock Broker{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+</head>
+<body>
+    <h2 class="header" >Archived Stock Broker</h2>
+    <a class="btn btn-success" href=/admin_broker>Go to Main</a></p>
+    <table class="table">
+        <thead >
+            <tr>
+                <th>Name</th>
+                <th>Logo</th>
+                <th>Pair</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}         
+            <tr style="text-align:center">
+                <td>{{row["bname"]}}</td>
+                <td> <img class = "img" id="img" src="/static/{{row['blogo']}}"></td>   
+                <td>
+                    <p>{{row["bpair"]}}</p>
+                </td> 
+                <td>
+                    <a href="{{url_for('brokerrestore',id=row['id'])}}" style="text-decoration: none;">
+                        <button class="edit-button">Restore<i class='bx bxs-archive-out'></i></button>
+                    </a>
+                    <a href="{{url_for('auth.delete_archivedbroker',id=row['id'])}}" style="text-decoration: none;">
+                        <button class="delete-button">Delete<i class='bx bxs-trash-alt'></i></button>
+                    </a>
+                </td>
+            {% endfor %}
+        </tbody>
+    </table>
+    </body>
+</html>
+{% endblock %}
+ 
