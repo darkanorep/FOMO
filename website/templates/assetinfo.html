@@ -7,7 +7,6 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/static/css/amc.css"></link>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     </head>
     <body>
@@ -20,12 +19,15 @@
                     {% for row in profile %}
                         <div class="stock-info-container">
                             <img class= "stock-logo" src="/static/{{row['logo']}}">
-                            <h1 class="stock-name">{{row["name"]}} ({{row["symbol"]}})</h1>
-                            <h1 class="current-price">${{ current_price[0].text }}</h1>
-                            <h3 class="current-change">{{ current_change[0].text }} {{ current_changepercent[0].text }}</h3>
-                            <p class="closed-time">{{ closed_time[0].text }}</p>
+                            <h1 class= "stock-symbol">{{row["symbol"]}}</h1>
+                            <h2 class="stock-name">{{row["name"]}}</h2>
                         </div>
                     {% endfor %}
+                    <div class="price">
+                        <h1 class="current-price">${{ current_price[0].text }}</h1>
+                        <h3 class="current-change">{{ current_change[0].text }} {{ current_changepercent[0].text }}</h3>
+                        <p class="closed-time">&bull;{{ closed_time[0].text }}</p>
+                    </div>
                     <P class="interpretation">
                         {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD rate today is <b>${{ current_price[0].text }}</b> and has changed <b>{{ current_changepercent[0].text }}</b> from <b>${{ previousclose[0].text }}</b>.
                     </P>
@@ -92,7 +94,7 @@
                             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                             <script type="text/javascript">
                             new TradingView.widget({
-                                "width": 980,
+                                "width": 943,
                                 "height": 510,
                                 "symbol": "{% for row in profile %}{{row["symbol"]}}{% endfor %}",
                                 "interval": "D",
@@ -108,6 +110,11 @@
                                 );
                                 </script>
                         </div>
+                        <script>
+                            var winScreen = window.screen.width;
+                            winScreen = winScreen - 110;
+                            $('.tab').find('#tradingview_8ec7b').find("div").css("width",winScreen)
+                        </script>
                     </div>
                     <hr>
                     <table>
@@ -131,6 +138,13 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="stock-profile">
+                {% for row in profile %}
+                    <h3>Sector: {{row["sector"]}}</h3>
+                    <h3>Industry: {{row["industry"]}}</h3>
+                    <p>{{row["profile"]}}</p>
+                {% endfor %}
             </div>
             <div class="seven-wrapper">
                 <div class="seven">
@@ -156,19 +170,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="stock-profile">
-                    {% for row in profile %}
-                        <h3>Sector: {{row["sector"]}}</h3>
-                        <h3>Industry: {{row["industry"]}}</h3>
-                        <p>{{row["profile"]}}</p>
-                    {% endfor %}
-                </div>
             </div>
             <div class="info-container">
                 {% for row in profile %}
                     <h2>{{row["symbol"]}} Price Prediction</h2>
                 {% endfor %}
-        
                 <div class="prediction-wrapper">
                     <div class="layer1">
                         <div class="wrapper-24hr">
@@ -286,134 +292,6 @@
                     </div>
                 </section>
             </div>
-            <!--<label><b>{% for row in profile %}{{row["symbol"]}}{% endfor %} Data</b></label>
-            <select name="search_filter" id="search_filter" class="select">
-                <option value="">-Select Data-</option>';
-                {% for row in interval %}
-                    <option value="{{row["interval"]}}">{{row["interval"]}}</option>
-                {% endfor %}
-                <optgroup label="MINUTES">
-                    <option value="1min">1 minute</option>
-                    <option value="5min">5 minutes</option>
-                    <option value="15min">15 minutes</option>
-                    <option value="30min">30 minutes</option>
-                </optgroup>
-                <optgroup label="HOURS">
-                    <option value="1hr">1 hour</option>
-                </optgroup>
-                <optgroup label="DAYS">
-                    <option value="1d">1 day</option>
-                    <option value="5d">5 day</option>
-                </optgroup>
-                <optgroup label="WEEKS">
-                    <option value="1wk">1 week</option>
-                </optgroup>
-                <optgroup label="MONTHS">
-                    <option value="1mo">1 month</option>
-                    <option value="3mo">3 months</option>
-                    <option value="6mo">6 months</option>
-                </optgroup>
-                <optgroup label="YEARS">
-                    <option value="1yr">1 year</option>
-                </optgroup>
-            </select>
-            <div class ="tableFixHead">
-                <section>
-                    <input type="hidden" name="hidden_value" id="hidden_value"/>
-                    <table id="mytable">
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody id="intervalData"></tbody>
-                    </table>
-                </section>
-            </div>-->
-            <!--<div>
-                {% for row in profile %}
-                <h2>{{row["symbol"]}} 1 Minute Data</h2>
-                {% endfor %}
-                <div class="tableFixHead">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in onemindata %}
-                            <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>{{row["open"]}}</td>
-                                <td>{{row["close"]}}</td>
-                                <td>{{row["finalpchange"]}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div>
-                {% for row in profile %}
-                <h2>{{row["symbol"]}} 5 Minutes Data</h2>
-                {% endfor %}
-                <div class="tableFixHead">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in fivemindata %}
-                            <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>{{row["open"]}}</td>
-                                <td>{{row["close"]}}</td>
-                                <td>{{row["finalpchange"]}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div>
-                {% for row in profile %}
-                <h2>{{row["symbol"]}} 15 Minutes Data</h2>
-                {% endfor %}
-                <div class="tableFixHead">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in fifteendata %}
-                            <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>{{row["open"]}}</td>
-                                <td>{{row["close"]}}</td>
-                                <td>{{row["finalpchange"]}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>-->
             <div class="interval">
                 <div class="intervals">
                     <input type="radio" id="tab1" name="intervals" checked="checked">
@@ -548,60 +426,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div>
-                {% for row in profile %}
-                <h2>{{row["symbol"]}} 30 Minutes Data</h2>
-                {% endfor %}
-                <div class="tableFixHead">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in thirtymindata %}
-                            <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>{{row["open"]}}</td>
-                                <td>{{row["close"]}}</td>
-                                <td>{{row["finalpchange"]}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div>
-                {% for row in profile %}
-                <h2>{{row["symbol"]}} 1 Hour Data</h2>
-                {% endfor %}
-                <div class="tableFixHead">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date:Time</th>
-                                <th>Open</th>
-                                <th>Close</th>
-                                <th>Change</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in onehourdata %}
-                            <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>{{row["open"]}}</td>
-                                <td>{{row["close"]}}</td>
-                                <td>{{row["finalpchange"]}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>-->
             <div class="ideas">
                 <h1>{% for row in profile %}{{row["symbol"]}}{% endfor %} Ideas</h1>
                 <div class="ideas-container">

@@ -40,6 +40,7 @@ h5 {
 	visibility: hidden;
 	opacity: 0;
 }
+
 .overlay:target {
 	visibility: visible;
 	opacity: 1;
@@ -51,7 +52,7 @@ h5 {
 	border-radius: 5px;
 	width: 30%;
 	position: relative;
-	transition: all 5s ease-in-out;
+	/*transition: all 5s ease-in-out;*/
 }
 .wrapper h2 {
 	margin-top: 0;
@@ -109,7 +110,7 @@ input[type="submit"] {
 @media screen and (max-width: 768px) {
     .wrapper {
 		width: 60%;
-		margin: 100px auto;
+		margin-left: 30%;
 	}
 
 	.wrapper .content {

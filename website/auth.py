@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from flask import Blueprint, render_template, request, flash, url_for, redirect, session, jsonify
 import sqlite3
 from datetime import datetime
@@ -22,6 +21,7 @@ b = None
 c = None
 d = None
 e = None
+
 
 def email_alert(subject, body, to):
     msg = EmailMessage()
@@ -159,7 +159,7 @@ def login():
 
         else: 
             session["email"] = username
-            return redirect(url_for("auth.user"))
+            return redirect(url_for("auth.assets"))
         
     return render_template("login.html")
 
@@ -334,8 +334,6 @@ def tutorial():
 
         cur.execute("select * from Tutorial")
         rows = cur.fetchall()
-
-        
 
         return render_template("tutorials.html", rows=rows)
     
@@ -1089,10 +1087,8 @@ def changepass():
                 email_alert("Did you changed your password?", "Hi "+email+". We noticed the password for your account was recently changed.", eaddress)
                 flash("Password Successfully changed.", category='s')
                 return redirect(url_for("auth.profile"))
-                
 
-
-        return render_template('change_pass.html', user=user)
+        return redirect(url_for("auth.profile", user=user))
 
     else:
         return redirect(url_for("auth.login"))
@@ -1599,7 +1595,6 @@ def fetchtutorials():
 
     else:
         return redirect(url_for("auth.login"))
-
 
 
 @auth.route('/logout')

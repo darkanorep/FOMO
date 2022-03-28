@@ -24,17 +24,6 @@ def index():
     return redirect(url_for("auth.login"))
 
 
-@views.route('/verify')
-def verify():
-
-    return render_template('verify.html')
-
-@views.route('/index_home')
-def index_home():
-
-    return render_template("index_home.html")
-
-
 @views.route('/assets/<symbol>')
 def assetinfo(symbol):
     

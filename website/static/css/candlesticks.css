@@ -1,16 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Mochiy+Pop+P+One&display=swap');
 
-body {
-    background: white;
-}
-
 a {
     text-decoration: none;
 }
 
-
 .container {
-    padding: 30px;
+    padding: 20px;
 }
 
 .align-center {
@@ -46,7 +41,7 @@ a {
 
 .card .symbol {
     text-indent: 20px;
-    font-size: 20px;
+    font-size: 18px;
     margin: 5px;
     text-align: left;
     color: white;
@@ -55,25 +50,18 @@ a {
 .card img {
     background-color: rgb(233, 234, 235);
     position: relative;
-    width: 300px;
+    width: 75%;
     height: 300px;
     overflow: hidden;
     border-radius: 20px;
 }
 
-@media screen and (max-width: 720px) {
 
-    .stock-container {
-        grid-template-columns: 1fr 1fr; 
-    }
-}
 
-@media screen and (max-width: 480px) {
-
+@media screen and (max-width: 728px) {
 
     .stock-container {
         grid-template-columns: 1fr; 
     }
 }
-
 

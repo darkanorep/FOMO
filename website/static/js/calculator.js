@@ -28,14 +28,14 @@ const config = {
 };
 
     // render init block
-const myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
+//const myChart = new Chart(
+  //document.getElementById('myChart'),
+  //config
+//);
 
 function updateChart(){
-  myChart.config.data.datasets[0].data = [investment_amount.value,interest_rate.value, years.value];
-  myChart.update();
+  //myChart.config.data.datasets[0].data = [investment_amount.value,interest_rate.value, years.value];
+  //myChart.update();
   
   calculator();
 };

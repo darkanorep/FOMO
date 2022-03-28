@@ -8,19 +8,6 @@
         <link rel="stylesheet" type="text/css" href="/static/css/update_profile.css">
     </head>
     <body>
-        <center>
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                messages %} {% for category, message in messages %} {% if category ==
-                'e' %}
-                <div id="alertdanger" role="alert">
-                  {{ message }}
-                </div>
-                {% else %}
-                <div id="alertsuccess" role="alert">
-                  {{ message }}
-                </div>
-            {% endif %} {% endfor %} {% endif %} {% endwith %}
-        </center>
         <div class="container">
             <div class="content">
                 {% for row in user %}
@@ -31,10 +18,33 @@
                     Email: {{row["email"]}}
                     <br>
                     Username: {{row["username"]}}
-                    <br>
-                    <a href="/changepass" style="text-decoration: none;">Change Password</a>
+                    <div class="box">
+                        <a class="button" href="#divOne" style="text-decoration: none;">Change Password</a>
+                    </div>
                 </div>
                 {% endfor %}
+                <!---->
+                <div class="overlay" id="divOne">
+                    <div class="wrapper">
+                        <h2>Change Password</h2><a class="close" href="#">&times;</a>
+                        <div class="content">
+                            <div class="container">
+                                <form method="post" action="/changepass">
+                                    {% for row in user %}
+                                    <input type="text" name="email" value="{{row["email"]}}" hidden></input>
+                                    {% endfor %}
+                                    <label >New Password</label>
+                                    <input type="password" class="password" name="password"></input>
+                                    <br>
+                                    <label>Confirm New Password</label>
+                                    <input type="password" class="password1" name="password1"></input>
+                                    <center><input type="submit" class="btn btn-success btn-block" value="Submit" onclick="notifySuccess()"></center>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
                 <hr>
                 <div class="cont">
                     <div class="con">
@@ -72,11 +82,5 @@
             </div>
         </div>
     </body>
-    <script>
-        document.getElementById("alertdanger").style.color = "red";
-    </script>
-    <script>
-        document.getElementById("alertsuccess").style.color = "green";
-    </script>
 </html>
 {% endblock %}

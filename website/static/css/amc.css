@@ -3,14 +3,61 @@ body {
     margin: 0;
 }
 
-hr {
+.container {
+    padding: 20px;
+}
+
+.container hr {
     margin: 10px;
     background: #7FE3CA;;
     border: 3px solid #7FE3CA;
     border-radius: 3px;
 }
-.container {
-    padding: 20px;
+
+.stock-info-container {
+    display: grid;
+    grid-template-columns: .1fr 1fr;
+    grid-template-areas: 
+        "stock-logo stock-symbol"
+        "stock-logo stock-name"
+}
+
+.stock-symbol {
+    grid-area: stock-symbol;
+
+}
+
+.stock-name {
+    grid-area: stock-name;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    color: #3c3d41;
+}
+
+.price {
+    display: grid;
+    padding-top: 15px;
+    grid-template-columns: .1fr 1fr;
+    grid-column-gap: 20px;
+    grid-template-areas:
+        "current-price current-change"
+        "closed-time closed-time";
+}
+
+.current-price {
+    grid-area: current-price;
+
+}
+
+.current-change {
+    grid-area: current-change;
+    padding-top: 4px;
+
+}
+
+.closed-time {
+    grid-area: closed-time;
 }
 
 
@@ -33,8 +80,10 @@ hr {
 
 .interpretation {
     padding-top: 40px;
-    text-align: center;
+    text-align: left;
+    padding-bottom: 20px;
 }
+
 
 .info-content {
     border: 2px solid black;
@@ -55,17 +104,10 @@ hr {
 
 
 .stock-logo {
-    margin: 10px;
-    margin-top: 10px;
-    width: 100px;
-    height: 100px;
-    align-items: center;
+    grid-area: stock-logo;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
-    display: inline-flex;
-    font-style: normal;
-    font-weight: 700;
-    justify-content: center;
-    float: left;
 }
 
 .img {
@@ -76,13 +118,12 @@ hr {
     border-radius: 60px;
 }
 
-
 .prediction-wrapper img {
     padding: 10px;
     background: #FFE8B1;
     border-radius: 10px;
     height: 100%;
-    width: 400px;
+    width: 60%;
 }
 
 
@@ -355,4 +396,82 @@ th {
     background: #6FB2D2;
     border: solid #85C88A 3px;
     border-radius: 20px;
+}
+
+
+@media screen and (max-width: 728px) {
+
+    .profile-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 10px;
+        grid-template-areas:
+            "profile"
+            "info-container"
+    }
+    
+    .profile {
+        grid-area: profile;
+        margin: 15px
+    }
+    
+    .info-container {
+        grid-area: info-container;
+        margin: 15px;
+    
+    }
+
+    .layer1 {
+        position: relative;
+        padding: 15px;
+        grid-area: layer1;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+        grid-template-areas:
+            "wrapper-24hr "
+            "wrapper-1mo" 
+            "wrapper-3mo"
+    }
+    
+    .wrapper-24hr {
+        text-align: center;
+        grid-area: wrapper-24hr;
+    }
+    
+    .wrapper-1mo {
+        text-align: center;
+        grid-area: wrapper-1mo;
+    
+    }
+    
+    .wrapper-3mo {
+        text-align: center;
+        grid-area: wrapper-3mo;
+    }
+
+    .layer2 {
+        position: relative;
+        padding: 15px;
+        grid-area: layer2;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 30px;
+        grid-template-areas:
+            "wrapper-6mo "
+            "wrapper-1yr"
+    }
+    
+    .wrapper-6mo {
+        text-align: center;
+        grid-area: wrapper-6mo;
+    
+    }
+    
+    .wrapper-1yr {
+        text-align: center;
+        grid-area: wrapper-1yr;
+    
+    }
 }

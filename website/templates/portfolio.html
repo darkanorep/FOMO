@@ -6,8 +6,7 @@
 <html>
     <head>
         <style>
-
-            .wrapper {
+            .container {
                 padding: 20px;
             }
 
@@ -61,6 +60,32 @@
 
             }
 
+            form {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                padding-bottom: 10px;
+                padding-top: 10px;
+            }
+
+            form label {
+                text-transform: uppercase;
+                font-weight: 500;
+            }
+
+            input[type=text], select, input {
+                padding: 5px;
+                width: 50%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            input[type="submit"] {
+                background-color: #1c5003;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+            }
+
             @media (max-width: 768px) {
 
                 .positive:before { content: "+"; color: 
@@ -99,43 +124,65 @@
                     font-size: 14px;
                     text-align: left;
                 }
+
+                form {
+                    display: grid;
+                    grid-template-columns: 1fr;
+
+                }
+
+                input[type=text], select, input {
+                    padding: 5px;
+                    width: 100%;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+
+                input[type="submit"] {
+                    margin-top: 15px;
+                    background-color: #1c5003;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                }
+                
+
             }
         </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
-        <center>
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                messages %} {% for category, message in messages %} {% if category ==
-                'e' %}
-                <div id="alertdanger" role="alert">
-                  {{ message }}
-                </div>
-                {% else %}
-                <div id="alertsuccess" role="alert">
-                  {{ message }}
-                </div>
-            {% endif %} {% endfor %} {% endif %} {% endwith %}
-        </center>
-        <div class="wrapper">
+        <div class="container">
             <h2>Portfolio Manager</h2>
-            <form method="post" action="/addportfolio">
-                <section>
-                    <label>Stocks</label>
-                    <select name="search_filter" id="search_filter" class="select">
-                        <option value="">-Select Stocks-</option>';
-                        {% for row in symbol %}
-                            <option value="{{row["symbol"]}}">{{row["symbol"]}}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="hidden" name="symbol" id="hidden_value" required/>
-                </section>
-                <label>Quantity</label>
-                <input id="quantity" type="number" name="quantity" required>
-                <label>Initial Value</label>
-                <input id="initial_value" type="float" name="initial_value" required>
-                <button type="submit">add</button>
-            </form>
+            <div>
+                <div class="content">
+                    <div class="wrapper">
+                        <form method="post" action="/addportfolio">
+                            <section>
+                                <label>Stocks</label>
+                                <select name="search_filter" id="search_filter" class="select">
+                                    <option value="">-Select Stocks-</option>';
+                                    {% for row in symbol %}
+                                        <option value="{{row["symbol"]}}">{{row["symbol"]}}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="hidden" name="symbol" id="hidden_value" required/>
+                            </section>
+                            <div>
+                                <label>Quantity</label>
+                                <input id="quantity" type="number" name="quantity" required>
+                            </div>
+                            <div>
+                                <label>Initial Value</label>
+                                <input id="initial_value" type="float" name="initial_value" required>
+                            </div>
+                            <div>
+                                <input type="submit" name="submit" class="btn btn-success" value="Add"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!---->
             <div class="center">
                 <div class="table-container">
                     <table id="portfolio" class="table">
@@ -179,12 +226,6 @@
             </div>
         </div>
     </body>
-    <script>
-        document.getElementById("alertdanger").style.color = "red";
-    </script>
-    <script>
-        document.getElementById("alertsuccess").style.color = "green";
-    </script>
     <script type="text/javascript" src="../static/js/portfolio.js" ></script>
 </html>
 {% endblock %}

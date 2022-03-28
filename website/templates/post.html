@@ -152,19 +152,6 @@
     </style>
 </head>
     <body>
-        <center>
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                messages %} {% for category, message in messages %} {% if category ==
-                'e' %}
-                <div id="alertdanger" role="alert">
-                  {{ message }}
-                </div>
-                {% else %}
-                <div id="alertsuccess" role="alert">
-                  {{ message }}
-                </div>
-            {% endif %} {% endfor %} {% endif %} {% endwith %}
-        </center>
         <div class="container">
             <a href="{{url_for('auth.community')}}"><i class="fi fi-br-angle-left"></i>Back</a>
             <div class="wrapper">
@@ -213,11 +200,5 @@
             </div>
         </div>
     </body>
-    <script>
-        document.getElementById("alertdanger").style.color = "red";
-    </script>
-    <script>
-        document.getElementById("alertsuccess").style.color = "green";
-    </script>
 </html>
 {% endblock %}

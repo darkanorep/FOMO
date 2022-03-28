@@ -6,22 +6,8 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="../static/css/community.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
     <body>
-        <center>
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if
-                messages %} {% for category, message in messages %} {% if category ==
-                'e' %}
-                <div id="alertdanger" role="alert">
-                  {{ message }}
-                </div>
-                {% else %}
-                <div id="alertsuccess" role="alert">
-                  {{ message }}
-                </div>
-            {% endif %} {% endfor %} {% endif %} {% endwith %}
-        </center>
         <div class="main">
             <div class="box">
                 <a class="button" href="#divOne"><textarea type="text" placeholder="What's on your mind?" disabled></textarea></a>
@@ -64,12 +50,6 @@
             </section>
         </div>
     </body>
-    <script>
-        document.getElementById("alertdanger").style.color = "red";
-    </script>
-    <script>
-        document.getElementById("alertsuccess").style.color = "green";
-    </script>
     <script>
         $('#category_filter').change(function(){
                 $('#category').val($('#category_filter').val());
