@@ -1,20 +1,14 @@
 from flask import Blueprint, render_template, request, flash, url_for, redirect, session, jsonify
-import sqlite3
+import sqlite3, json, bs4, os, requests, time, smtplib, uuid
 from datetime import datetime
-import json, bs4
-import os
 from bs4 import BeautifulSoup
-import requests
-import time
-import smtplib
 from email.message import EmailMessage
 from random import randint
-import uuid
-
 
 auth = Blueprint('auth', __name__)
 views = Blueprint('views',__name__)
 otp=randint(000000,999999)
+
 
 a = None
 b = None

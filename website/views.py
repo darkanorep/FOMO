@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, redirect, session, url_for, request, jsonify
-import sqlite3, csv
+import sqlite3, csv, json, plotly, requests, bs4
 import numpy as np
 import pandas as pd
 import yfinance as yf
 import plotly.graph_objs as go
 from plotly.subplots import  make_subplots
-import json, plotly, requests, bs4
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score

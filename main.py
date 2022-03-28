@@ -1,16 +1,12 @@
-from click import DateTime
 from website import create_app
 from flask import request, redirect, flash, url_for, render_template, session
-from flask_mail import Mail, Message
-import json
-import os
-import sqlite3
+import json, os, sqlite3
 from datetime import datetime
-
 
 app = create_app()
 app.config['UPLOAD_FOLDER'] = "website/static"
 app.config['COMMUNITY_FOLDER'] = "website/static/community"
+
 
 @app.route('/uploadtutorial', methods=["POST","GET"])
 def uploadtutorial():
@@ -779,7 +775,6 @@ def editpost(id):
         return redirect(url_for("auth.login"))
 
 
-
 if __name__ == '__main__':
-
-    app.run(debug=True  )
+    app.run(debug=True, threaded=True, processes=1)
+    #socketio.run(app, debug=True)
