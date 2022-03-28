@@ -19,8 +19,6 @@ def create_app():
 
     return app
 
-
-
 #user_db.execute("create Table User(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE NOT NULL, password TEXT NOT NULL, password1 TEXT NOT NULL)")    
 #print('Table Created')
 
