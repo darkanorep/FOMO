@@ -117,7 +117,7 @@
                         </script>
                     </div>
                     <hr>
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>1min</th>
@@ -129,11 +129,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td id ="1min">{% for row in onemin %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="5min">{% for row in fivemin %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="1hr">{% for row in hour %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="1d">{% for row in phour %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="5d">{% for row in fivedays %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="1min" data-label=1min>{% for row in onemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="5min" data-label=5min>{% for row in fivemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="1hr" data-label=1hr>{% for row in hour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="1d" data-label=24hr>{% for row in phour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                <td id ="5d" data-label=7d>{% for row in fivedays %}{{row["finalpchange"]}}%{% endfor %}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -149,7 +149,7 @@
             <div class="seven-wrapper">
                 <div class="seven">
                     <h3>7 day Price History of {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD</h3>
-                    <table>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -161,10 +161,10 @@
                         <tbody>
                             {% for row in hdata %}
                             <tr>
-                                <td>{{row["date"]}}</td>
-                                <td>${{row["close"]}}</td>
-                                <td>{{row["change"]}}</td>
-                                <td>{{row["finalpchange"]}}%</td>
+                                <td data-label=Date>{{row["date"]}}</td>
+                                <td data-label={% for row in profile %}{{row["symbol"]}}{% endfor %}/USD>${{row["close"]}}</td>
+                                <td data-label=24 hr Changes>{{row["change"]}}</td>
+                                <td data-label=Change %>{{row["finalpchange"]}}%</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -298,7 +298,7 @@
                     <label for="tab1">1 Minute</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -310,10 +310,10 @@
                                 <tbody>
                                     {% for row in onemindata %}
                                     <tr>
-                                        <td>{{row["date"]}}</td>
-                                        <td>{{row["open"]}}</td>
-                                        <td>{{row["close"]}}</td>
-                                        <td>{{row["finalpchange"]}}</td>
+                                        <td data-label=Date:Time>{{row["date"]}}</td>
+                                        <td data-label=Open>{{row["open"]}}</td>
+                                        <td data-label=Close>{{row["close"]}}</td>
+                                        <td data-label=Change>{{row["finalpchange"]}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -324,7 +324,7 @@
                     <label for="tab5">5 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -336,10 +336,10 @@
                                 <tbody>
                                     {% for row in fivemindata %}
                                     <tr>
-                                        <td>{{row["date"]}}</td>
-                                        <td>{{row["open"]}}</td>
-                                        <td>{{row["close"]}}</td>
-                                        <td>{{row["finalpchange"]}}</td>
+                                        <td data-label=Date:Time>{{row["date"]}}</td>
+                                        <td data-label=Open>{{row["open"]}}</td>
+                                        <td data-label=Close>{{row["close"]}}</td>
+                                        <td data-label=Change>{{row["finalpchange"]}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -350,7 +350,7 @@
                     <label for="tab15">15 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -362,10 +362,10 @@
                                 <tbody>
                                     {% for row in fifteendata %}
                                     <tr>
-                                        <td>{{row["date"]}}</td>
-                                        <td>{{row["open"]}}</td>
-                                        <td>{{row["close"]}}</td>
-                                        <td>{{row["finalpchange"]}}</td>
+                                        <td data-label=Date:Time>{{row["date"]}}</td>
+                                        <td data-label=Open>{{row["open"]}}</td>
+                                        <td data-label=Close>{{row["close"]}}</td>
+                                        <td data-label=Change>{{row["finalpchange"]}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -376,7 +376,7 @@
                     <label for="tab30">30 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -388,10 +388,10 @@
                                 <tbody>
                                     {% for row in thirtymindata %}
                                     <tr>
-                                        <td>{{row["date"]}}</td>
-                                        <td>{{row["open"]}}</td>
-                                        <td>{{row["close"]}}</td>
-                                        <td>{{row["finalpchange"]}}</td>
+                                        <td data-label=Date:Time>{{row["date"]}}</td>
+                                        <td data-label=Open>{{row["open"]}}</td>
+                                        <td data-label=Close>{{row["close"]}}</td>
+                                        <td data-label=Change>{{row["finalpchange"]}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -402,7 +402,7 @@
                     <label for="tab1hr">1 Hour</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table>
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -414,10 +414,10 @@
                                 <tbody>
                                     {% for row in onehourdata %}
                                     <tr>
-                                        <td>{{row["date"]}}</td>
-                                        <td>{{row["open"]}}</td>
-                                        <td>{{row["close"]}}</td>
-                                        <td>{{row["finalpchange"]}}</td>
+                                        <td data-label=Date:Time>{{row["date"]}}</td>
+                                        <td data-label=Open>{{row["open"]}}</td>
+                                        <td data-label=Close>{{row["close"]}}</td>
+                                        <td data-label=Change>{{row["finalpchange"]}}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

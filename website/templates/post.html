@@ -13,7 +13,7 @@
         }
 
         .container {
-            padding: 20px;
+            padding: 2rem 7%;
         }
 
         .wrapper {
@@ -29,7 +29,7 @@
         }
 
 
-        hr {
+        .wrapper hr {
             margin: 10px;
             background: black;
             border: 3px solid rgb(0, 0, 0);
@@ -37,10 +37,10 @@
         }
 
         .tag {
+            color: rgb(78, 147, 234);
             grid-area: tag;
-            padding-bottom: 20px;
-            font-weight: 400;
             font-size: 20px;
+            font-weight: bold;
         }
 
         .user {
@@ -53,6 +53,7 @@
             grid-area: user;
             text-align: left;
             padding-top: 20px;
+            color: #4c4c4c;
         }
 
         .img {
@@ -123,7 +124,7 @@
             padding-left: 15px;
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 780px) {
             .comment{
                 width: 100%;
             }
@@ -164,7 +165,7 @@
                     </div>
                     <br>
                     <div class="date">
-                        {{row["date"]}}
+                        &bull;{{row["date"]}}
                     </div>
                     <br>
                     <div class="idea">

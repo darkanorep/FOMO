@@ -4,14 +4,16 @@ body {
     background: linear-gradient(111deg, rgb(196, 240, 170) -60.93%, rgb(220, 240, 252) 63.25%, rgb(245, 232, 172) 180.51%), rgb(247, 251, 255);
 }
 
-a {
-    text-decoration: none;
-}
 
 .container{
-    padding: 20px;
+    padding: 2rem 7%;
 }
 
+h1 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
 .align-center {
     text-align: center;
@@ -71,6 +73,21 @@ a {
     height: 200px;
     overflow: hidden;
     border-radius: 20px;
+    
+}
+
+.container a {
+    height: 100%;
+    background-color: green;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 8px;
+    color: white;
+}
+
+.container a:hover {
+    border-radius: 15px;
+    transition: .5s
     
 }
 

@@ -8,10 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <a href="{{url_for('auth.handbook')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+        <a class="button" href="{{url_for('auth.handbook')}}" role="button"><i class='bx bx-arrow-back'></i>
+            <span>Back</span>
+        </a>
         <section class="stock-list">
             <div class="header">
-                <center><h1>Pattern</h1></center>
+                <center><h1>Candlestick Patterns</h1></center>
             </div>
             <select name="search_filter" id="search_filter" class="select">
                 <option value="">All</option>';

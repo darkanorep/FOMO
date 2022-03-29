@@ -19,15 +19,19 @@
 
         select {
             width: 100%;
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            font-size: 20px;
+            padding: 5px;
+            font-weight: bold;
         }
 
         .container {
-            padding: 20px;
+            padding: 2rem 7%; 
         }
         
         .wrapper{
             margin: 15px;
-            background-color: rgb(255, 255, 255);
+            background: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
             border-radius: 32px;
             box-shadow: rgb(25 19 38 / 10%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
             color: rgb(22, 73, 137);
@@ -45,7 +49,7 @@
         }
         #tutorials{
             margin: 15px;
-            background-color: rgb(255, 255, 255);
+            background: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
             border-radius: 32px;
             box-shadow: rgb(25 19 38 / 10%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
             color: rgb(22, 73, 137);
@@ -75,20 +79,33 @@
         }
 
         h1 {
-            background: linear-gradient(111.68deg, rgb(242, 236, 242) 0%, rgb(232, 242, 246) 100%);
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
             padding: 24px;
-        }
-
-        a {
-            text-decoration: none;
+            font-size: 30px;
         }
         
+        .container a {
+            height: 100%;
+            background-color: green;
+            border-radius: 5px;
+            text-decoration: none;
+            padding: 8px;
+            color: white;
+        }
+
+        .container a:hover {
+            border-radius: 15px;
+            transition: .5s
+            
+        }
         
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="{{url_for('auth.handbook')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+        <a class="button" href="{{url_for('auth.handbook')}}" role="button"><i class='bx bx-arrow-back'></i>
+            <span>Back</span>
+        </a>
         <div class="wrapper">
             <section class="stock-list">
                 <div class="header">

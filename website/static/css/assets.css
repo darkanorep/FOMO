@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Mochiy+Pop+P+One&display=swap');
 
-body {
-    background: white;
+
+h1 {
+    padding: 24px;
+    font-size: 30px;
+    color: rgb(22, 73, 137);
+}
+
+select {
+    background: linear-gradient(120deg, #fafafa 0%, #c7f7cb 100%);
+    font-size: 12px;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .container {
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-        "title"
-        "select"
-        "stock-container"     
+    padding: 2rem 7%;   
 }
 
-.stock-list {
-    padding: 20px;
-}
 
 .stock-list .card {
     background-color: #397d54;
@@ -53,22 +54,13 @@ body {
 }
 
 .more-button {
-    -webkit-box-align: center;
     align-items: center;
     border: 0px;
     border-radius: 16px;
     box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: inherit;
     font-size: 16px;
     font-weight: 600;
-    -webkit-box-pack: center;
-    justify-content: center;
     letter-spacing: 0.03em;
-    line-height: 1;
-    opacity: 1;
-    outline: 0px;
     transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
     height: 48px;
     padding: 0px 24px;

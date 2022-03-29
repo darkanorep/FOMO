@@ -5,7 +5,7 @@ body {
 }
 
 .main {
-    padding: 20px;
+    padding: 2rem 7%; 
 }
 
 
@@ -23,6 +23,13 @@ h5 {
 	font-size: 20px;
 	width: 50%;
 	line-height: 1.7;
+}
+
+select {
+    background: linear-gradient(120deg, #fafafa 0%, #c7f7cb 100%);
+    font-size: 12px;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .box {
@@ -92,12 +99,19 @@ input[type=text], select, textarea {
 	width: 100%;
 	padding: 12px;
 	border: 1px solid #ccc;
+	background: white;
 	border-radius: 4px;
 	box-sizing: border-box;
 	margin-top: 6px;
 	margin-bottom: 16px;
 	resize: vertical;
 }
+
+input[type=text], select, textarea:hover {
+	border: 1px solid rgb(0, 0, 0);
+	transition: .2s;
+}
+
 input[type="submit"] {
     margin-top: 20px;
 	background-color: #1c5003;

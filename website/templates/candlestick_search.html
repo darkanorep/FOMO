@@ -1,13 +1,9 @@
 {% for row in candlestick %}
-<div class="card">
+<div class="inner-offer">
     <br>
-    <div class="title">{{row["name"]}}</div>
+    <h2 class="title">{{row["name"]}}</h2>
     <br>
-    <div>
-        <img class="image" src="/static/{{row['image']}}">
-    </div>
-    <div class="symbol">
-        <p>{{row["description"]}}</p>
-    </div>
+    <img class="image" src="/static/{{row['image']}}">
+    <p class="symbol">{{row["description"]}}</p>
 </div>
 {% endfor %} 

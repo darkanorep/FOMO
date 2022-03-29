@@ -4,11 +4,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="/static/css/candlesticks.css"></link>
+    <style>
+        .container {
+            padding: 2rem 7%;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .main-offer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .inner-offer {
+            background: white;
+            border-radius: 20px;
+            flex: 1 1 300px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        }
+
+        .inner-offer img {
+            width: 150px;
+            height: 100%;
+        }
+
+        .inner-offer h2 {
+            font-size: 20px;
+            margin: 1rem 0;
+        }
+
+        .inner-offer p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .inner-offer a {
+            padding: .5rem;
+            background: #ed358d;
+            border-radius: 15px;
+            font-size: 1rem;
+            color: white;
+            transition: .5s;
+        }
+
+        .container a {
+            height: 100%;
+            background-color: green;
+            border-radius: 5px;
+            text-decoration: none;
+            padding: 8px;
+            color: white;
+        }
+
+        .container a:hover {
+            border-radius: 15px;
+            transition: .5s
+            
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <a href="{{url_for('auth.handbook')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+        <a class="button" href="{{url_for('auth.handbook')}}" role="button"><i class='bx bx-arrow-back'></i>
+            <span>Back</span>
+        </a>
         <section class="stock-list">
             <div class="header">
                 <center><h1>Candlestick</h1></center>
@@ -22,7 +90,7 @@
             <input type="hidden" name="hidden_value" id="hidden_value" />
             <br>
             <br>
-            <table class="stock-container">
+            <table class="main-offer">
                 
             </table>
         </section>
