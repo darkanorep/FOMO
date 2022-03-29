@@ -1,6 +1,5 @@
 .img {
-    height: 100px;
-    width: 200px;
+    width: 100%;
     box-shadow: 5px 5px 15px;
 }
 body {
@@ -8,6 +7,10 @@ body {
 }
 * {
     box-sizing: border-box
+}
+
+.container {
+    padding-top: 50px;
 }
 
 .header {
@@ -18,14 +21,14 @@ body {
     font-weight: 500;
     color: #272346;
 }
+
+
 .table {
-    border-collapse: collapse;
-    border: 2px solid rgb(0, 0, 0);      
+    border-collapse: collapse;      
 }
 
 .table td,.table th {
-    padding: 12px 15px ;
-    border: 2px solid rgb(0, 0, 0);   
+    border: 1px solid rgb(0, 0, 0);   
     text-align: center;
     font-size: 16px;
 }
@@ -41,50 +44,31 @@ body {
 
 .delete-button {
     margin-top: 10px;
-    -webkit-box-align: center;
     align-items: center;
     border: 0px;
     border-radius: 16px;
     box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
-    cursor: pointer;
     display: inline-flex;
-    font-family: inherit;
-    font-size: 16px;
     font-weight: 600;
-    -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
-    line-height: 1;
-    opacity: 1;
-    outline: 0px;
-    transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
     height: 48px;
-    padding: 0px 24px;
+    /* padding: 0px 24px; */
     background-color: #af5353;
     color: rgb(255, 255, 255);
     width: 100%;
 }
 
 .edit-button {
-    -webkit-box-align: center;
     align-items: center;
     border: 0px;
     border-radius: 16px;
     box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
-    cursor: pointer;
     display: inline-flex;
-    font-family: inherit;
-    font-size: 16px;
     font-weight: 600;
-    -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
-    line-height: 1;
-    opacity: 1;
-    outline: 0px;
-    transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
     height: 48px;
-    padding: 0px 24px;
     background-color: rgb(93, 170, 214);
     color: rgb(255, 255, 255);
     width: 100%;
@@ -92,26 +76,17 @@ body {
 
 .archive-button {
     margin-top: 10px;
-    -webkit-box-align: center;
     align-items: center;
     border: 0px;
     border-radius: 16px;
     box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
-    cursor: pointer;
     display: inline-flex;
-    font-family: inherit;
-    font-size: 16px;
     font-weight: 600;
-    -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
-    line-height: 1;
-    opacity: 1;
-    outline: 0px;
-    transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
     height: 48px;
     padding: 0px 24px;
-    background-color: #28a745;;
+    background-color: #28a745;
     color: rgb(255, 255, 255);
     width: 100%;
 }
@@ -135,9 +110,9 @@ body {
     transform: translateY(4px);
 }
 
+@media screen and (max-width: 768px) {
 
-@media (max-width: 500px) {
-    .table thead {
+    .table th {
         display: none;
     }
 
@@ -145,23 +120,28 @@ body {
         display: block;
         width: 100%;
     }
+
     .table tr {
         margin-bottom: 15px;
     }
-    .table td{
+    
+    .table tbody tr td {
         text-align: right;
         padding-left: 50%;
-        text-align: right;
         position: relative;
     }
-    .table td::before{
+
+    .table td::before {
         content: attr(data-label);
         position: absolute;
         left: 0;
         width: 50%;
         padding-left: 15px;
-        font-size: 15px;
         font-weight: bold;
+        font-size: 14px;
         text-align: left;
     }
+
 }
+
+

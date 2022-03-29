@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
   <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -12,142 +14,145 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-    <meta charset="UTF-8">
-    <!--<title> Drop Down Sidebar Menu | CodingLab </title>-->
-    <link rel="stylesheet" href="../static/css/user.css">
-    <!-- Boxiocns CDN Link -->
+    <link rel="stylesheet" href="../static/css/base.css">
+    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <script src="https://kit.fontawesome.com/2790f8327e.js" crossorigin="anonymous"></script>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Admin Panel{% endblock %}</title>
-  </head>
-  <body>
-    <div class="sidebar close">
-      <ul class="nav-links">
-        <li>
-          <a href="{{url_for('auth.admin_tutorial')}}">
-            <i class='bx bx-book-alt' ></i>
-            <span class="link_name">Tutorials</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_tutorial')}}">Tutorials</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="{{url_for('auth.admin_pattern')}}">
-            <i class='bx bx-bar-chart-alt-2' ></i>
-            <span class="link_name">Patterns</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_pattern')}}">Patterns</a></li>
-          </ul>
-        </li>
-
-        <li>
-          <a href="{{url_for('auth.admin_term')}}">
-            <i class='bx bxs-terminal' ></i>
-            <span class="link_name">Terms</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_term')}}">Terms</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="{{url_for('auth.admin_candlestick')}}">
-            <i class='bx bx-bar-chart-alt'></i>
-            <span class="link_name">Candlesticks</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_candlestick')}}">Candlesticks</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="{{url_for('auth.admin_stocks')}}">
-            <i class='bx bx-line-chart' ></i>
-            <span class="link_name">Stocks</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_stocks')}}">Stocks</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="{{url_for('auth.admin_broker')}}">
-            <i class='bx bx-book-content'></i>
-            <span class="link_name">Stock Broker</span>
-          </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="{{url_for('auth.admin_broker')}}">Stock Broker</a></li>
-          </ul>
-        </li>
-        <li>
-      <div class="profile-details">
-        <div class="">
-          <!--<img src="image/profile.jpg" alt="profileImg">-->
-        </div>
-        <a href="/logout">
-        <i class='bx bx-log-out' ></i>
-      </a>
-      </div>
-    </li>
-  </ul>
+   </head>
+<body onload="myFunction()">
+  <div id="loading"></div>
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bx-candles' ></i>
+        <div class="logo_name">FOMO: Admin</div>
+        <i class='bx bx-menu' id="btn" ></i>
     </div>
-    <section class="home-section">
-      <div class="home-content">
-        <i class='bx bx-menu' ></i>
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-          messages %} {% for category, message in messages %} {% if category ==
-          'e' %}
-          <div class="alert alert-danger alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          {% else %}
-          <div class="alert alert-success alter-dismissable fade show" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          {% endif %} {% endfor %} {% endif %} {% endwith %}
-        <div>{% block content %} {% endblock %}</div>
+    <ul class="nav-list">
+      <hr>
+      <li>
+       <a href="{{url_for('auth.admin_tutorial')}}">
+        <i class='bx bx-book-alt' ></i>
+         <span class="links_name">Tutorials</span>
+       </a>
+       <span class="tooltip">Tutorials</span>
+      </li>
+      <li>
+       <a href="{{url_for('auth.admin_pattern')}}">
+        <i class='bx bx-bar-chart-alt-2' ></i>
+         <span class="links_name">Patterns</span>
+       </a>
+       <span class="tooltip">Patterns</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.admin_term')}}">
+          <i class='bx bxs-terminal' ></i>
+          <span class="links_name">Terms</span>
+        </a>
+        <span class="tooltip">Terms</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.admin_candlestick')}}">
+          <i class='bx bx-bar-chart-alt'></i>
+          <span class="links_name">Candlesticks</span>
+        </a>
+       <span class="tooltip">Candlesticks</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.admin_stocks')}}">
+          <i class='bx bx-line-chart' ></i>
+          <span class="links_name">Stocks</span>
+        </a>
+       <span class="tooltip">Stocks</span>
+      </li>
+      <li>
+        <a href="{{url_for('auth.admin_broker')}}">
+          <i class='bx bx-book-content'></i>
+          <span class="links_name">Stock Broker</span>
+        </a>
+       <span class="tooltip">Stock Broker</span>
+      </li>
+      <li class="profile">
+         <li class="profile">
+          <a href="/logout">
+            <i class='bx bx-power-off' ></i>
+            <span class="links_name">Logout</span>
+          </a>
+      </li>
+     </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      'e' %}
+      <div class="alert alert-danger alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </section>
-      <script
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"
-      ></script>
-  
-      <script
-        type="text/javascript"
-        src="{{ url_for('static', filename='index.js') }}"
-      ></script>
-    <script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-      arrow[i].addEventListener("click", (e)=>{
-     let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-     arrowParent.classList.toggle("showMenu");
-      });
-    }
+      {% else %}
+      <div class="alert alert-success alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
+      <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+      {% block content %} {% endblock %}
+  </section>
+
+  <script>
     let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", ()=>{
-      sidebar.classList.toggle("close");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", ()=>{
+      sidebar.classList.toggle("open");
+      menuBtnChange();//calling the function(optional)
     });
-    
-    </script>
-  </body>
+
+    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+      sidebar.classList.toggle("open");
+      menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+    if(sidebar.classList.contains("open")){
+      closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+    }else {
+      closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+    }
+    }
+  </script>
+  <script>
+    var preloader = document.getElementById("loading");
+      // window.addEventListener('load', function(){
+      // 	preloader.style.display = 'none';
+      // 	})
+  
+    function myFunction(){
+      preloader.style.display = 'none';
+    };
+  </script>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+</body>
 </html>
