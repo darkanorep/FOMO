@@ -564,6 +564,7 @@ def admin_tutorial():
     else:
         return redirect(url_for("auth.login"))
 
+
 @auth.route('/delete_tutorial/<int:id>')
 def delete_tutorial(id):
     if "admin" in session:
@@ -1589,6 +1590,39 @@ def fetchtutorials():
 
     else:
         return redirect(url_for("auth.login"))
+
+
+@auth.route('/dashboard')
+def dashboard():
+    if "admin" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("SELECT COUNT (*) FROM User")
+        user = cur.fetchone()[0]
+
+        cur.execute("SELECT COUNT (*) FROM Stocks")
+        stocks = cur.fetchone()[0]
+
+        cur.execute("SELECT COUNT (*) FROM Broker")
+        broker = cur.fetchone()[0]
+
+        cur.execute("SELECT COUNT (*) FROM Blog")
+        blog = cur.fetchone()[0]
+
+        cur.execute("SELECT * FROM Blog ORDER BY date desc LIMIT 7")
+        rblog = cur.fetchall()
+
+        cur.execute("SELECT * FROM Stocks ORDER BY id desc LIMIT 6")
+        rstocks = cur.fetchall()
+        
+        return render_template("dashboard.html", user=user, stocks=stocks, broker=broker, blog=blog, rblog=rblog, rstocks=rstocks)
+        
+    else:
+        return redirect(url_for("auth.login"))
+
 
 
 @auth.route('/logout')

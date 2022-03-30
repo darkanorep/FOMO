@@ -6,11 +6,18 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h2 class="header">System Patterns</h2>
         <a class="btn btn-success" href=/archived_pattern>Go to Archived</a>
+        <br>
+        <br>
         <table class="table">
             <thead >
                 <tr>
@@ -21,8 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in rows %}
-                        
+                {% for row in rows %}               
                 <tr style="text-align:center">
                     <td data-label=Name>{{row["name"]}}</td>  
                     <td data-label=Meaning>

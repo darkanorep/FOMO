@@ -6,39 +6,46 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h2 class="header" >Archived Data</h2>
-    <a class="btn btn-success" href=/admin_term>Go to Main</a></p>
-    <table class="table">
-        <thead >
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in rows %}         
-                <tr style="text-align:center">
-                    <td>{{row["name"]}}</td>  
-                    <td>
-                        <p>{{row["description"]}}</p>
-                    </td>
-                    <td> <img class = "img" id="img" src="/static/{{row['image']}}"></td>
-                    <td>
-                        <a href="{{url_for('termrestore',name=row['name'])}}" style="text-decoration: none;">
-                            <button class="edit-button">Restore<i class='bx bxs-archive-out'></i></button>
-                        </a>
-                        <a href="{{url_for('auth.delete_archivedterm',name=row['name'])}}" style="text-decoration: none;">
-                            <button class="delete-button">Delete<i class='bx bxs-trash-alt'></i></button>
-                        </a>
-                    </td>
+    <div class="container">
+        <h2 class="header" >Archived Data</h2>
+        <a class="btn btn-success" href=/admin_term>Go to Main</a></p>
+        <table class="table">
+            <thead >
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    </body>
+            </thead>
+            <tbody>
+                {% for row in rows %}         
+                    <tr style="text-align:center">
+                        <td data-label=Name>{{row["name"]}}</td>  
+                        <td data-label=Description>
+                            <p>{{row["description"]}}</p>
+                        </td>
+                        <td data-label=Image> <img class = "img" id="img" src="/static/{{row['image']}}"></td>
+                        <td data-label=Action>
+                            <a href="{{url_for('termrestore',name=row['name'])}}" style="text-decoration: none;">
+                                <button class="edit-button">Restore<i class='bx bxs-archive-out'></i></button>
+                            </a>
+                            <a href="{{url_for('auth.delete_archivedterm',name=row['name'])}}" style="text-decoration: none;">
+                                <button class="delete-button">Delete<i class='bx bxs-trash-alt'></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
 </html>
 {% endblock %}
