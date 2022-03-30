@@ -140,7 +140,7 @@ def login():
         if request.form.get("username") == "admin@admin" and request.form.get("password") == "admin":
             session["admin"] = username
             
-            return redirect(url_for("auth.admin_tutorial"))
+            return redirect(url_for("auth.dashboard"))
 
         
         statement = f"SELECT * FROM user WHERE username='{username}' AND password='{password}';"
