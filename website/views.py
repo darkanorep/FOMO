@@ -443,7 +443,7 @@ def assetinfo(symbol):
             #--------------------------------------------------------------------------------
 
             fig = go.Figure()
-            df = pd.read_sql_query("SELECT * FROM ChartData where symbol = '"+symbol+"' and interval='1d';","sqlite:////Users/Jerome/Desktop/FOMO/system.db")
+            df = pd.read_sql_query("SELECT * FROM ChartData where symbol = '"+symbol+"' and interval='1d';",con=sqlite3.connect("system.db"))
 
 
             fig = make_subplots(specs=[[{"secondary_y":True}]])
