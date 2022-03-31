@@ -542,6 +542,9 @@ def assetinfo(symbol):
         previousclose = find_all_div.find_all("td", {"class":["Ta(end) Fw(600) Lh(14px)"]})
         previousclose[0].text
 
+        cur.execute("DELETE FROM ChartData WHERE date = (SELECT MAX(date) FROM ChartData where symbol=? and interval='1wk') and interval='1wk'",[symbol])
+        con.commit()
+
         cur.execute("SELECT finalpchange FROM ChartData where symbol=? and interval='1wk' ORDER BY date desc LIMIT 1",([symbol]))
         fivedays = cur.fetchall()
 

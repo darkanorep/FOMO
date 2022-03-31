@@ -55,7 +55,7 @@
                                 {{row["category"]}}
                             </div>
                             <div class="date">
-                                {{row["date"]}}
+                                &bull;{{row["date"]}}
                             </div>
                             <div class="user">
                                 {{row["author"]}}
@@ -68,12 +68,8 @@
                                 <img src="/static/community/{{row['image']}}">
                             </div>
                             <div class="action">
-                                <a href="{{url_for('editpost',id=row['id'])}}" style="text-decoration: none;">
-                                    <button class="edit-button">Edit</button>
-                                </a>
-                                <a href="{{url_for('auth.delete_blog',id=row['id'])}}" style="text-decoration: none;">
-                                    <button class="edit-button">Delete</button>
-                                </a>
+                                <a href="{{url_for('editpost',id=row['id'])}}" style="text-decoration: none;">Edit</a>
+                                <a href="{{url_for('auth.delete_blog',id=row['id'])}}" style="text-decoration: none;">Delete</a>
                             </div>
                         </div>
                         {% endfor %}

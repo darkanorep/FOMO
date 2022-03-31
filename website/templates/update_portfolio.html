@@ -7,6 +7,7 @@
     <head>
         <style>
             .update-form {
+                margin-top: 5rem;
                 position: relative;
                 background: #ffffff;
                 display: grid;
@@ -39,6 +40,23 @@
                 border: 1px solid #e5e5e5;
                 background: #f7fafc;
                 transition: 0.3s ease;
+            }
+
+            .content button {
+                border: none;
+                width: 100%;
+                text-decoration: none;
+                padding: .5rem;
+                background: #6BCB77;
+                font-size: 1rem;
+                color: white;
+                transition: .5s;
+            }
+            
+            .content button:hover {
+                background: #4D96FF;
+                border-radius: 15px;
+                
             }
     
             .btn, button, input {
@@ -89,6 +107,7 @@
                             <input type="float" name="initial_value" value="{{data['initial_value']}}"></input>
                             <input type="submit" class="btn btn-success btn-block" value="Update">
                         </form>
+                        <a href="/portfolio"><button>Cancel</button></a>
                     </div>
                 </div>
             </div>

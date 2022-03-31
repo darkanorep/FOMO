@@ -63,8 +63,8 @@ select {
     transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
     height: 48px;
     padding: 0px 24px;
-    background-color: rgb(232, 157, 57);
-    color: rgb(255, 255, 255);
+    background-color: #ffc233;
+    color: #ffffff;
     width: 100%;
 }
  

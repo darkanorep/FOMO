@@ -8,8 +8,19 @@
     <link rel="stylesheet" type="text/css" href="#">
     <style>
 
-        a {
+        .container a {
+            height: 100%;
+            background-color: green;
+            border-radius: 5px;
             text-decoration: none;
+            padding: 8px;
+            color: white;
+        }
+
+        .container a:hover {
+            border-radius: 15px;
+            transition: .5s
+            
         }
 
         .container {
@@ -54,6 +65,7 @@
             text-align: left;
             padding-top: 20px;
             color: #4c4c4c;
+            padding-bottom: 10px;
         }
 
         .img {
@@ -62,22 +74,24 @@
         }
 
         .idea {
-            font-size: 22px;
+            text-align: left;
+            font-size: 16px;
             grid-area: idea;
-            padding: 10px;
-            padding-bottom: 20px;
+            padding-top: 11px;
         }
 
         .wrapper img {
             width: 100%;
-            height: 650px;
+            height: 350px;
+            border: 2px solid black;
+            border-radius: 20px;
         }
 
         form {
             grid-area: form;
             height: 50px;
             display: grid;
-            grid-template-columns: .9fr .1fr;
+            grid-template-columns: 1fr .2fr;
             grid-gap: 5px;
             grid-template-areas:
                 "comment submit"
@@ -95,14 +109,14 @@
         }
 
         .comwrapper {
-            padding: 10px;
-            background: gray;
+            padding: 5px;
+            background: rgb(255, 255, 255);
         }
 
         .comsection {
             display: grid;
             grid-template-rows: 1fr;
-            grid-row-gap: 20px;
+            grid-row-gap: 5px;
             
         }
 
@@ -123,6 +137,19 @@
             font-size: 18px;
             padding-left: 15px;
         }
+
+        form .submit {
+            background-color: #1c5003;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form .comment {
+            border-radius: 5px;
+        }
+
+        
 
         @media (max-width: 780px) {
             .comment{
@@ -146,7 +173,16 @@
             .comments {
                 font-size: 14px;
                 padding-left: 5px;
+                
             }
+
+            .idea {
+                text-align: left;
+                font-size: 14px;
+                grid-area: idea;
+                padding-top: 11px;
+            }
+                
             
         }
         
@@ -154,7 +190,11 @@
 </head>
     <body>
         <div class="container">
-            <a href="{{url_for('auth.community')}}"><i class="fi fi-br-angle-left"></i>Back</a>
+            <a class="button" href="{{url_for('auth.community')}}" role="button"><i class='bx bx-arrow-back'></i>
+                <span>Back</span>
+            </a>
+            <br>
+            <br>
             <div class="wrapper">
                 {% for row in blog %}
                     <div class="tag">

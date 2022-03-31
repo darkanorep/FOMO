@@ -6,8 +6,42 @@
 <html>
     <head>
         <style>
+
+            .bxs-edit {
+                font-size: 16px;
+                height: 30px;
+                width: 30px;
+                background: #cce5ff;
+                line-height: 30px;
+                text-align: center;
+                color: #66b0ff;
+                border-radius: 12px;
+                margin: -15px 0 0 6px;
+            }
+
+            .bxs-trash {
+                font-size: 16px;
+                height: 30px;
+                width: 30px;
+                background: #f7d4d7;
+                line-height: 30px;
+                text-align: center;
+                color: #e05260;
+                border-radius: 12px;
+                margin: -15px 0 0 6px;
+            }
+
+            h2 {
+                color: rgb(22, 73, 137);
+                font-size: 20px;
+            }
+
             .container {
                 padding: 2rem 7%; 
+            }
+
+            .table-container {
+                box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
             }
 
             .positive:before { content: "+"; color: 
@@ -34,7 +68,7 @@
             }
 
             .table th {
-                background-color: rgb(25, 0, 250);
+                background-color: #6BCB77;;
                 color: white;
             }
 
@@ -46,17 +80,18 @@
                 opacity: 1;
                 padding: 12px;
                 vertical-align: top;
-                border: 1px solid black;
+                
             }
 
             .table tbody tr td {
-                font-size: 14px;
+                font-size: 16px;
                 letter-spacing: .35px;
-                font-weight: normal;
+                font-weight: 400;
                 background-color: white;
                 padding: 8px;
                 text-align: center;
                 border: 1px solid #dee2e685;
+                padding: 20px;
 
             }
 
@@ -206,7 +241,7 @@
                                     <a href="{{url_for('auth.deleteportfolio',id=row['id'])}}" id="d"><i class='bx bxs-trash' ></i></a>
                                 </td>
                                 <td data-label="Quantity">{{row["quantity"]}}</td>
-                                <td data-label="InitialValue">{{row["initial_Value"]}}</td>
+                                <td data-label="InitialValue">${{row["initial_Value"]}}</td>
                                 <td colspan="8"><b>Calculating </b><img src="../static/loading.gif" style="height:10px;"></td>
                             <tr>
                             {% endfor %}

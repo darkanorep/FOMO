@@ -8,7 +8,7 @@ p {
 }
 
 .con {
-    padding: 20px;
+    padding: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 15px;
@@ -16,17 +16,22 @@ p {
 
 .card img {
     width: 100%;
-    height: 300px;
+    height: 230px;
+    border: 1px solid black;
+}
+
+img {
+    border-radius: 20px;
 }
 
 .card {
-    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    padding: 10px;
+    padding: 20px;
     background: rgb(255, 255, 255);
-    border-radius: 5px;
+    border-radius: 15px;
     grid-template-areas:
         "tag tag tag"
         "user user date"
@@ -35,8 +40,15 @@ p {
         "action action action"
 }
 
+.card:hover {
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+}
+
+
 .tag {
     grid-area: tag;
+    font-weight: 700;
+
 
 }
 
@@ -48,12 +60,16 @@ p {
 .date {
     grid-area: date;
     font-size: 12px;
-    text-align: left;
+    text-align: right;
+    font-weight: 400;
+    color: #4c4c4c;
 
 }
 
 .idea {
     grid-area: idea;
+    padding-bottom: 20px;
+    text-align: left;
 
 }
 
@@ -63,6 +79,20 @@ p {
 
 .action {
     grid-area: action;
+}
+
+.action a {
+    border-radius: 15px;
+    padding: 5px;
+    background:#56b8f9;
+    color: white;
+    font-size: 13px;
+}
+
+.action a:hover {
+    transition: .5s;
+    background: #6BCB77;;
+    border-radius: 0;
 }
 
 .overlay {
@@ -137,6 +167,19 @@ input[type="submit"] {
 	border-radius: 50px;
 }
 
+.box a {
+    width: 20%;
+    text-decoration: none;
+    background: #6BCB77;
+    color: white;
+    transition: .5s;
+}
+
+.box a:hover {
+    background: #4D96FF;
+    border-radius: 15px;  
+}
+
 @media screen and (max-width: 768px) {
     .con {
         padding: 5px;
@@ -161,6 +204,7 @@ input[type="submit"] {
 
     .user {
         font-family: 'Kanit', sans-serif;
+        font-size: 14px;
     }
 
 
@@ -173,6 +217,7 @@ input[type="submit"] {
 
     .idea {
         padding: 10px;
+        font-size: 12px;
     }
 
     .card img {

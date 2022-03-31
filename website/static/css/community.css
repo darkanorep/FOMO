@@ -25,12 +25,18 @@ h5 {
 	line-height: 1.7;
 }
 
+h1 {
+	color: rgb(22, 73, 137);
+	font-size: 20px;
+}
+
 select {
     background: linear-gradient(120deg, #fafafa 0%, #c7f7cb 100%);
     font-size: 12px;
     padding: 5px;
     font-weight: bold;
 }
+
 
 .box {
 	text-align: center;

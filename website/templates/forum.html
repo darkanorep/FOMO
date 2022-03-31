@@ -11,8 +11,6 @@
 
         .con{
             height:100%;
-            background: #2f5226;
-            padding: 20px;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-gap: 15px;
@@ -20,16 +18,17 @@
 
         select {
             background: linear-gradient(120deg, #fafafa 0%, #c7f7cb 100%);
+            width: 100%;
         }
 
         .card {
-            border: 1px solid rgb(0, 0, 0);
+            box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 1fr;
             padding: 10px;
-            background: #f2fff4;
-            border-radius: 5px;
+            background: white;
+            border-radius: 15px;
             grid-template-areas:
                 "tag tag tag"
                 "img img img"
@@ -53,12 +52,18 @@
         .img {
             grid-area: img;
             border: 2px solid rgb(0, 0, 0);
+            border-radius: 20px;
 
         }
 
         .card img {
             width: 100%;
-            height: 300px;
+            height: 250px;
+            border-radius: 20px;
+        }
+
+        .card:hover {
+            box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
         }
 
         .user {
@@ -87,9 +92,11 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            padding: 5px;
         }
 
         .idea a {
+            border-radius: 15px;
             padding: 5px;
             background:#56b8f9;
             color: white;
@@ -98,12 +105,32 @@
 
         .idea a:hover {
             transition: .5s;
-            background: #6156F9;
+            background: #6BCB77;;
+            border-radius: 0;
+        }
+
+        .user .bx {
+            font-size: 20px;
+            text-align: center;
+            color: #6BCB77;
+
+        }
+
+        .user .bxs-user-circle {
+            display: inline-block;
+            font-size: 20px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            border-radius: 12px;
+            margin: -15px 0 0 6px;
+            color: #2BD47D;
+            background: #C0F2D8;
         }
 
         @media screen and (max-width: 768px) {
             .con {
-                padding: 15px;
+                padding: 5px;
                 grid-template-columns: 1fr;
                 grid-template-areas:
                 "tag"
@@ -123,10 +150,14 @@
 
             }
 
+            .user {
+                font-size: 14px;
+            }
 
             .date {
                 grid-area: user;
-                padding-top: 30px;
+                padding-top: 35px;
+                padding-left: 20px;
                 font-size: 10px;
                 text-align: left;
             }
@@ -138,7 +169,8 @@
             .card img {
             width: 100%;
             height: 180px;
-        }
+            
+            }
 
 
         }
@@ -162,7 +194,7 @@
                         <i class='bx bxs-user-circle'></i>{{row["author"]}}
                     </div>
                     <div class="date">
-                        {{row["date"]}}
+                        &bull;{{row["date"]}}
                     </div>
                     <div class="idea">
                         {{row["blog"]}}
