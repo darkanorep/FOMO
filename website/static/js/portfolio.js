@@ -116,7 +116,7 @@ function percentChangeCalc(x, y) {
 
 function percentChangeRow(percentChange) {
     if (percentChange > 0) {
-        return "<td class='positive' data-label=PnL(%)>" + percentChange.toFixed(2) + "%</td>";
+        return "<td class='positive' data-label=PnL(%)>+" + percentChange.toFixed(2) + "%</td>";
     }
     else if (percentChange < 0) {
         return "<td class='negative' data-label=PnL(%)>" + percentChange.toFixed(2) + "%</td>";
@@ -128,7 +128,7 @@ function percentChangeRow(percentChange) {
 
 function profitRow(profit) {
     if (profit > 0) {
-        return "<td class='positive' data-label=PnL>$" + profit.toFixed(2) + "</td>";
+        return "<td class='positive' data-label=PnL>+$" + profit.toFixed(2) + "</td>";
     }
     else if (profit < 0) {
         var x = profit *= -1

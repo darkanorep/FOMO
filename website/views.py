@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from datetime import datetime
+from random import randint
 
 import base64
 from io import BytesIO
@@ -16,6 +17,7 @@ from io import BytesIO
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
 
+num = randint(1,5)
 
 @views.route('/')
 def index():
@@ -31,6 +33,9 @@ def assetinfo(symbol):
         con =sqlite3.connect('system.db')
         con.row_factory = sqlite3.Row
         cur = con.cursor()
+
+        cur.execute("SELECT * FROM Stocks ORDER BY RANDOM() LIMIT 4")
+        random = cur.fetchall()
 
         date = datetime.now().strftime("%B %d, %Y")
 
@@ -688,7 +693,8 @@ def assetinfo(symbol):
                                                     data=data, profile=profile, 
                                                     broker=broker, 
                                                     hdata=hdata, 
-                                                    symbol=symbol)
+                                                    symbol=symbol,
+                                                    random=random)
     
     else:
         return redirect(url_for("auth.login"))

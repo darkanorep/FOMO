@@ -8,6 +8,33 @@
         <link rel="stylesheet" type="text/css" href="/static/css/amc.css"></link>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+        <style>
+            .swiper {
+                width: 100%;
+                height: 100%;
+            }
+
+            .swiper-slide {
+                text-align: center;
+                font-size: 18px;
+                background: #fff;
+
+                /* Center slide text vertically */
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                -webkit-justify-content: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                -webkit-align-items: center;
+                align-items: center;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -175,6 +202,7 @@
                 {% for row in profile %}
                     <h2>{{row["symbol"]}} Price Prediction</h2>
                 {% endfor %}
+                <p style="font-style: italic;">&bull;Note: R2 Score blah blah blah...</p>
                 <div class="prediction-wrapper">
                     <div class="layer1">
                         <div class="wrapper-24hr">
@@ -272,25 +300,23 @@
                     </div>
                 </div>
             </div>
+            {% for row in random %}
+                <div class="random">
+                    <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
+                </div>
+            {% endfor %}
             <div>
                 <h2>Available Market</h2>
-                <section class="product">
-                    <div class="container-fluid">
-                        <div class="slider-wrap">
-                            <div class="slider-main" id="slider-main">
-                                {% for row in market %}    
-                                <div class="item">
-                                    <div class="text">
-                                        <a href="{{row["blink"]}}" style="text-decoration: none;" target="_blank"><img class = "img" id="img" src="/static/{{row['blogo']}}"></a>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <button type="button" class="slider-btn-next" onClick="prev()">Next</button>
-                        <button type="button" class="slider-btn-prev" onClick="next()">Previous</button>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        {% for row in market %}    
+                            <div class="swiper-slide"><a href="{{row["blink"]}}" style="text-decoration: none; padding-bottom: 20px;" target="_blank" ><img class = "img" id="img" src="/static/{{row['blogo']}}"></a></div>
+                        {% endfor %}
                     </div>
-                </section>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
             </div>
             <div class="interval">
                 <div class="intervals">
@@ -454,28 +480,24 @@
         </div>
     </body>
     <script src="../static/js/assetinfo.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        var arr = ["item1", "item2", "item3"]
-        var sliderMain = document.getElementById("slider-main");
-        var item = sliderMain.getElementsByClassName("item");
-
-        function next() {
-            sliderMain.append(item[0]);
-            
-        }
-
-        function prev() {
-            sliderMain.prepend(item[item.length-1]);
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-        $.getJSON("/fetchprice",
-        function getPrice(json) {
-
-            console.log(json)
+        var swiper = new Swiper(".mySwiper", {
+          spaceBetween: 30,
+          centeredSlides: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
         });
-    })
     </script>
 </html>
 {% endblock %}

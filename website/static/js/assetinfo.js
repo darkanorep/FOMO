@@ -41,3 +41,12 @@ if(fivedays.includes("-")){
     document.getElementById('5d').style.color = 'green'
 }
 
+
+$(document).ready(function () {
+    $.getJSON("/fetchprice",
+    function getPrice(json) {
+
+        console.log(json)
+    });
+})
+

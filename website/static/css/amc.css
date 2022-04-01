@@ -410,6 +410,12 @@ th {
 }
 
 
+.random {
+    display: flex;
+}
+
+
+
 @media screen and (max-width: 768px) {
 
     .profile-wrapper {
@@ -429,7 +435,6 @@ th {
     
     .info-container {
         grid-area: info-container;
-        margin: 15px;
     
     }
 
