@@ -60,42 +60,71 @@
                     </P>
                 </div>
                 <div class="info-container">
-                    {% for row in profile %}
-                        <h2>{{row["symbol"]}} and Market Stats</h2>
-                    {% endfor %}
+
                     <div class="info-content">
-                        <table>
-                            <tbody>
-                                <tr>
-                                {% for row in profile %}
-                                    <th>{{row["symbol"]}} Price</th>
-                                {% endfor %}
-                                <td>${{ current_price[0].text }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Trading Volume</th>
-                                    {% for row in info %}
-                                    <td>{{row["volume"]}}</td>
-                                    {% endfor %}
-                                </tr>
-                                <tr>
-                                    <th>Previous Close</th>
-                                    <td>${{ previousclose[0].text }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Exchange</th>
+                        <div class="box1">
+                            <div class="right-side">
+                                <div class="box-topic">
                                     {% for row in profile %}
-                                        <td>{{row["exchange"]}}</td>
+                                    {{row["symbol"]}} Price
                                     {% endfor %}
-                                </tr>
-                                <tr>
-                                    <th>IPO Date</th>
+                                </div>
+                                <div class="number">
+                                    ${{ current_price[0].text }}
+                                </div>
+                            </div>
+                            <i class='bx five bxs-dollar-circle' ></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">
+                                    Trading Volume
+                                </div>
+                                <div class="number">
+                                    {% for row in info %}
+                                    {{row["volume"]}}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <i class='bx bxs-bar-chart-alt-2' ></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">
+                                    Previous Close
+                                </div>
+                                <div class="number">
+                                    ${{ previousclose[0].text }}
+                                </div>
+                            </div>
+                            <i class='bx two bxs-purchase-tag' ></i>
+                        </div>
+                        <div class="box">
+                           <div class="right-side">
+                                <div class="box-topic">
+                                    Exchange
+                                </div>
+                                <div class="number">
+                                    {% for row in profile %}
+                                    {{row["exchange"]}}
+                                    {% endfor %}
+                                </div>
+                           </div>
+                           <i class='bx three bxs-store' ></i>
+                        </div>
+                        <div class="box">
+                            <div class="right-side">
+                                <div class="box-topic">
+                                    IPO Date
+                                </div>
+                                <div class="number">
                                     {% for row in h %}
-                                    <td>{{row["date"]}}</td>
+                                    {{row["date"]}}
                                     {% endfor %}
-                                </tr>
-                            </tbody>
-                        </table>
+                                </div>
+                            </div>
+                            <i class='bx four bxs-offer' ></i>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -72,6 +72,13 @@ body {
 
 .profile {
     grid-area: profile;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* width: calc(100% / 1 - 15px); */
+    padding: 15px 14px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 42%);
 }
 
 .info-container {
@@ -86,8 +93,98 @@ body {
 }
 
 
-.info-content {
-    border: 2px solid black;
+.info-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    margin-bottom: 26px;
+}
+
+.info-content .box {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 2 - 15px);
+    background: #fff;
+    padding: 15px 14px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+
+.info-content .box1 {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 1 - 15px);
+    background: #fff;
+    padding: 15px 14px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+
+.profile-wrapper .box1 .number {
+    display: inline-block;
+    font-size: 25px;
+    margin-top: -6px;
+    font-weight: 500;
+}
+
+
+.info-content .box-topic {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.profile-wrapper .box .number {
+    display: inline-block;
+    font-size: 25px;
+    margin-top: -6px;
+    font-weight: 500;
+}
+
+.profile-wrapper .box .bx {
+    display: inline-block;
+    font-size: 32px;
+    height: 50px;
+    width: 50px;
+    background: #cce5ff;
+    line-height: 50px;
+    text-align: center;
+    color: #66b0ff;
+    border-radius: 12px;
+    margin: -15px 0 0 6px;
+}
+
+.profile-wrapper .box .two {
+    color: #2BD47D;
+    background: #C0F2D8;
+}
+
+.profile-wrapper .box .three {
+    color: #ffc233;
+    background: #ffe8b3;
+}
+
+.profile-wrapper .box .four {
+    color: #e05260;
+    background: #f7d4d7
+}
+
+.profile-wrapper .box1 .bx {
+    display: inline-block;
+    font-size: 32px;
+    height: 50px;
+    width: 50px;
+    background: #f5d4f7;
+    line-height: 50px;
+    text-align: center;
+    color: #a552e0;
+    border-radius: 12px;
+    margin: -15px 0 0 6px;
 }
 
 .chart-wrapper {
@@ -414,7 +511,12 @@ th {
     display: flex;
 }
 
-
+@media (max-width: 1000px) {
+    .info-content .box {
+        width: calc(100% / 1 - 15px);
+        margin-bottom: 15px;
+    }
+}
 
 @media screen and (max-width: 768px) {
 
