@@ -29,6 +29,10 @@ body {
 
 }
 
+.stock-info-container h1, h2 {
+    padding-left: 10px;
+}
+
 .stock-name {
     grid-area: stock-name;
     font-size: 16px;
@@ -77,8 +81,6 @@ body {
     /* justify-content: center; */
     /* width: calc(100% / 1 - 15px); */
     padding: 15px 14px;
-    border-radius: 12px;
-    box-shadow: 0 5px 10px rgb(0 0 0 / 42%);
 }
 
 .info-container {
@@ -87,11 +89,18 @@ body {
 }
 
 .interpretation {
-    padding-top: 40px;
+    font-size: 14px;
     text-align: left;
-    padding-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+    padding: 2% 3%;
 }
 
+.stock-profile p {
+    font-size: 15px;
+    font-weight: 400;
+    word-spacing: 5px;
+}
 
 .info-content{
     display: flex;
