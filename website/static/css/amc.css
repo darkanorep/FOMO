@@ -210,6 +210,13 @@ body {
 }
 
 
+.change {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+
 .stock-logo {
     grid-area: stock-logo;
     width: 75px;
@@ -227,16 +234,12 @@ body {
 
 .layer1 img {
     padding: 10px;
-    background: #FFE8B1;
     border-radius: 10px;
     height: 100%;
     width: 100%;
 }
 
 .layer2 img {
-    padding: 10px;
-    background: #FFE8B1;
-    border-radius: 10px;
     height: 100%;
     width: 60%;
 }
@@ -303,7 +306,7 @@ body {
 
 .tableFixHead {
     overflow-y: auto;
-    height: 200px;
+    height: 100vh;
 }
 
 .tableFixHead thead th {
@@ -317,11 +320,37 @@ table {
 }
 th,
 td {
-    padding: 8px 16px;
-    border: 1px solid #C1F8CF;
+    text-align: center;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 0px solid #dee2e6;
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 18px;
+    color: #333;
+}
+
+.seven {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+}
+
+
+.seven p {
+    font-size: 24px;
+    font-weight: 500;
     text-align: center;
 }
-th {
+#historicaldata th {
     background: #38A3A5;
     color:white;
     text-align: center;
@@ -329,17 +358,16 @@ th {
 
 
 .prediction-wrapper {
-    margin: 20px;
+    margin: 0 1rem 0 1rem;
     position: relative;
     background: linear-gradient(98.94deg, #00C897 -1.06%, #019267 103.55%);
-    box-shadow: 0px 0px 28px 4px #FFD365;
-    border-radius: 37px;
+    border-radius: 5px;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     grid-template-areas:
         "layer1"
-        "layer2"
+        "layer2";
 }
 
 .layer1 {
@@ -396,8 +424,53 @@ th {
 .card {
     padding: 5px;
     background: #BFF1E5;
-    border-radius: 15px;
+    border-radius: 5px;
 }
+
+.card-header {
+    background: #2c3a47;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 20px;
+}
+
+.pic {
+    width: 100%;
+
+}
+
+.card-footer {
+    background: #f4f4f4;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.item {
+    flex: 1;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: #e66767;
+}
+
+.item span {
+    display: block;
+    color: #2c3a47;
+        height: 1.3rem;
+}
+
+.numbers {
+    display: flex;
+    align-items: center;
+}
+
+.border {
+    width: 1px;
+    height: 30px;
+    background: #bbb;
+}
+
 
 .slider-wrap {
     grid-area: slider-wrap;
@@ -409,11 +482,7 @@ th {
 
 
 .item {
-    width: 25%;
-    display: inline-block;
-    position: relative;
-    height: 100px;
-    margin: 4px;
+    margin: 5px;
 }
 
 .text{
@@ -460,13 +529,12 @@ th {
 }
 
 .ideas-card {
-    border: 1px solid rgb(0, 0, 0);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     padding: 10px;
     background: rgb(255, 255, 255);
-    border-radius: 5px;
+    border-radius: 15px;
     grid-template-areas: 
         "user user date"
         "ideas-img ideas-img ideas-img"
@@ -491,7 +559,6 @@ th {
 
 .ideas-img {
     grid-area: ideas-img;
-    border: 2px solid rgb(0, 0, 0);
 
 }
 
@@ -500,24 +567,92 @@ th {
     height: 300px;
 }
 
+.ideas-card:hover {
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+
+.ideas-card a {
+    text-decoration: none;
+    padding: 0.2rem 0.3rem;
+    background: #56b8f9;
+    border-radius: 15px;
+    /* font-size: .6rem; */
+    color: white;
+    transition: .5s;
+}
+
+.ideas-card a:hover {
+    background: #6BCB77;
+    border-radius: 0;
+}
+
+.ideas-card p {
+    padding-top: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .idea {
     grid-area: idea;
+    font-size: .8rem;
+    margin-bottom: 0.5rem;
 }
 
 
 .stock-profile {
-    margin-top: 20px;
-    margin-bottom: 20px;
     padding: 10px;
     grid-area: stock-profile;
     background: #6FB2D2;
     border: solid #85C88A 3px;
     border-radius: 20px;
+    margin: 3rem 0 3rem 0rem;
 }
 
 
 .random {
     display: flex;
+}
+
+.ideas {
+    padding: 6rem 7%;
+    background: #BFF1E5;
+}
+
+.ideas h1 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 25px;
+
+}
+
+.main-who {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner-who {
+    flex: 1 1 45rem;
+}
+
+.inner-who img {
+    width: 100%;
+    /* padding-left: 6rem; */
+    padding: 2rem;
+}
+
+.inner-who-content {
+    padding: 0 2rem;
+}
+
+.inner-who-content p {
+    font-size: 1rem;
+    margin: 1rem 0;
+    margin-bottom: 25px;
+    color: white;
+    
 }
 
 @media (max-width: 1000px) {
@@ -546,7 +681,7 @@ th {
     
     .info-container {
         grid-area: info-container;
-    
+        margin: 3rem 0 3rem 0rem;
     }
 
     .layer1 {
@@ -583,11 +718,10 @@ th {
         padding: 15px;
         grid-area: layer2;
         display: grid;
-        grid-template-columns: 1fr;
-        grid-row-gap: 30px;
-        grid-template-areas:
-            "wrapper-6mo "
-            "wrapper-1yr"
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 10px;
+        grid-template-areas: 
+            "wrapper-6mo wrapper-1yr";
     }
     
     .wrapper-6mo {
@@ -610,18 +744,18 @@ th {
     }
 
     .ideas-card {
-        border: 1px solid rgb(0, 0, 0);
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
         padding: 10px;
         background: rgb(255, 255, 255);
-        border-radius: 5px;
-        grid-template-areas: 
-            "user"
-            "ideas-img"
-            "idea"
-    
+        border-radius: 15px;
+        grid-template-areas:
+            "user user date"
+            "ideas-img ideas-img ideas-img"
+            "idea idea idea";
     }
+
 
     .date {
         grid-area: user;
@@ -641,7 +775,7 @@ th {
     .item {
         width: 25%;
         display: inline-block;
-        height: 100px;
+        height: 3rem;
         margin: 4px;
         position: inherit;
     }
@@ -670,9 +804,25 @@ th {
         position: absolute;
         left: 0;
         width: 50%;
-        padding-left: 15px;
-        font-weight: bold;
-        font-size: 14px;
-        text-align: left;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: left
+    }
+
+    .main-who {
+        flex-wrap: wrap;
+    }
+
+    .card-footer {
+        background: #f4f4f4;
+        display: grid;
+        grid-template-columns: 1fr;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .border {
+        position: fixed;
     }
 }

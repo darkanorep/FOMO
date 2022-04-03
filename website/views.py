@@ -649,7 +649,7 @@ def assetinfo(symbol):
         cur.execute("SELECT interval FROM ChartData")
         interval = cur.fetchall()
 
-        cur.execute("SELECT * FROM Blog WHERE category=? ORDER BY DATE DESC LIMIT 6",[(symbol)])
+        cur.execute("SELECT * FROM Blog WHERE category=? ORDER BY DATE DESC LIMIT 3",[(symbol)])
         blog = cur.fetchall()
 
         #---------------------------------------------------------------------------------------------------------

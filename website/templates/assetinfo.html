@@ -177,38 +177,49 @@
                         </script>
                     </div>
                     <hr>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>1min</th>
-                                <th>5min</th>
-                                <th>1hr</th>
-                                <th>24hr</th>
-                                <th>7d</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id ="1min" data-label=1min>{% for row in onemin %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="5min" data-label=5min>{% for row in fivemin %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="1hr" data-label=1hr>{% for row in hour %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="1d" data-label=24hr>{% for row in phour %}{{row["finalpchange"]}}%{% endfor %}</td>
-                                <td id ="5d" data-label=7d>{% for row in fivedays %}{{row["finalpchange"]}}%{% endfor %}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="change">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>1min</th>
+                                    <th>5min</th>
+                                    <th>1hr</th>
+                                    <th>24hr</th>
+                                    <th>7d</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id ="1min" data-label=1min>{% for row in onemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                    <td id ="5min" data-label=5min>{% for row in fivemin %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                    <td id ="1hr" data-label=1hr>{% for row in hour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                    <td id ="1d" data-label=24hr>{% for row in phour %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                    <td id ="5d" data-label=7d>{% for row in fivedays %}{{row["finalpchange"]}}%{% endfor %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="stock-profile">
-                {% for row in profile %}
-                    <h3>Sector: {{row["sector"]}}</h3>
-                    <h3>Industry: {{row["industry"]}}</h3>
-                    <p>{{row["profile"]}}</p>
-                {% endfor %}
+                <div class="main-who">
+                    <div class="inner-who">
+                        <img src="../static/asset-industry.png">
+                    </div>
+                    <div class="inner-who">
+                        <div class="inner-who-content">
+                            {% for row in profile %}
+                                <h3>Sector: {{row["sector"]}}</h3>
+                                <h3>Industry: {{row["industry"]}}</h3>
+                                <p>{{row["profile"]}}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="seven-wrapper">
                 <div class="seven">
-                    <h3>7 day Price History of {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD</h3>
+                    <p>7 day Price History of {% for row in profile %}{{row["symbol"]}}{% endfor %} to USD</p>
                     <table class="table">
                         <thead>
                             <tr>
@@ -240,55 +251,100 @@
                     <div class="layer1">
                         <div class="wrapper-24hr">
                             <div class="card">
-                                <div class="prediction-24hr">
-                                    <h3>Period : 24 Hr.</h3>
-                                    <label>Prediction : </label>
-                                    {% for row in prediction %}${{row["prediction"]}}{% endfor %}
+                                <div class="card-header">
+                                    <div class="pic">
+                                        {% for row in profile %}
+                                        <img src="../static/datavisual/{{row["symbol"]}}24hr.png">
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="rscore-24hr">
-                                    <label>R2 Score : </label>
-                                    {% for row in prediction %}{{row["r2score"]}}{% endfor %}
-                                </div>
-                                <div class="data-24hr">
-                                    {% for row in profile %}
-                                    <img src="../static/datavisual/{{row["symbol"]}}24hr.png">
-                                    {% endfor %}
+                                <div class="card-footer">
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>24 Hr.</span>
+                                            Period
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in prediction %}${{row["prediction"]}}{% endfor %}</span>
+                                            Prediction
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in prediction %}{{row["r2score"]}}{% endfor %}</span>
+                                            R2 Score
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="wrapper-1mo">
                             <div class="card">
-                                <div class="prediction-1mo">
-                                    <h3>Period : 1 Month</h3>
-                                    <label>Prediction : </label>
-                                    {% for row in onemopred %}${{row["prediction"]}}{% endfor %}
+                                <div class="card-header">
+                                    <div class="pic">
+                                        {% for row in profile %}
+                                        <img src="../static/datavisual/{{row["symbol"]}}1mo.png">
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="rscore-1mo">
-                                    <label>R2 Score : </label>
-                                    {% for row in onemopred %}{{row["r2score"]}}{% endfor %}
-                                </div>
-                                <div class="data-1mo">
-                                    {% for row in profile %}
-                                    <img src="../static/datavisual/{{row["symbol"]}}1mo.png">
-                                    {% endfor %}
+                                <div class="card-footer">
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>1 Month</span>
+                                            Period
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in onemopred %}${{row["prediction"]}}{% endfor %}</span>
+                                            Prediction
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in onemopred %}{{row["r2score"]}}{% endfor %}</span>
+                                            R2 Score
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="wrapper-3mo">
                             <div class="card">
-                                <div class="prediction-3mo">
-                                    <h3>Period : 3 Months</h3>
-                                    <label>Prediction : </label>
-                                    {% for row in threemopred %}${{row["prediction"]}}{% endfor %}
+                                <div class="card-header">
+                                    <div class="pic">
+                                        {% for row in profile %}
+                                        <img src="../static/datavisual/{{row["symbol"]}}3mo.png">
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="rscore-3mo">
-                                    <label>R2 Score : </label>
-                                    {% for row in threemopred %}{{row["r2score"]}}{% endfor %}
-                                </div>
-                                <div class="data-3mo">
-                                    {% for row in profile %}
-                                    <img src="../static/datavisual/{{row["symbol"]}}3mo.png">
-                                    {% endfor %}
+                                <div class="card-footer">
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>3 Months</span>
+                                            Period
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in threemopred %}${{row["prediction"]}}{% endfor %}</span>
+                                            Prediction
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in threemopred %}{{row["r2score"]}}{% endfor %}</span>
+                                            R2 Score
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -296,37 +352,67 @@
                     <div class="layer2">
                         <div class="wrapper-6mo">
                             <div class="card">
-                                <div class="prediction-6mo">
-                                    <h3>Period : 6 Months</h3>
-                                    <label>Prediction : </label>
-                                    {% for row in sixmopred %}${{row["prediction"]}}{% endfor %}
+                                <div class="card-header">
+                                    <div class="pic">
+                                        {% for row in profile %}
+                                        <img src="../static/datavisual/{{row["symbol"]}}6mo.png">
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="rscore-6mo">
-                                    <label>R2 Score : </label>
-                                    {% for row in sixmopred %}{{row["r2score"]}}{% endfor %}
-                                </div>
-                                <div class="data-6mo">
-                                    {% for row in profile %}
-                                    <img src="../static/datavisual/{{row["symbol"]}}6mo.png">
-                                    {% endfor %}
+                                <div class="card-footer">
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>6 Months</span>
+                                            Period
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in sixmopred %}${{row["prediction"]}}{% endfor %}</span>
+                                            Prediction
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in sixmopred %}{{row["r2score"]}}{% endfor %}</span>
+                                            R2 Score
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="wrapper-1yr">
                             <div class="card">
-                                <div class="prediction-1yr">
-                                    <h3>Period : 1 Year</h3>
-                                    <label>Prediction : </label>
-                                    {% for row in oneyrpred %}${{row["prediction"]}}{% endfor %}
+                                <div class="card-header">
+                                    <div class="pic">
+                                        {% for row in profile %}
+                                        <img src="../static/datavisual/{{row["symbol"]}}1yr.png">
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                                <div class="rscore-1yr">
-                                    <label>R2 Score : </label>
-                                    {% for row in oneyrpred %}{{row["r2score"]}}{% endfor %}
-                                </div>
-                                <div class="data-1yr">
-                                    {% for row in profile %}
-                                    <img src="../static/datavisual/{{row["symbol"]}}1yr.png">
-                                    {% endfor %}
+                                <div class="card-footer">
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>1 Year</span>
+                                            Period
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in oneyrpred %}${{row["prediction"]}}{% endfor %}</span>
+                                            Prediction
+                                        </div>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="numbers">
+                                        <div class="item">
+                                            <span>{% for row in oneyrpred %}{{row["r2score"]}}{% endfor %}</span>
+                                            R2 Score
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -338,7 +424,7 @@
                     <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
                 </div>
             {% endfor %}
-            <div>
+            <div class="market" style="margin: 3rem 0 3rem 0rem;">
                 <h2>Available Market</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
@@ -357,7 +443,7 @@
                     <label for="tab1">1 Minute</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table class="table">
+                            <table class="table" id="historicaldata">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -383,7 +469,7 @@
                     <label for="tab5">5 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table class="table">
+                            <table class="table" id="historicaldata">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -409,7 +495,7 @@
                     <label for="tab15">15 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table class="table">
+                            <table class="table" id="historicaldata">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -435,7 +521,7 @@
                     <label for="tab30">30 Minutes</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table class="table">
+                            <table class="table" id="historicaldata">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -461,7 +547,7 @@
                     <label for="tab1hr">1 Hour</label>
                     <div class="tab">
                         <div class="tableFixHead">
-                            <table class="table">
+                            <table class="table" id="historicaldata">
                                 <thead>
                                     <tr>
                                         <th>Date:Time</th>
@@ -485,29 +571,29 @@
                     </div>
                 </div>
             </div>
-            <div class="ideas">
-                <h1>{% for row in profile %}{{row["symbol"]}}{% endfor %} Ideas</h1>
-                <div class="ideas-container">
-                    <div class="ideas-content">
-                        {% for row in blog %}
-                            <div class="ideas-card">
-                                <div class="user">
-                                    <i class='bx bxs-user-circle'></i>{{row["author"]}}
-                                </div>
-                                <div class="date">
-                                    {{row["date"]}}
-                                </div>
-                                <div class="idea">
-                                    {{row["blog"]}}
-                                    <br>
-                                    <a href="/blog/{{row['id']}}" style="text-decoration: none;">Read More..</a>
-                                </div>
-                                <div class="ideas-img">
-                                    <img src="/static/community/{{row['image']}}">
-                                </div>
+        </div>
+        <div class="ideas">
+            <h1>{% for row in profile %}{{row["symbol"]}}{% endfor %} Ideas</h1>
+            <div class="ideas-container">
+                <div class="ideas-content">
+                    {% for row in blog %}
+                        <div class="ideas-card">
+                            <div class="user">
+                                <i class='bx bxs-user-circle'></i>{{row["author"]}}
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="date">
+                                {{row["date"]}}
+                            </div>
+                            <div class="idea">
+                                <p>{{row["blog"]}}</p>
+                                <br>
+                                <a href="/blog/{{row['id']}}">Read More..</a>
+                            </div>
+                            <div class="ideas-img">
+                                <img src="/static/community/{{row['image']}}">
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
