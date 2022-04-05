@@ -17,7 +17,6 @@ from io import BytesIO
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
 
-num = randint(1,5)
 
 @views.route('/')
 def index():
@@ -34,17 +33,16 @@ def assetinfo(symbol):
         con.row_factory = sqlite3.Row
         cur = con.cursor()
 
-        cur.execute("SELECT * FROM Stocks ORDER BY RANDOM() LIMIT 4")
+        cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1d' ORDER BY r2score desc limit 5)")
         random = cur.fetchall()
 
-        date = datetime.now().strftime("%B %d, %Y")
 
         cur.execute("DELETE FROM ChartData where SYMBOL = '"+symbol+"';")
         con.commit()
         cur.execute("DELETE FROM Hour where SYMBOL = '"+symbol+"';")
         con.commit()
 
-        cur.executemany("DELETE FROM Prediction where symbol=? and date=?", [(symbol, date)])
+        cur.execute("DELETE FROM Prediction where symbol=?", [(symbol)])
         con.commit()
 
         cur.execute("DELETE FROM Prediction where symbol=? and interval='1yr';", [symbol])
@@ -288,7 +286,6 @@ def assetinfo(symbol):
             df1 = pd.DataFrame(pred)
             df1["r2score"] = r2_score(df['Close'], df['prePred'])
             df1["interval"] = "1d"
-            df1['date'] = date
             df1.round(2).to_csv('website/data/'+symbol+'1dpred.csv', index=False)
 
             df.round(2).to_csv(r'website/data/'+symbol+'1min.csv', index=False)
@@ -512,9 +509,9 @@ def assetinfo(symbol):
         
         with open('website/data/'+symbol+'1dpred.csv','r') as fin:
             dr = csv.DictReader(fin)
-            to_db = [(i['0'], i['interval'], i['date'], i['r2score']) for i in dr]
+            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
 
-            cur.executemany("INSERT into Prediction (symbol, prediction, interval, date, r2score) values ('"+symbol+"',?,?,?,?)", to_db)
+            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
             con.commit()
 
         r = requests.get('https://finance.yahoo.com/quote/'+symbol+'?p='+symbol+'')

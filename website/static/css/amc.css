@@ -5,6 +5,7 @@ body {
     margin: 0;
 }
 
+
 .container {
     padding: 20px;
 }
@@ -85,6 +86,7 @@ body {
 
 .info-container {
     grid-area: info-container;
+    padding: 2rem 7%;
 
 }
 
@@ -655,6 +657,35 @@ th {
     
 }
 
+.we-offer {
+    padding: 2rem 7%;
+}
+
+.main-offer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.inner-offer {
+    /* flex: 1 1 300px; */
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+}
+
+.we-offer h1 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.inner-offer:hover {
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+}
+
 @media (max-width: 1000px) {
     .info-content .box {
         width: calc(100% / 1 - 15px);
@@ -717,11 +748,13 @@ th {
         position: relative;
         padding: 15px;
         grid-area: layer2;
+        grid-row-gap: 30px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-column-gap: 10px;
         grid-template-areas: 
-            "wrapper-6mo wrapper-1yr";
+            "wrapper-6mo"
+            "wrapper-1yr";
     }
     
     .wrapper-6mo {
@@ -766,7 +799,6 @@ th {
 
     .layer2 img {
         padding: 10px;
-        background: #FFE8B1;
         border-radius: 10px;
         height: 100%;
         width: 100%;

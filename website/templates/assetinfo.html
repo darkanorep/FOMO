@@ -244,9 +244,9 @@
             </div>
             <div class="info-container">
                 {% for row in profile %}
-                    <h2>{{row["symbol"]}} Price Prediction</h2>
+                    <h2 style="text-align: center;">{{row["symbol"]}} Price Prediction</h2>
                 {% endfor %}
-                <p style="font-style: italic;">&bull;Note: R2 Score blah blah blah...</p>
+                <p style="font-style: italic; text-align: center;">&bull;Note: A higher R2 Score indicates a better fit for the model.</p>
                 <div class="prediction-wrapper">
                     <div class="layer1">
                         <div class="wrapper-24hr">
@@ -419,17 +419,26 @@
                     </div>
                 </div>
             </div>
-            {% for row in random %}
-                <div class="random">
-                    <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
+            <div class="we-offer">
+                <h1>Suggest to Buy</h1>
+                <div class="main-offer">
+                    {% for row in random %}
+                    <div class="inner-offer">
+                        <div class="random">
+                            <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
             <div class="market" style="margin: 3rem 0 3rem 0rem;">
                 <h2>Available Market</h2>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         {% for row in market %}    
-                            <div class="swiper-slide"><a href="{{row["blink"]}}" style="text-decoration: none; padding-bottom: 20px;" target="_blank" ><img class = "img" id="img" src="/static/{{row['blogo']}}"></a></div>
+                            <div class="swiper-slide"><a href="{{row["blink"]}}" style="text-decoration: none; padding-bottom: 20px;" target="_blank" >
+                                <img class = "img" id="img" src="/static/{{row['blogo']}}"></a>
+                            </div>
                         {% endfor %}
                     </div>
                     <div class="swiper-button-next"></div>
