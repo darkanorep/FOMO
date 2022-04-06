@@ -394,6 +394,39 @@ def admin_user():
     else:
         return redirect(url_for("auth.login"))
 
+@auth.route('/user_post')
+def user_post():
+
+    if "admin" in session:
+        
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Blog order by date desc ")  
+        rows = cur.fetchall()
+
+        return render_template("user_post.html",rows = rows)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/post_delete/<id>')
+def post_delete(id):
+    if "admin" in session:
+        try:
+            con = sqlite3.connect('system.db')
+            cur = con.cursor()
+            cur.execute("DELETE FROM Blog where id=?",([id]))
+            con.commit()
+            flash("Record Deleted Successfully",category="s")
+        except:
+            flash("Record Delete Failed","danger",category="e")
+        finally:
+            return redirect(url_for("auth.user_post"))
+    else:
+        return redirect(url_for("auth.login"))
+
 @auth.route("/user_add",methods=["POST","GET"])
 def user_add():
     if "admin" in session:

@@ -6,44 +6,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Record</title>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+    <title>User</title>
 </head>
 <body>
-    <div class="container text-center">
-        <div class="col-md-offset-1 col-md-10">
-            <h2 class="page-header text-primary text-center">System Users</h2>
-            <table class="table table-bordered">
-                <thead >
-                    <tr>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Password1</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    {% for row in rows %}
-                    
-                        <tr style="text-align:center"> 
-                            <td>{{row["email"]}}</td>  
-                            <td>{{row["password"]}}</td>  
-                            <td>{{row["password1"]}}</td>
-                            <td class="action text-center">
-                            <a style="text-align:center"><a href="{{url_for('auth.userupdate',id=row['id'])}}" class="btn btn-primary">Edit</a>
-                            <a style="text-align:center"><a href="{{url_for('auth.user_delete',id=row['id'])}}" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
-                            
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div>
-                <td>
-                    <center><a href="{{url_for('auth.user_add')}}" class="btn btn-success">Add Record</a></center>
-                </td>
-            </div>
-        </div>
+    <div class="container">
+        <h2 class="header">System User</h2>
+        <a class="btn btn-success" href=#>Go to Archived</a>
+        <br>
+        <br>
+        <table class="table">
+            <thead >
+                <tr>
+                    <th>Email</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}               
+                <tr style="text-align:center">
+                    <td data-label=Email>{{row["email"]}}</td>
+                    <td data-label=Username>{{row["username"]}}</td>
+                    <!--<td data-label=Action>
+                        <a href="{{url_for('patternupdate',id=row['id'])}}" style="text-decoration: none;">
+                            <button class="edit-button">Edit<i class='bx bxs-edit-alt'></i></button>
+                        </a>
+                        <a href="{{url_for('patternarchived',name=row['name'])}}" style="text-decoration: none;">
+                            <button class="archive-button">Archive<i class='bx bxs-archive-in'></i></button>
+                        </a>
+                    </td>-->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!--<div>
+            <td>
+                <center><a href="{{url_for('auth.add_pattern')}}" class="btn btn-success">Add Pattern</a></center>
+            </td>
+        </div>-->
     </div>
 </body>
 </html>

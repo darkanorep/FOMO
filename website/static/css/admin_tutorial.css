@@ -49,7 +49,7 @@ body {
     justify-content: center;
     letter-spacing: 0.03em;
     height: 48px;
-    /* padding: 0px 24px; */
+    padding: 0px 24px;
     background-color: #af5353;
     color: rgb(255, 255, 255);
     width: 100%;

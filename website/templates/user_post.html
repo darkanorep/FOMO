@@ -1,0 +1,50 @@
+{% extends "admin_base.html" %}
+{% block title %}User's Post{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+    <style>
+        img {
+            width: 70%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header" >User's Post</h2>
+        <a class="btn btn-success" href=#>Go to Archived</a></p>
+        <table class="table">
+            <thead >
+                <tr>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Post</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr style="text-align:center">
+                    <td data-label=Author>{{row["author"]}}</td>  
+                    <td data-label=Category>{{row["category"]}}</td>
+                    <td data-label=Post>{{row["blog"]}}</td>
+                    <td data-label=Image> <img class = "img" id="img" src="/static/community/{{row['image']}}"></td>  
+                    <td data-label=Action>
+
+                        <a href="{{url_for('auth.post_delete',id=row['id'])}}" style="text-decoration: none;">
+                            <button class="delete-button">Delete<i class='bx bxs-trash-alt'></i></button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}
+ 
