@@ -69,7 +69,7 @@
                             </div>
                             <div class="action">
                                 <a href="{{url_for('editpost',id=row['id'])}}" style="text-decoration: none;">Edit</a>
-                                <a href="{{url_for('auth.delete_blog',id=row['id'])}}" style="text-decoration: none;">Delete</a>
+                                <a href="{{url_for('auth.delete_blog',id=row['id'])}}" style="text-decoration: none;" class="delete-btn">Delete</a>
                             </div>
                         </div>
                         {% endfor %}
@@ -79,4 +79,30 @@
         </div>
     </body>
 </html>
+<script>
+    const btnUpdate= document.querySelectorAll('.btn-block');
+    if(btnUpdate) {
+    const btnArray = Array.from(btnUpdate);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to change your password?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+
+    const btnDelete= document.querySelectorAll('.delete-btn');
+    if(btnDelete) {
+    const btnArray = Array.from(btnDelete);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to delete it?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+
+</script>
 {% endblock %}

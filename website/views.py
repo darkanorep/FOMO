@@ -21,7 +21,7 @@ auth = Blueprint('auth',__name__)
 @views.route('/')
 def index():
 
-    return redirect(url_for("auth.login"))
+    return render_template("landing-page.html")
 
 
 @views.route('/assets/<symbol>')

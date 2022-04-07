@@ -48,4 +48,29 @@
     </div>
 </body>
 </html>
+<script>
+    const btnDelete= document.querySelectorAll('.delete-button');
+    if(btnDelete) {
+    const btnArray = Array.from(btnDelete);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to delete it?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+    
+    const btnRestore= document.querySelectorAll('.edit-button');
+    if(btnRestore) {
+    const btnArray = Array.from(btnRestore);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to restore it?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+</script>
 {% endblock %}
