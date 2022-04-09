@@ -21,7 +21,15 @@ auth = Blueprint('auth',__name__)
 @views.route('/')
 def index():
 
-    return render_template("landing-page.html")
+    con =sqlite3.connect('system.db')
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+
+    cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1yr' ORDER BY r2score desc limit 5)")
+    random = cur.fetchall()
+    
+
+    return render_template("landing-page.html", random=random)
 
 
 @views.route('/assets/<symbol>')
@@ -32,10 +40,6 @@ def assetinfo(symbol):
         con =sqlite3.connect('system.db')
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-
-        cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1d' ORDER BY r2score desc limit 5)")
-        random = cur.fetchall()
-
 
         cur.execute("DELETE FROM ChartData where SYMBOL = '"+symbol+"';")
         con.commit()
@@ -690,8 +694,7 @@ def assetinfo(symbol):
                                                     data=data, profile=profile, 
                                                     broker=broker, 
                                                     hdata=hdata, 
-                                                    symbol=symbol,
-                                                    random=random)
+                                                    symbol=symbol)
     
     else:
         return redirect(url_for("auth.login"))

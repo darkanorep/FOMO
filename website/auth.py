@@ -34,6 +34,42 @@ def email_alert(subject, body, to):
 
     server.quit()
 
+def email_support(subject, body, to):
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg['subject'] = subject
+    msg['to'] = to
+
+    user = "fomosspp@gmail.com"
+    msg['from'] = user
+    password ="hpqjvkcghufninji"
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(user, password)
+    server.send_message(msg)
+
+    server.quit()
+
+@auth.route('/form', methods=["GET", "POST"])
+def form():
+
+    if request.method == 'POST':
+
+        name = request.form.get("name")
+        email = request.form.get("email")
+        message = request.form.get("message")
+
+        if len(email) < 4:
+            flash("Please enter valid email.", category="e")
+        
+        else:
+            email_alert("FOMO Support", "Thank you for reaching us! Dear "+str(name), email)
+            email_support("Concern of our Dear"+str(name)+", "+str(email), str(message), "fomostockmarket@gmail.com")
+        
+        return redirect(url_for("views.index"))
+
+    return render_template("landing-page.html")
 
 @auth.route('/signup', methods = ['GET', 'POST'])
 def signup():
@@ -88,14 +124,6 @@ def signup():
 
                 email_alert("OTP", "Your OTP password is: "+str(int(otp)), email)             
                 return redirect(url_for('auth.verify'))
-                
-            
-                cur.execute("INSERT into User (email, password, password1) values (?,?,?)",(email,password,password1))
-                con.commit()
-                flash("Successfully Registered.", category='s')
-
-                return redirect(url_for("auth.login"))
-
 
         return redirect(url_for("auth.signup"))
     

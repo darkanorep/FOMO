@@ -1,3 +1,7 @@
+{% extends "index.html" %}
+{% block title %}FOMO{% endblock %} 
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +41,38 @@
     }
 
     section{
-        min-height: 100vh;
         padding:0 9%;
         padding-top: 7.5rem;
         padding-bottom: 2rem;
+    }
+
+    .stock-logo {
+        border-radius: 60px;
+    }
+    
+    .we-offer {
+        padding: 2rem 7%;
+    }
+
+    .main-offer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .inner-offer {
+        /* flex: 1 1 300px; */
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        border: 0.1rem solid rgba(0,0,0,.2);
+    }
+
+
+    .inner-offer:hover {
+        box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
     }
 
     .btn{
@@ -116,6 +148,7 @@
     }
 
     .home{
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -573,6 +606,20 @@
 </section>
 
 <!-- features section ends -->
+<section>
+    <div class="we-offer">
+        <h1 class="heading">Suggest to Buy</h1>
+        <div class="main-offer">
+            {% for row in random %}
+            <div class="inner-offer">
+                <div class="random">
+                    <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 <!-- about section starts  -->
 
@@ -601,27 +648,26 @@
         <img src="../static/contact-img.png" alt="">
     </div>
 
-    <form action="">
 
+    <form action ="/form" method="POST">
         <h1 class="heading">contact us</h1>
 
         <div class="inputBox">
-            <input type="text" required>
+            <input type="text" id="name" name="name" required autofocus/>
             <label>Name</label>
         </div>
 
         <div class="inputBox">
-            <input type="email" required>
+            <input type="email" id="email" name="email" required autofocus/>
             <label>Email</label>
         </div>
 
         <div class="inputBox">
-            <textarea required name="" id="" cols="30" rows="10"></textarea>
+            <textarea required name="message" id="" cols="30" rows="10"></textarea>
             <label>Message</label>
         </div>
 
-        <input type="submit" class="btn" value="Send Message">
-
+        <button class="btn" type="submit">Send Message</button>
     </form>
 
 </section>
@@ -664,3 +710,4 @@
 
 </body>
 </html>
+{% endblock %}

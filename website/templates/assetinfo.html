@@ -419,18 +419,6 @@
                     </div>
                 </div>
             </div>
-            <div class="we-offer">
-                <h1>Suggest to Buy</h1>
-                <div class="main-offer">
-                    {% for row in random %}
-                    <div class="inner-offer">
-                        <div class="random">
-                            <a href="{{url_for('auth.assets')}}{{row["symbol"]}}" target="_blank"><img class= "stock-logo" src="/static/{{row['logo']}}" style="height: 50px; width: 50px;"></a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
             <div class="market" style="margin: 3rem 0 3rem 0rem;">
                 <h2>Available Market</h2>
                 <div class="swiper mySwiper">
