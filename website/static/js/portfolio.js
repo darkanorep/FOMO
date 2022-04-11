@@ -64,11 +64,11 @@ $(document).ready(function () {
             row = "<tr>";
             row += "<td data-label=Stock>" + ticker + '<a href="' + e +'/'+ id + '">'+"<i class='bx bxs-edit'></i>"+'</a>' + '<a href="' + d +'/'+ id + '">'+"<i class='bx bxs-trash' >"+'</a>'; +"</td>";
             row += "<td data-label=Quantity>" + totalShares + "</td>";
-            row += "<td data-label=InitialValue>$" + initialValue.toFixed(2) + "</td>";
-            row += "<td data-label=CurrentPrice>$" + currentPrice + "</td>";
-            row += "<td data-label=TotalCost>$" + totalCost.toFixed(2)  + "</td>";
-            row += "<td data-label=CurrentValue>$" + currentValue.toFixed(2) + "</td>";
-            row += profitRow(profit);
+            row += "<td data-label=InitialValue>$" + numberWithCommas(initialValue.toFixed(2)) + "</td>";
+            row += "<td data-label=CurrentPrice>$" + numberWithCommas(currentPrice) + "</td>";
+            row += "<td data-label=TotalCost>$" + numberWithCommas(totalCost.toFixed(2))  + "</td>";
+            row += "<td data-label=CurrentValue>$" + numberWithCommas(currentValue.toFixed(2)) + "</td>";
+            row += numberWithCommas(profitRow(profit));
             row += percentChangeRow(percentChange);
             row += "</tr>";
             tableHTML += row;
@@ -88,9 +88,9 @@ $(document).ready(function () {
         tableHTML += "<th>&nbsp;</th>";
         tableHTML += "<th>&nbsp;</th>";
         tableHTML += "<th>&nbsp;</th>";
-        tableHTML += "<td data-label=PortfolioCost>$" + portfolioCost.toFixed(2) + "</td>";
-        tableHTML += "<td data-label=PortfolioValue>$" + portfolioCurrent.toFixed(2) + "</td>";
-        tableHTML += profitRow(portfolioProfitChange);
+        tableHTML += "<td data-label=PortfolioCost>$" + numberWithCommas(portfolioCost.toFixed(2)) + "</td>";
+        tableHTML += "<td data-label=PortfolioValue>$" + numberWithCommas(portfolioCurrent.toFixed(2)) + "</td>";
+        tableHTML += numberWithCommas(profitRow(portfolioProfitChange));
         tableHTML += percentChangeRow(portfolioPercentChange);
         tableHTML += "</tr>"
 
@@ -138,6 +138,31 @@ function profitRow(profit) {
         return "<td data-label=CurrentValue data-label=PnL>$" + profit.toFixed(2) + "</td>";
     }
 }
+
+function numberWithCommas(totalCost) {
+    return totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(profitRow) {
+    return profitRow.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(portfolioCost) {
+    return portfolioCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(portfolioCurrent) {
+    return portfolioCurrent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(initialValue) {
+    return initialValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function numberWithCommas(currentPrice) {
+    return currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
 getPortfolio();
 
