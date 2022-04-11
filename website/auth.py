@@ -1691,4 +1691,4 @@ def logout():
     session.pop("email", None)
     session.pop("admin", None)
     
-    return redirect(url_for("views.index"))
+    return render_template("landing-page.html")
