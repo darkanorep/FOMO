@@ -201,7 +201,7 @@ def forgot():
         if data:
             cur.execute("UPDATE User SET token=? WHERE email=?", [token, email])
             con.commit()
-            email_alert("Reset Password", "Hi there. To reset your password, click the link: https://www.fomostockpriceprediction.com/reset/"+str(token), email)
+            email_alert("Reset Password", "Hi there. To reset your password, click the link: www.fomostockpriceprediction.com/reset/"+str(token), email)
             flash("Instruction has been sent to your email..", category='s')
         
         else:
@@ -1241,7 +1241,7 @@ def comment(id):
             cur.execute("INSERT into Comment (comment, comment_author, author, blog_id, date, author_email) values (?,?,?,?,?,?)",(comment, email, author, blog_id, time, eaddress))
             con.commit()
             flash("Your comment has been posted.", category='s')
-            email_alert("Notification", "Hi "+author+". "+email+" has been comment to your post. Click the link to redirect. https://www.fomostockpriceprediction.com/blog/"+str(id), eaddress)
+            email_alert("Notification", "Hi "+author+". "+email+" has been comment to your post. Click the link to redirect. www.fomostockpriceprediction.com/blog/"+str(id), eaddress)
             return redirect(url_for("auth.blog", id = blog_id))
 
         return render_template('post.html', blog=blog, user=user, blog_id=blog_id)
