@@ -1691,4 +1691,4 @@ def logout():
     session.pop("email", None)
     session.pop("admin", None)
     
-    return redirect(url_for("/#"))
+    return redirect(url_for("auth.login"))
