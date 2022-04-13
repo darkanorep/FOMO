@@ -33,6 +33,10 @@
                             <a href="{{url_for('unblock',id=row['id'])}}" style="text-decoration: none;">
                                 <button class="edit-button">Unblock<i class='bx bxs-check-square'></i></button>
                             </a>
+                            <a href="{{url_for('auth.user_delete',id=row['id'])}}" style="text-decoration: none;">
+                                <button class="edit-button">Delete<i class='bx bxs-check-square'></i></button>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
