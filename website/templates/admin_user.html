@@ -27,14 +27,14 @@
                 <tr style="text-align:center">
                     <td data-label=Email>{{row["email"]}}</td>
                     <td data-label=Username>{{row["username"]}}</td>
-                    <!--<td data-label=Action>
-                        <a href="{{url_for('patternupdate',id=row['id'])}}" style="text-decoration: none;">
-                            <button class="edit-button">Edit<i class='bx bxs-edit-alt'></i></button>
+                    <td data-label=Action>
+                        <a href="{{url_for('user_delete',id=row['id'])}}" style="text-decoration: none;">
+                            <button class="edit-button">Delete<i class='bx bxs-edit-alt'></i></button>
                         </a>
                         <a href="{{url_for('patternarchived',name=row['name'])}}" style="text-decoration: none;">
                             <button class="archive-button">Archive<i class='bx bxs-archive-in'></i></button>
                         </a>
-                    </td>-->
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
