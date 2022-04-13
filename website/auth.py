@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, url_for, redirect, session, jsonify
+from flask import Blueprint, render_template, request, flash, url_for, redirect, session, jsonify, Markup
 import sqlite3, json, bs4, os, requests, time, smtplib, uuid
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -170,6 +170,12 @@ def login():
             
             return redirect(url_for("auth.dashboard"))
 
+        statement = f"SELECT * FROM blockUser WHERE username='{username}';"
+        cur.execute(statement)
+
+        if cur.fetchone():
+            flash(Markup('Sorry, your account has been blocked!, contact our support <a href="/#contact" class="alert-link">here</a>'), category="e")
+            return redirect(url_for("auth.login"))
         
         statement = f"SELECT * FROM user WHERE username='{username}' AND password='{password}';"
         cur.execute(statement)
@@ -706,6 +712,22 @@ def delete_candlestick(id):
         finally:
             return redirect(url_for("auth.admin_candlestick"))
 
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/block_user')
+def block_user():
+
+    if "admin" in session:
+        
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()  
+        cur.execute("SELECT * FROM blockUser ORDER BY ID DESC;")  
+        rows = cur.fetchall()
+
+        return render_template("block_user.html",rows = rows)
+    
     else:
         return redirect(url_for("auth.login"))
 

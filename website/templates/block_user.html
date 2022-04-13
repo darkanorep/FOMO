@@ -1,0 +1,56 @@
+{% extends "admin_base.html" %}
+{% block title %}User{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/css/admin_tutorial.css">
+    <style>
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header" >Block Users</h2>
+        <a class="btn btn-success" href=/admin_user>Go to Main</a></p>
+        <table class="table">
+            <thead >
+                <tr>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}         
+                    <tr style="text-align:center">
+                        <td data-label=Email>{{row["email"]}}</td>
+                        <td data-label=Username>{{row["username"]}}</td>
+                        <td data-label=Action>
+                            <a href="{{url_for('unblock',id=row['id'])}}" style="text-decoration: none;">
+                                <button class="edit-button">Unblock<i class='bx bxs-check-square'></i></button>
+                            </a>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </body>
+</html>
+<script>
+    const btnUnblock= document.querySelectorAll('.edit-button');
+    if(btnUnblock) {
+    const btnArray = Array.from(btnUnblock);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to unblock this user?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+</script>
+{% endblock %}

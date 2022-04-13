@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h2 class="header">System User</h2>
-        <a class="btn btn-success" href=#>Go to Archived</a>
+        <a class="btn btn-success" href="/block_user">Go to Block Users</a>
         <br>
         <br>
         <table class="table">
@@ -20,6 +20,7 @@
                 <tr>
                     <th>Email</th>
                     <th>Username</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,12 +29,12 @@
                     <td data-label=Email>{{row["email"]}}</td>
                     <td data-label=Username>{{row["username"]}}</td>
                     <td data-label=Action>
-                        <a href="{{url_for('user_delete',id=row['id'])}}" style="text-decoration: none;">
-                            <button class="edit-button">Delete<i class='bx bxs-edit-alt'></i></button>
+                        <a href="{{url_for('blockuser',id=row['id'])}}" style="text-decoration: none;">
+                            <button class="delete-button">Block<i class='bx bxs-x-square'></i></button>
                         </a>
-                        <a href="{{url_for('patternarchived',name=row['name'])}}" style="text-decoration: none;">
+                        <!--<a href="{{url_for('patternarchived',name=row['name'])}}" style="text-decoration: none;">
                             <button class="archive-button">Archive<i class='bx bxs-archive-in'></i></button>
-                        </a>
+                        </a>-->
                     </td>
                 </tr>
                 {% endfor %}
@@ -46,6 +47,19 @@
         </div>-->
     </div>
 </body>
+<script>
+    const btnBlock= document.querySelectorAll('.delete-button');
+    if(btnBlock) {
+    const btnArray = Array.from(btnBlock);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to block this user?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+</script>
 </html>
 
 {% endblock %}

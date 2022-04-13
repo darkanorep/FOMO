@@ -7,6 +7,43 @@ app = create_app()
 app.config['UPLOAD_FOLDER'] = "website/static"
 app.config['COMMUNITY_FOLDER'] = "website/static/community"
 
+@app.route('/blockuser/<id>', methods=["POST","GET"])
+def blockuser(id):
+    
+    if "admin" in session:
+
+        con=sqlite3.connect("system.db")
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("INSERT INTO blockUser SELECT [id], [username], [email], [password], [password1], [token] FROM User WHERE id=?",([id]))
+        con.commit()
+        cur.execute("DELETE from User WHERE id=?",([id]))
+        con.commit()
+        flash("Successfully Blocked User", category="s")
+
+        return redirect(url_for("auth.admin_user"))
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@app.route('/unblock/<id>', methods=["POST","GET"])
+def unblock(id):
+    
+    if "admin" in session:
+
+        con=sqlite3.connect("system.db")
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute("INSERT INTO User SELECT * FROM blockUser WHERE id=?",([id]))
+        con.commit()
+        cur.execute("DELETE from blockUser WHERE id=?",([id]))
+        con.commit()
+        flash("Successfully User Unblock!", category="s")
+
+        return redirect(url_for("auth.block_user"))
+    
+    else:
+        return redirect(url_for("auth.login"))
 
 @app.route('/uploadtutorial', methods=["POST","GET"])
 def uploadtutorial():
