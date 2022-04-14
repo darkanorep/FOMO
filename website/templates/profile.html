@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}User{% endblock %}
+{% block title %}FOMO{% endblock %} 
 
 {% block content %}
 <!DOCTYPE html>
@@ -44,9 +44,12 @@
                         </div>
                     </div>
                 </div>
+                <br>
                 <!---->
                 <hr>
                 <div class="cont">
+                    <br>
+                    <h4>You have {{ count }} published ideas yet.</h4>
                     <div class="con">
                         {% for row in blog %}
                         <div class="card">

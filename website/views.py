@@ -10,6 +10,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from datetime import datetime
 from random import randint
+import yliveticker
 
 import base64
 from io import BytesIO
@@ -30,7 +31,7 @@ def index():
     
 
     return render_template("landing-page.html", random=random)
-
+ 
 
 @views.route('/assets/<symbol>')
 def assetinfo(symbol):
@@ -54,7 +55,6 @@ def assetinfo(symbol):
         cur.execute("DELETE FROM Prediction where symbol=? and interval='3mo';", [symbol])
         cur.execute("DELETE FROM Prediction where symbol=? and interval='1mo';", [symbol])
         con.commit()
-
 
         data1yr = yf.download(tickers=''+symbol+'', period='1y', interval='1d')
         data1yr.to_csv('website/data/'+symbol+'1yr.csv')
@@ -155,6 +155,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'30min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -176,6 +177,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'15min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -241,6 +243,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1hr.csv')
             df.columns.values[0] = 'Date'
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -263,6 +266,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -310,6 +314,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'5min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -518,6 +523,7 @@ def assetinfo(symbol):
             cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
             con.commit()
 
+        
         r = requests.get('https://finance.yahoo.com/quote/'+symbol+'?p='+symbol+'')
         soup = bs4.BeautifulSoup(r.text, "html.parser")
 
@@ -652,6 +658,7 @@ def assetinfo(symbol):
 
         cur.execute("SELECT * FROM Blog WHERE category=? ORDER BY DATE DESC LIMIT 3",[(symbol)])
         blog = cur.fetchall()
+    
 
         #---------------------------------------------------------------------------------------------------------
 

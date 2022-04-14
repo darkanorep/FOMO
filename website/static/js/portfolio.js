@@ -28,10 +28,10 @@ $(document).ready(function () {
         
         var table = document.getElementById("portfolio");
         var e = document.getElementById('e');
-        e.href = "/editportfolio"
+        e.href = "/editportfolio";
         
         var d = document.getElementById('d');
-        d.href = "/deleteportfolio"
+        d.href = "/deleteportfolio";
 
         var tableHTML = `<tr>
             <th>Stock</th>
@@ -97,6 +97,7 @@ $(document).ready(function () {
         table.innerHTML = tableHTML;
 
         console.log(json)
+        
     });
 })
 

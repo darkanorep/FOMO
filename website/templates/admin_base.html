@@ -2,7 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="../static/favicon.png">
+    <title>{% block title %}FOMO{% endblock %}</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -97,7 +98,7 @@
       </li>
       <li class="profile">
          <li class="profile">
-          <a href="/logout">
+          <a href="/logout" class="logout-btn">
             <i class='bx bx-power-off' ></i>
             <span class="links_name">Logout</span>
           </a>
@@ -201,6 +202,19 @@
       {% block content %} {% endblock %}
     </div>
   </section>
+  <script>
+    const btnLogout= document.querySelectorAll('.logout-btn');
+    if(btnLogout) {
+    const btnArray = Array.from(btnLogout);
+    btnArray.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+        if(!confirm('Are you sure you want to logout?')){
+            e.preventDefault();
+        }
+        });
+    })
+    }
+  </script>
 
   <script>
     let sidebar = document.querySelector(".sidebar");
@@ -210,11 +224,6 @@
     closeBtn.addEventListener("click", ()=>{
       sidebar.classList.toggle("open");
       menuBtnChange();//calling the function(optional)
-    });
-
-    searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
-      sidebar.classList.toggle("open");
-      menuBtnChange(); //calling the function(optional)
     });
 
     // following are the code to change sidebar button(optional)

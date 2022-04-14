@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="shortcut icon" type="image/png" href="../static/favicon.png">
+        <title>FOMO</title>
+    </head>
+    <body>
+        {% for row in profile %}
+            <img src="../static/datavisual/{{row["symbol"]}}24hr.png">
+        {% endfor %}
+    </body>
+</html>
+ 

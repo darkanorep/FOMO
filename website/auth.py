@@ -109,6 +109,12 @@ def signup():
 
         elif len(password)< 8:
             flash("Password must be 8 characters.", category="e")
+
+        elif not any(char.isupper() for char in password):
+            flash('Password should have at least one uppercase letter', category="e")
+
+        elif not any(char.isdigit() for char in password):
+            flash('Password should have at least one numeral', category="e")
             
         elif password != password1:
             flash("Password does not match.", category="e")
@@ -122,7 +128,7 @@ def signup():
                 c = password1
                 d = username
 
-                email_alert("OTP", "Your OTP password is: "+str(int(otp)), email)             
+                email_alert("OTP", "Thank you for signing up, "+d+"!\nBelow is your OTP: \n"+str(int(otp)), email)             
                 return redirect(url_for('auth.verify'))
 
         return redirect(url_for("auth.signup"))
@@ -236,6 +242,12 @@ def reset(token):
         
         elif len(password) < 8:
             flash("Password must be 8 characters.", category="e")
+        
+        elif not any(char.isupper() for char in password):
+            flash('Password should have at least one uppercase letter', category="e")
+
+        elif not any(char.isdigit() for char in password):
+            flash('Password should have at least one numeral', category="e")
 
         elif  user:
             cur.execute("UPDATE User SET password=?, password1=?, token=? where token=?",(password,password1,token1,token))
@@ -1127,7 +1139,10 @@ def profile():
         cur.execute("SELECT * FROM User where username=?",([email]))
         user = cur.fetchall()
 
-        return render_template('profile.html', blog=blog, user=user)
+        cur.execute("SELECT COUNT (*) FROM Blog where author=?",([email]))
+        count = cur.fetchone()[0]
+
+        return render_template('profile.html', blog=blog, user=user, count=count)
 
     else:
         return redirect(url_for("auth.login"))
@@ -1706,7 +1721,91 @@ def dashboard():
     else:
         return redirect(url_for("auth.login"))
 
+@auth.route('/datavisual/<symbol>24hr')
+def datavisual24hr(symbol):
 
+    if "email" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
+        profile = cur.fetchall()
+
+        return render_template("datavisual24hr.html", profile=profile)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+
+@auth.route('/datavisual/<symbol>1mo')
+def datavisual1mo(symbol):
+
+    if "email" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
+        profile = cur.fetchall()
+
+        return render_template("datavisual1mo.html", profile=profile)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/datavisual/<symbol>3mo')
+def datavisual3mo(symbol):
+
+    if "email" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
+        profile = cur.fetchall()
+
+        return render_template("datavisual3mo.html", profile=profile)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/datavisual/<symbol>6mo')
+def datavisual6mo(symbol):
+
+    if "email" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
+        profile = cur.fetchall()
+
+        return render_template("datavisual6mo.html", profile=profile)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/datavisual/<symbol>1yr')
+def datavisual1yr(symbol):
+
+    if "email" in session:
+
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
+        profile = cur.fetchall()
+
+        return render_template("datavisual1yr.html", profile=profile)
+    
+    else:
+        return redirect(url_for("auth.login"))
 
 @auth.route('/logout')
 def logout():
