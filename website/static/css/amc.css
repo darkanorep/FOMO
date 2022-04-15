@@ -660,7 +660,7 @@ th {
 
 @media (max-width: 1000px) {
     .info-content .box {
-        width: calc(100% / 1 - 15px);
+        width: calc(100% / 1 - 0);
         margin-bottom: 15px;
     }
 }

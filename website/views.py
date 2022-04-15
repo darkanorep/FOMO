@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, session, url_for, request, jsonify
+from flask import Blueprint, render_template, redirect, session, url_for
 import sqlite3, csv, json, plotly, requests, bs4
 import numpy as np
 import pandas as pd
@@ -8,12 +8,6 @@ from plotly.subplots import  make_subplots
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
-from datetime import datetime
-from random import randint
-import yliveticker
-
-import base64
-from io import BytesIO
 
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
@@ -63,6 +57,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1yr.csv')
     
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -155,7 +150,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'30min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%B %d, %Y %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -177,7 +172,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'15min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%B %d, %Y %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -243,7 +238,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1hr.csv')
             df.columns.values[0] = 'Date'
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
+            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%B %d, %Y %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -266,7 +261,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%B %d, %Y %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -314,7 +309,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'5min.csv')
     
             df = df[['Datetime', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%Y-%m-%d %I:%M %p")
+            df['Datetime'] = pd.to_datetime(df['Datetime'], format='%Y-%m-%d %H:%M:%S.%f').dt.strftime("%B %d, %Y %I:%M %p")
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -424,6 +419,8 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'.csv')
 
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
+
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -587,13 +584,13 @@ def assetinfo(symbol):
         cur.execute("select * from Broker")
         broker = cur.fetchall()
 
-        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1d' ORDER BY DATE DESC LIMIT 7", ([symbol]))
+        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1d' ORDER BY id DESC LIMIT 7", ([symbol]))
         hdata = cur.fetchall()
 
         cur.execute("SELECT * FROM ChartData where symbol=? and interval = '1d' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         info = cur.fetchall()
 
-        cur.execute("SELECT date FROM ChartData where symbol=? ORDER BY DATE ASC LIMIT 1", ([symbol]))
+        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1d' order by id asc limit 1", ([symbol]))
         h = cur.fetchall()
 
         #----------------------------------------------------------------------------------------------
@@ -647,7 +644,7 @@ def assetinfo(symbol):
         cur.execute("SELECT * FROM ChartData where symbol=? and interval='30min' ORDER BY DATE DESC",([symbol]))
         thirtymindata = cur.fetchall()
 
-        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1hr' ORDER BY DATE DESC",([symbol]))
+        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1hr' ORDER BY id DESC",([symbol]))
         onehourdata = cur.fetchall()
         #----------------------------------------------------------------------------------------------------------
         cur.execute("SELECT * FROM Broker")

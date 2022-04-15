@@ -1,5 +1,4 @@
 from flask import Flask
-from werkzeug.utils import secure_filename
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 

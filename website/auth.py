@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, url_for, redirect, session, jsonify, Markup
-import sqlite3, json, bs4, os, requests, time, smtplib, uuid
+import sqlite3, json, os, requests, smtplib, uuid
 from datetime import datetime
 from bs4 import BeautifulSoup
 from email.message import EmailMessage
@@ -111,10 +111,10 @@ def signup():
             flash("Password must be 8 characters.", category="e")
 
         elif not any(char.isupper() for char in password):
-            flash('Password should have at least one uppercase letter', category="e")
+            flash('Password should have at least one uppercase letter.', category="e")
 
         elif not any(char.isdigit() for char in password):
-            flash('Password should have at least one numeral', category="e")
+            flash('Password should have at least one numeral.', category="e")
             
         elif password != password1:
             flash("Password does not match.", category="e")
@@ -244,10 +244,10 @@ def reset(token):
             flash("Password must be 8 characters.", category="e")
         
         elif not any(char.isupper() for char in password):
-            flash('Password should have at least one uppercase letter', category="e")
+            flash('Password should have at least one uppercase letter.', category="e")
 
         elif not any(char.isdigit() for char in password):
-            flash('Password should have at least one numeral', category="e")
+            flash('Password should have at least one numeral.', category="e")
 
         elif  user:
             cur.execute("UPDATE User SET password=?, password1=?, token=? where token=?",(password,password1,token1,token))
