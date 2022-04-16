@@ -186,7 +186,6 @@ def login():
         statement = f"SELECT * FROM user WHERE username='{username}' AND password='{password}';"
         cur.execute(statement)
 
-
         if not cur.fetchone():
             flash("Your username or password was incorrect.", category="e")    
             return redirect(url_for("auth.login"))
