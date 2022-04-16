@@ -500,6 +500,7 @@ def user_delete(id):
             cur.execute("DELETE FROM blockUser where id=?",([id]))
             con.commit()
             con.close()
+            #con.close()
             flash("Record Deleted Successfully",category="s")
         except:
             flash("Record Delete Failed","danger",category="e")
