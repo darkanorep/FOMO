@@ -188,7 +188,7 @@ def login():
 
 
         if not cur.fetchone():
-            flash("Your email or password was incorrect.", category="e")    
+            flash("Your username or password was incorrect.", category="e")    
             return redirect(url_for("auth.login"))
 
         else: 
