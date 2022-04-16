@@ -34,7 +34,7 @@ def unblock(id):
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute("INSERT INTO User SELECT * FROM blockUser WHERE id=?",([id]))
+        cur.execute("INSERT INTO User SELECT [id], [username], [email], [password], [password1], [token] FROM blockUser WHERE id=?",([id]))
         con.commit()
         cur.execute("DELETE from blockUser WHERE id=?",([id]))
         con.commit()
