@@ -4,6 +4,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from email.message import EmailMessage
 from random import randint
+from pytz import timezone
 
 auth = Blueprint('auth', __name__)
 views = Blueprint('views',__name__)
@@ -1272,9 +1273,14 @@ def comment(id):
         if request.method == "POST":
 
             comment = request.form.get('comment')
-            time = datetime.now().strftime("%B %d, %Y %I:%M%p")
+            time_format = "%B %d, %Y %I:%M%p"
+            now = datetime.now().strftime(time_format)
+            tz = ['Asia/Manila']
 
-            cur.execute("INSERT into Comment (comment, comment_author, author, blog_id, date, author_email) values (?,?,?,?,?,?)",(comment, email, author, blog_id, time, eaddress))
+            for zone in tz:
+                dt = datetime.now(timezone(zone)).strftime(time_format)
+
+            cur.execute("INSERT into Comment (comment, comment_author, author, blog_id, date, author_email) values (?,?,?,?,?,?)",(comment, email, author, blog_id, dt, eaddress))
             con.commit()
             flash("Your comment has been posted.", category='s')
             email_alert("Notification", "Hi "+author+". "+email+" has been comment to your post. Click the link to redirect. www.fomostockpriceprediction.com/blog/"+str(id), eaddress)
