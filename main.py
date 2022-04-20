@@ -2,6 +2,8 @@ from website import create_app
 from flask import request, redirect, flash, url_for, render_template, session
 import json, os, sqlite3
 from datetime import datetime
+from pytz import timezone
+
 
 app = create_app()
 app.config['UPLOAD_FOLDER'] = "website/static"
@@ -751,13 +753,19 @@ def write():
             blog = request.form.get('blog')
             image = request.files['image']
             symbol = request.form.get('symbol')
-            time = datetime.now().strftime("%B %d, %Y %I:%M%p")
+            time_format = "%B %d, %Y %I:%M%p"
+            now = datetime.now().strftime(time_format)
+            tz = ['Asia/Manila']
+
+            for zone in tz:
+                dt = datetime.now(timezone(zone)).strftime(time_format)
+            
 
 
             if image.filename !=' ':
                 filepath=os.path.join(app.config['COMMUNITY_FOLDER'], image.filename)
                 image.save(filepath)
-                cur.execute("INSERT into Blog (blog, category, image, author, date, email) values (?,?,?,?,?,?)",(blog, symbol, image.filename, email, time, eaddress))
+                cur.execute("INSERT into Blog (blog, category, image, author, date, email) values (?,?,?,?,?,?)",(blog, symbol, image.filename, email, dt, eaddress))
                 con.commit()
 
                 flash("Successfully Posted", category="s")
