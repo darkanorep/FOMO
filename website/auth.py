@@ -1838,7 +1838,6 @@ def index():
 
     cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1yr' ORDER BY r2score desc limit 5)")
     random = cur.fetchall()
-        
 
     return render_template("landing-page.html", random=random)
 
