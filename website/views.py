@@ -11,20 +11,6 @@ from sklearn.metrics import r2_score
 
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
-
-
-@views.route('/')
-def index():
-
-    con =sqlite3.connect('system.db')
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-
-    cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1yr' ORDER BY r2score desc limit 5)")
-    random = cur.fetchall()
-    
-
-    return render_template("landing-page.html", random=random)
  
 
 @views.route('/assets/<symbol>')

@@ -1179,7 +1179,7 @@ def changepass():
                 con.commit()
                 email_alert("Did you changed your password?", "Hi "+email+". We noticed the password for your account was recently changed.", eaddress)
                 flash("Password Successfully changed.", category='s')
-                return redirect(url_for("auth.profile"))
+                return redirect(url_for("auth.logout"))
 
         return redirect(url_for("auth.profile", user=user))
 
@@ -1811,6 +1811,37 @@ def datavisual1yr(symbol):
     
     else:
         return redirect(url_for("auth.login"))
+
+@auth.route('/home')
+def home():
+
+    if "email" in session:
+
+        con =sqlite3.connect('system.db')
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+
+        cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1yr' ORDER BY r2score desc limit 5)")
+        random = cur.fetchall()
+
+        return render_template("session_landing-page.html", random=random)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route('/')
+def index():
+
+    con =sqlite3.connect('system.db')
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+
+    cur.execute("select A.* from stocks A where A.symbol in (SELECT symbol FROM prediction WHERE interval='1yr' ORDER BY r2score desc limit 5)")
+    random = cur.fetchall()
+        
+
+    return render_template("landing-page.html", random=random)
+
 
 @auth.route('/logout')
 def logout():
