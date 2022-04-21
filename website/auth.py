@@ -497,8 +497,10 @@ def user_delete(id):
         try:
             con = sqlite3.connect('system.db')
             cur = con.cursor()
+
             cur.execute("DELETE FROM blockUser where id=?",([id]))
             con.commit()
+            
             flash("Record Deleted Successfully",category="s")
         except:
             flash("Record Delete Failed","danger",category="e")
