@@ -10,12 +10,22 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
         <style>
+
+            .main-offer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
             .swiper {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 overflow: hidden;
+                display: none;
             }
 
             .swiper-slide {
@@ -36,6 +46,19 @@
                 -ms-flex-align: center;
                 -webkit-align-items: center;
                 align-items: center;
+                
+            }
+            
+
+            @media (max-width: 670px) {
+                .swiper {
+                    display: block;
+                }
+
+                .main-offer {
+                    display: none;
+                }
+
             }
 
         </style>
@@ -421,7 +444,17 @@
                 </div>
             </div>
             <div class="market" style="margin: 3rem 0 3rem 0rem;">
-                <h2>Available Market</h2>
+                <center><h2>Available Market</h2></center>
+                <div class="main-offer">
+                    {% for row in market %}    
+                        <div class="inner-offer">
+                            <div class="random">
+                                <a href="{{row["blink"]}}" style="text-decoration: none; padding-bottom: 20px;" target="_blank" >
+                                <img class = "img" id="img" src="/static/{{row['blogo']}}"></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         {% for row in market %}    

@@ -18,6 +18,13 @@ body {
     color: #272346;
 }
 
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
 
 .table {
     border-collapse: collapse;      
@@ -140,6 +147,10 @@ body {
         font-weight: bold;
         font-size: 14px;
         text-align: left;
+    }
+
+    .tab {
+        justify-content: center;
     }
 
 }

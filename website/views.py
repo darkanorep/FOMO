@@ -362,6 +362,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'1mo.csv')
 
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
             df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
@@ -405,7 +406,7 @@ def assetinfo(symbol):
             df = pd.read_csv('website/data/'+symbol+'.csv')
 
             df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
+            #df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
 
             df['prevClose'] = df['Adj Close'].shift(1)
             df['change'] = (df['Adj Close']-df['prevClose'])
@@ -570,7 +571,7 @@ def assetinfo(symbol):
         cur.execute("select * from Broker")
         broker = cur.fetchall()
 
-        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1d' ORDER BY id DESC LIMIT 7", ([symbol]))
+        cur.execute("SELECT * FROM ChartData where symbol=? and interval='1mo' ORDER BY id DESC LIMIT 7", ([symbol]))
         hdata = cur.fetchall()
 
         cur.execute("SELECT * FROM ChartData where symbol=? and interval = '1d' ORDER BY DATE DESC LIMIT 1", ([symbol]))

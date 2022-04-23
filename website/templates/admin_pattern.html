@@ -15,9 +15,10 @@
 <body>
     <div class="container">
         <h2 class="header">System Patterns</h2>
-        <a class="btn btn-success" href=/archived_pattern>Go to Archived</a>
-        <br>
-        <br>
+        <div class="tab">
+            <a class="btn btn-success" href=/archived_pattern>Go to Archived</a>
+            <a href="{{url_for('auth.add_pattern')}}" class="btn btn-success">Add Pattern</a>
+        </div>
         <table class="table">
             <thead >
                 <tr>
@@ -50,11 +51,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div>
-            <td>
-                <center><a href="{{url_for('auth.add_pattern')}}" class="btn btn-success">Add Pattern</a></center>
-            </td>
-        </div>
     </div>
 </body>
 </html>

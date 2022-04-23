@@ -15,7 +15,10 @@
 <body>
     <div class="container">
         <h2 class="header" >System Stocks</h2>
-        <a class="btn btn-success" href=/archived_stocks>Go to Archived</a></p>
+        <div class="tab">
+            <a class="btn btn-success" href=/archived_stocks>Go to Archived</a>
+            <a href="{{url_for('auth.add_stocks')}}" class="btn btn-success">Add Stocks</a>
+        </div>
         <table class="table">
             <thead >
                 <tr>
@@ -55,11 +58,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div>
-            <td>
-                <center><a href="{{url_for('auth.add_stocks')}}" class="btn btn-success">Add Stocks</a></center>
-            </td>
-        </div>
     </div>
 </body>
 </html>

@@ -7,7 +7,6 @@
 .add-form {
     position: relative;
     background: #ffffff;
-    display: grid;
     align-items: center;
 }
 
@@ -18,6 +17,7 @@
 }
 
 .add-form h2{
+    text-align: center;
     font-size: 30px;
     line-height: 40px;
     margin-bottom: 5px;
@@ -118,7 +118,7 @@ p.account a:hover{
     font-weight: 500;
     font-size: 16px;
     line-height: 1.4;
-    width: 475px;
+    width: 100%;
     height: 70px;
     transition: all 0.2s;
 }

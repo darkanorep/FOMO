@@ -5,7 +5,126 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/static/css/add_tutorial.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+            .body {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .add-form {
+                position: relative;
+                background: #ffffff;
+                display: grid;
+                align-items: center;
+                padding: 40px;
+                
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+
+            }
+
+            .add-form h2{
+                font-size: 30px;
+                line-height: 40px;
+                margin-bottom: 5px;
+                font-weight: 500;
+                color: #272346;
+                text-align: center;
+            }
+
+            .add-form .main {
+                margin: 10px 0;
+            }
+
+            .content {
+                flex-basis: 50%;
+                padding: 3rem;
+                background: #ffffff;
+                box-shadow: 2px 9px 49px -17px rgb(0 0 0 / 10%);
+                border-radius: 8px;
+            }
+
+            .btn{
+                text-align: center
+            }
+
+            hr {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                border: 0;
+                border-top: 1px solid rgba(0,0,0,.1);
+            }
+
+            .btn,
+            button,
+            input {
+                border-radius: 35px;
+
+            }
+            .btn:hover,
+            button:hover{
+                transition: 0.5s ease;
+            }
+            *{
+                text-decoration: none;
+            }
+
+            .add-form form {
+                margin: 10px 0;
+            }
+
+            #otp {
+                outline: none;
+                margin-bottom: 15px;
+                font-stretch: 20px;
+                color: rgb(0, 0, 0);
+                text-align: center;
+                padding: 14px 20px;
+                width: 100%;
+                display: inline-block;
+                box-sizing: border-box;
+                border: 1px solid #e5e5e5;
+                background: #f7fafc;
+                transition: 0.3s ease;
+                border-radius: 10px;
+            }
+
+            .add-form input:focus {
+                background: transparent;
+                border: 1px solid #af5353;
+            }
+            
+            .btn-success {
+                background: #66af53;
+                border-radius: 10px;
+                font-size: 18px;
+                color: #fff;
+                width: 100%;
+                border: none;
+                padding: 14px 15px;
+                font-weight: 600;
+                transition: 0.3s ease;
+            }
+            
+            @media(max-width: 736px) {
+                .add-form .main{
+                    flex-direction: column;
+                }
+                .add-form form {
+                    margin: 30px;
+                    margin-bottom: 10px;
+                }
+                .content {
+                    order: 1;
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px
+                }
+            }
+        </style>
     </head>
     <body>
         <div class="add-form">
@@ -14,9 +133,9 @@
                     <div class="content">
                         <h2>Verification</h2>
                         <form method="post" action="/validate">
-                            <p>One time password has been sent to your email</p>
-                            Enter OTP:
-                            <input type="text" name="otp" placeholder="Please enter OTP" required autofocus></input>
+                            <center><p>One time password has been sent to your email.</p></center>
+                            <hr>
+                            <input type="text" name="otp" placeholder="Enter OTP" id="otp" required autofocus></input>
                             <input type="submit" name="submit" class="btn btn-success" value="Submit"/>
                         </form>
                     </div>
