@@ -68,7 +68,7 @@ def form():
             email_alert("FOMO Support", "Thank you for reaching us! Dear "+str(name), email)
             email_support("Concern of our Dear"+str(name)+", "+str(email), str(message), "fomostockmarket@gmail.com")
         
-        return redirect(url_for("views.index"))
+        return render_template("landing-page.html")
 
     return render_template("landing-page.html")
 
