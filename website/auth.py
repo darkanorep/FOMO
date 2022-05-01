@@ -1238,6 +1238,7 @@ def blog(id):
 
     if "email" in session:
         
+        email = session["email"]
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
@@ -1245,10 +1246,55 @@ def blog(id):
         cur.execute("Select * from Blog where id=?", [id])
         blog=cur.fetchall()
 
+        postArray = []
+
+        for row in blog:
+            blogid = row['id']
+            type = -1
+
+            cur.execute("SELECT count(*) as cntStatus,type FROM like_unlike WHERE author=? AND blogid=?", (email, blogid))
+            rs1 = cur.fetchone()
+            count_status = rs1['cntStatus']
+
+            if count_status > 0:
+                type = rs1['type']
+                        
+            cur.execute("SELECT COUNT(*) AS cntLikes FROM like_unlike WHERE type='1' and blogid=?", [blogid])
+            rs2 = cur.fetchone()
+            total_likes = rs2['cntLikes']
+
+            cur.execute("SELECT COUNT(*) AS cntUnlikes FROM like_unlike WHERE type='0' and blogid=?", [blogid])
+            rs3 = cur.fetchone()
+            total_unlikes = rs3['cntUnlikes']
+
+            if type == 1:
+                txtcolor = 'color: #ffa449;' 
+            else:
+                txtcolor = ''  
+            
+            if type == 0:
+                txtcolor2 = 'color: #ffa449;' 
+            else:
+                txtcolor2 = ''
+
+            postObj = {
+                'id': row['id'],
+                'category': row['category'],
+                'author': row['author'],
+                'blog': row['blog'],
+                'image': row['image'],
+                'date': row['date'],
+                'total_likes': total_likes,
+                'total_unlikes': total_unlikes,
+                'txtcolor': txtcolor,
+                'txtcolor2': txtcolor2}
+
+            postArray.append(postObj)
+
         cur.execute("Select * from Comment where blog_id=? order by id desc",[id])
         comment=cur.fetchall()
 
-        return render_template('post.html', blog=blog, comment=comment)
+        return render_template('post.html', blog=postArray, comment=comment)
     
     else:
         return redirect(url_for("auth.login"))
@@ -1301,9 +1347,13 @@ def delete_blog(id):
         try:
             con = sqlite3.connect("system.db")
             cur = con.cursor()
+            
             cur.execute("DELETE FROM Blog where id=?",([id]))
+
             cur.execute("DELETE FROM Comment where blog_id=?",([id]))
+            cur.execute("DELETE FROM like_unlike where blogid=?",([id]))
             con.commit()
+
             
             flash("Record Deleted Successfully",category="s")
 
@@ -1827,6 +1877,56 @@ def home():
         random = cur.fetchall()
 
         return render_template("session_landing-page.html", random=random)
+    
+    else:
+        return redirect(url_for("auth.login"))
+
+@auth.route("/likeunlike", methods = ["GET", "POST"])
+def likeunlike():
+    if "email" in session:
+
+        email = session["email"]
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        if request.method == 'POST':
+            blogid = request.form['blogid'] 
+            type = request.form['type']
+
+            cur.execute("SELECT COUNT(*) AS cntpost FROM like_unlike WHERE blogid=? AND author=?", (blogid, email))
+            rscount = cur.fetchone()
+            count = rscount['cntpost']
+
+            if count == 0:
+                cur.execute("INSERT INTO like_unlike (author, blogid, type) VALUES (?,?,?)", (email, blogid, type))
+                con.commit()
+        
+                cur.execute("SELECT COUNT(*) AS cntLike FROM like_unlike WHERE type='1' AND author=?",email)
+                rscounttotal = cur.fetchone()
+                countlike = rscounttotal['cntLike']
+
+                cur.execute("SELECT COUNT(*) AS cntUnlike FROM like_unlike WHERE type='0' AND blogid=?",([blogid]))
+                rscounttotalunlike = cur.fetchone()
+                countUnlike = rscounttotalunlike['cntUnlike']
+            
+            else:
+                cur.execute("UPDATE like_unlike SET type=? where author=? and blogid=?",(type, email, blogid))
+                con.commit()
+
+
+                cur.execute("SELECT COUNT(*) AS cntLike FROM like_unlike WHERE type='1' AND blogid=?",([blogid]))
+                rscounttotal = cur.fetchone()
+                countlike = rscounttotal['cntLike']
+
+                cur.execute("SELECT COUNT(*) AS cntUnlike FROM like_unlike WHERE type='0' AND blogid=?",([blogid]))
+                rscounttotalunlike = cur.fetchone()
+                countUnlike = rscounttotalunlike['cntUnlike']
+
+                totallikeajax = countlike
+                totalunlikeajax = countUnlike
+
+        return jsonify({"likes":totallikeajax,"unlikes":totalunlikeajax})
     
     else:
         return redirect(url_for("auth.login"))

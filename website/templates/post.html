@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="#">
+    <script src="https://kit.fontawesome.com/dcfee5a626.js" crossorigin="anonymous"></script>
     <style>
 
         .container a {
@@ -22,6 +23,7 @@
             transition: .5s
             
         }
+        
 
         .container {
             padding: 2rem 7%;
@@ -35,6 +37,7 @@
                 "user user"
                 "img img"
                 "idea idea"
+                "post-action post-action"
                 "form form"
                  
         }
@@ -78,6 +81,10 @@
             font-size: 16px;
             grid-area: idea;
             padding-top: 11px;
+        }
+
+        .post-action {
+            grid-area: post-action;
         }
 
         .wrapper img {
@@ -149,8 +156,51 @@
             border-radius: 5px;
         }
 
-        
+        .like,.unlike{
+            border: 0;
+            background: none;
+            letter-spacing: 1px;
+            color: lightseagreen;
+        }
+        .like,.unlike:hover{
+            cursor: pointer;
+        }
 
+        .fa-solid, .post-action span {
+            font-size: 1.5rem;
+            margin-right: .5rem;
+        }
+
+        .user .bx {
+            font-size: 20px;
+            text-align: center;
+            color: #6BCB77;
+
+        }
+
+        .user .bxs-user-circle {
+            display: inline-block;
+            font-size: 20px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            border-radius: 12px;
+            margin: -15px 0 0 6px;
+            color: #2BD47D;
+            background: #C0F2D8;
+        }
+
+        .author {
+            display: inline-block;
+            font-size: 20px;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            border-radius: 12px;
+            margin: -15px 0 0 6px;
+
+        }
+        
         @media (max-width: 780px) {
             .comment{
                 width: 100%;
@@ -187,6 +237,49 @@
         }
         
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type='text/javascript'>
+    $(document).ready(function(){
+        $(".like, .unlike").click(function(){
+            var id = this.id;   
+            var split_id = id.split("_");
+            var text = split_id[0];
+            var blogid = split_id[1]; 
+            var type = 0;
+            if(text == "like"){
+                type = 1;
+            }else{
+                type = 0;
+            }
+            $.ajax({
+                url: '/likeunlike',
+                type: 'post',
+                data: {blogid:blogid,type:type},
+                dataType: 'json',
+                success: function(data){
+                    var likes = data['likes'];
+                    var unlikes = data['unlikes'];
+                    $("#likes_"+blogid).text(likes);       
+                    $("#unlikes_"+blogid).text(unlikes);   
+                    if(type == 1){
+                        $("#like_"+blogid).css("color","#ffa449");
+                        $("#unlike_"+blogid).css("color","lightseagreen");
+                    }
+                    if(type == 0){
+                        $("#unlike_"+blogid).css("color","#ffa449");
+                        $("#like_"+blogid).css("color","lightseagreen");
+                    }
+                    console.log(data)
+                }
+                
+                
+            });
+            
+        });
+        
+
+    });
+    </script>
 </head>
     <body>
         <div class="container">
@@ -201,7 +294,7 @@
                         {{row["category"]}}
                     </div>
                     <div class="user">
-                        <i class='bx bxs-user-circle'></i>{{row["author"]}}
+                        <i class='bx bxs-user-circle'></i><span class="author">{{row["author"]}}</span>
                     </div>
                     <br>
                     <div class="date">
@@ -215,6 +308,10 @@
                     <br>
                     <div class="img">
                         <img class="img" src="/static/community/{{row['image']}}">
+                    </div>
+                    <div class="post-action">
+                        <button type="button" value="Like" id="like_{{row.id}}" class="like" style="{{row.txtcolor}}"><i class="fa-solid fa-thumbs-up"></i></button><span id="likes_{{row.id}}">{{row.total_likes}}</span>
+                        <button type="button" value="Unlike" id="unlike_{{row.id}}" class="unlike" style="{{row.txtcolor2}}"><i class="fa-solid fa-thumbs-down"></i></button><span id="unlikes_{{row.id}}">{{row.total_unlikes}}</span>
                     </div>
                     <form method="post" action="/comment/{{row['id']}}" enctype="multipart/form-data">
                         <input type="text" class="comment" name="comment" placeholder="Write a comment" autofocus required></input>
