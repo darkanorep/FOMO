@@ -48,6 +48,21 @@
                 align-items: center;
                 
             }
+
+            .back{
+                text-decoration: none;
+                height: 100%;
+                background-color: green;
+                border-radius: 5px;
+                text-decoration: none;
+                padding: 8px;
+                color: white;
+                transition: .5s;
+            }
+
+            .back:hover {
+                border-radius: 15px
+            }
             
 
             @media (max-width: 670px) {
@@ -66,7 +81,7 @@
     <body>
         <div class="container">
             {% for row in profile %}
-                <a href="{{url_for('auth.assets')}}" style="text-decoration: none;">Stocks</a><i class='bx bx-chevron-right'></i>{{row["symbol"]}}
+                <a class="back" href="{{url_for('auth.assets')}}">Stocks</a><i class='bx bx-chevron-right'></i>{{row["symbol"]}}
             {% endfor %}
             <div class="profile-wrapper">
                 <div class="profile">
@@ -162,7 +177,7 @@
                         <label for="tabsilver">TradingView</label>
                         <div class="tab">
                             <div id="tradingview_8ec7b"></div>
-                            <div class="tradingview-widget-copyright"><a><span class="blue-text">{% for row in profile %}{{row["symbol"]}}{% endfor %} Chart</span></a></div>
+                            <div class="tradingview-widget-copyright"><span class="blue-text">{% for row in profile %}{{row["symbol"]}}{% endfor %} Chart</span></div>
                             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                             <script type="text/javascript">
                             new TradingView.widget({
