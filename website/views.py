@@ -56,6 +56,7 @@ def assetinfo(symbol):
             df['Numbers'] = list(range(0, len(df)))
             x = np.array(df[['Numbers']])
             y = df['Close'].values
+            df.fillna(df.mean(), inplace=True)
             lin_model = LinearRegression().fit(x,y)
             y_pred = lin_model.coef_* x + lin_model.intercept_
             df['prePred'] = y_pred
