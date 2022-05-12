@@ -17,7 +17,7 @@ $(document).ready(function(){
     $('#search_filter').change(function(){
         $('#hidden_value').val($('#search_filter').val());
         var query = $('#hidden_value').val(); 
-        load_data(query);
+        /*load_data(query);*/
     });
     
 });
@@ -96,7 +96,7 @@ $(document).ready(function () {
 
         table.innerHTML = tableHTML;
 
-        console.log(json)
+        /*console.log(json)*/
         
     });
 })
@@ -106,7 +106,7 @@ function getPortfolio(json) {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data);
+            /*console.log(data);*/
 
         });
 }

@@ -4,7 +4,7 @@ for (var i=0; i < jsonTut.length; i++) {
     var str = '\<h2 id="tutTitle"'+i+'>'+jsonTut[i].name+'</h2>'
     
     str += '<ul id = "list" class="steps">'
-    console.log(str);
+    /*console.log(str);*/
     for(var z=0; z < jsonTut[i].stepNumber.length; z++){
         str += '<li>'+jsonTut[i].stepNumber[z].StepDetail+'</li><br>'
     }
