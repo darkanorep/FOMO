@@ -281,7 +281,16 @@
                     </table>
                 </div>
             </div>
-            <div class="info-container">
+            <div id="jsonFormatLine">
+                <script>
+                    function drawPlotyGraph(graph) {
+                        Plotly.plot('jsonFormatLine' , graphs, {});
+                    }
+                    var graphs = {{ lineJSON | safe }};
+                    drawPlotyGraph(graphs);
+                </script>
+            </div>
+            <!--<div class="info-container">
                 {% for row in profile %}
                     <h2 style="text-align: center;">{{row["symbol"]}} Price Prediction</h2>
                 {% endfor %}
@@ -457,7 +466,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="market" style="margin: 3rem 0 3rem 0rem;">
                 <center><h2>Available Market</h2></center>
                 <div class="main-offer">

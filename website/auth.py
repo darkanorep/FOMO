@@ -83,6 +83,7 @@ def signup():
     if request.method == 'POST':
 
         email = request.form.get('email')
+        name = request.form.get('name')
         username = request.form.get('username')
         password =  request.form.get('password')
         password1 = request.form.get('password1')
@@ -123,11 +124,12 @@ def signup():
         else:
             
             if not data:
-                global a, b, c, d
+                global a, b, c, d, e
                 a = email
                 b = password
                 c = password1
                 d = username
+                e = name
 
                 email_alert("OTP", "Thank you for signing up, "+d+"!\nBelow is your OTP: \n"+str(int(otp)), email)             
                 return redirect(url_for('auth.verify'))
@@ -138,27 +140,38 @@ def signup():
 
 @auth.route('/verify', methods = ['GET', 'POST'])
 def verify():
-    
 
-    return render_template("verify.html")
+    global a
+
+    return render_template("verify.html", a=a)
+
+@auth.route('/resend', methods = ['GET', 'POST'])
+def resend():
+
+    global a, b, c, d, e
+
+    email_alert("OTP", "Thank you for signing up, "+d+"!\nBelow is your OTP: \n"+str(int(otp)), a)
+    return redirect(url_for('auth.verify'))
 
 @auth.route('/validate',methods = ['POST'])
 def validate():
     con = sqlite3.connect('system.db')  
     con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
+    cur = con.cursor()
+
 
     user_otp=request.form['otp']
-    global a, b, c, d
+
+    global a, b, c, d, e
 
     if user_otp==str(otp):
-        cur.execute("INSERT into User (email, password, password1, username) values (?,?,?,?)",(a,b,c,d))
+        cur.execute("INSERT into User (name, email, password, password1, username) values (?,?,?,?,?)",(e,a,b,c,d))
         con.commit()
         flash("Successfully Registered.", category='s')
         return redirect(url_for('auth.login'))
-
+       
     else:
-        flash("Wrong OTP, please try again.", category="e")
+        flash("Wrong OTP, Please try again.", category='e')
 
     return render_template('verify.html')
 
@@ -279,7 +292,14 @@ def user():
 def handbook():
     if "email" in session:
 
-        return render_template("handbook.html")
+        con = sqlite3.connect('system.db')  
+        con.row_factory = sqlite3.Row  
+        cur = con.cursor()
+
+        cur.execute("select name from sqlite_master where type = 'table' and name <> 'sqlite_sequence' and name <> 'Step' and name <> 'tempBroker' and name <> 'tempTerms' and name <> 'tempCandlestick' and name <> 'tempPattern' and name <> 'Stocks' and name <> 'tempStocks' and name <> 'Portfolio' and name <> 'tempTutorial' and name <> 'ChartData' and name <> 'Hour' and name <> 'Comment' and name <> 'Prediction' and name <> 'Blog' and name <> 'blockUser' and name <> 'entirePortfolio' and name <> 'like_unlike' and name <> 'User' and name <> 'Broker'")
+        table = cur.fetchall()
+
+        return render_template("handbook.html", table=table)
     
     else:
         return redirect(url_for("auth.login"))
@@ -357,8 +377,15 @@ def fetchvalue():
 @auth.route('/calculator')
 def calculator():
     if "email" in session:
+
+        time_format = "%B %d, %Y"
+        now = datetime.now().strftime(time_format)
+        tz = ['Asia/Manila']
+
+        for zone in tz:
+            dt = datetime.now(timezone(zone)).strftime(time_format)
         
-        return render_template("calculator.html")
+        return render_template("calculator.html", dt=dt)
     
     else:
         return redirect(url_for("auth.login"))
@@ -603,7 +630,7 @@ def userupdate(id):
 
 def allowed_file(filename):
 
-    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'mp4'])
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     
@@ -1389,15 +1416,29 @@ def portfolio():
         cur = con.cursor()
 
         cur.execute("SELECT * from Stocks")
-        symbol=cur.fetchall()
+        symbols=cur.fetchall()
+
+        datas = [["Symbol", "Quantity"]]
 
         cur.execute("SELECT * FROM Portfolio where email=?",([email]))
         portfolio=cur.fetchall()
 
-        return render_template('portfolio.html', symbol= symbol, portfolio = portfolio)
+
+        for result in portfolio:
+            portfolioContent = [
+                str(result['symbol']),result['quantity']
+            ]
+
+            datas.append(portfolioContent)
+
+        json.dumps(datas)
+
+
+        return render_template('portfolio.html', symbols= symbols, portfolio = portfolio, row_data=datas)
 
     else:
         return redirect(url_for("auth.login"))
+
 
 @auth.route('/myportfolio')
 def myportfolio():
@@ -1670,11 +1711,12 @@ def fetchtutorials():
 
                 for id in ids:
                     
-                    cur.execute("select name, image from Tutorial where id = ?", ([id]))
+                    cur.execute("select * from Tutorial where id = ?", ([id]))
                     data = cur.fetchall()
                     for result in data:
                         name = result['name']
                         img = result['image']
+                        link = result['link']
 
                     cur.execute("select * from Step where tutorial_id = ?",([id]))
                     stepResult = cur.fetchall()
@@ -1691,6 +1733,7 @@ def fetchtutorials():
                     tutContent = {
                         'name': name,
                         'img': img,
+                        'link': link,
                         'stepNumber': steps
                     }
 
@@ -1711,11 +1754,12 @@ def fetchtutorials():
 
                 for id in ids:
                     
-                    cur.execute("select name, image from Tutorial where id = ?", ([id]))
+                    cur.execute("select * from Tutorial where id = ?", ([id]))
                     data = cur.fetchall()
                     for result in data:
                         name = result['name']
                         img = result['image']
+                        link = result['link']
 
                     cur.execute("select * from Step where tutorial_id = ?",([id]))
                     stepResult = cur.fetchall()
@@ -1732,7 +1776,8 @@ def fetchtutorials():
                     tutContent = {
                         'name': name,
                         'img': img,
-                        'stepNumber': steps
+                        'stepNumber': steps,
+                        'link' : link
                     }
 
                     tut.append(tutContent);

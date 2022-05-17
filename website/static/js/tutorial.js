@@ -9,6 +9,8 @@ for (var i=0; i < jsonTut.length; i++) {
         str += '<li>'+jsonTut[i].stepNumber[z].StepDetail+'</li><br>'
     }
     '</ul>'
+    '<ul>'
+    str += 'For more information click <a href="'+jsonTut[i].link+'" target="_blank">here!</a><br><br>'
     str += '<img src="static/'+jsonTut[i].img+'" class="tutorial_img"><br><br>'
     $('#tutorials').append(str);
     

@@ -110,6 +110,27 @@
                 transition: 0.3s ease;
             }
             
+            .btnresend {
+                align-items: center;
+                border: 0px;
+                border-radius: 10px;
+                box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+                font-size: 16px;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+                height: 48px;
+                padding: 0px 24px;
+                background-color: #af5353;
+                color: #ffffff;
+                width: 100%;
+            }
+            .btnresend:active {
+                background-color: rgb(175, 37, 37);
+                box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+                transform: translateY(4px);
+            }
+
             @media(max-width: 736px) {
                 .add-form .main{
                     flex-direction: column;
@@ -133,16 +154,61 @@
                     <div class="content">
                         <h2>Verification</h2>
                         <form method="post" action="/validate">
-                            <center><p>One time password has been sent to your email.</p></center>
+                            <center><p>One time password has been sent to {{ a }}.
+                                <br>
+                                Please check your email.
+                            </p></center>
                             <hr>
                             <input type="text" name="otp" placeholder="Enter OTP" id="otp" required autofocus></input>
                             <input type="submit" name="submit" class="btn btn-success" value="Submit"/>
+                        </form>
+                        <form method = "post" action="/resend" class="resend" style="text-align: center;">
+                            <button id="btnCounter" class="btnresend" disabled>Resend OTP</button>
+                            <center><span id="timer"></span></center>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        let timerOn = true;
+        var btn = document.getElementById("btnCounter");
+
+        function timer(remaining) {
+        var m = Math.floor(remaining / 60);
+        var s = remaining % 60;
+        
+        m = m < 10 ? '0' + m : m;
+        s = s < 10 ? '0' + s : s;
+        document.getElementById('timer').innerHTML = m + ':' + s;
+        remaining -= 1;
+        
+        if(remaining >= 0 && timerOn) {
+            setTimeout(function() {
+                timer(remaining);
+                console.log(parseInt(s))
+                window.localStorage.setItem("seconds",s)
+                window.localStorage.setItem("minutes",m)
+            }, 1000);
+            return;
+        }
+
+        if(!timerOn) {
+            // Do validate stuff here
+            return;
+        } 
+        btn.removeAttribute("disabled");
+        document.getElementById("timer").style.visibility = "hidden";
+        }
+
+        timer(2);
+
+        window.onload = function () {
+            sec  = parseInt(window.localStorage.getItem("seconds"))
+            min = parseInt(window.localStorage.getItem("minutes"))
+        }
+    </script>
 </html>
 {% endblock %}
 

@@ -8,6 +8,7 @@ from plotly.subplots import  make_subplots
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
+from fbprophet import Prophet
 
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
@@ -24,109 +25,15 @@ def assetinfo(symbol):
 
         cur.execute("DELETE FROM ChartData where SYMBOL = '"+symbol+"';")
         con.commit()
-        cur.execute("DELETE FROM Hour where SYMBOL = '"+symbol+"';")
-        con.commit()
 
         cur.execute("DELETE FROM Prediction where symbol=?", [(symbol)])
         con.commit()
 
-        cur.execute("DELETE FROM Prediction where symbol=? and interval='1yr';", [symbol])
-        cur.execute("DELETE FROM Prediction where symbol=? and interval='6mo';", [symbol])
-        cur.execute("DELETE FROM Prediction where symbol=? and interval='3mo';", [symbol])
-        cur.execute("DELETE FROM Prediction where symbol=? and interval='1mo';", [symbol])
-        con.commit()
-
-        data1yr = yf.download(tickers=''+symbol+'', period='1y', interval='1d')
-        data1yr.to_csv('website/data/'+symbol+'1yr.csv')
-
-        with open('website/data/'+symbol+'1yr.csv','r') as fin:
-            df = pd.read_csv('website/data/'+symbol+'1yr.csv')
-    
-            df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d').dt.strftime('%B %d, %Y')
-            df['prevClose'] = df['Adj Close'].shift(1)
-            df['change'] = (df['Adj Close']-df['prevClose'])
-            df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
-            df['finalpchange'] = (df['pchange'] * 100)
-            df["interval"] = "1yr"
-
-            fig = plt.figure()
-
-            df = df.set_index(pd.DatetimeIndex(df['Date'].values))
-            df['Numbers'] = list(range(0, len(df)))
-            x = np.array(df[['Numbers']])
-            y = df['Close'].values
-            df.fillna(df.mean(), inplace=True)
-            lin_model = LinearRegression().fit(x,y)
-            y_pred = lin_model.coef_* x + lin_model.intercept_
-            df['prePred'] = y_pred
-            df['prePred'].plot(label="model")
-            df['Close'].plot(label="price")
-            plt.legend(loc="upper right")
-            plt.title('1 Year '+symbol+' Close Price History and Prediction')
-            fig.savefig('website/static/datavisual/'+symbol+'1yr.png')
-
-            pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
- 
-            df1 = pd.DataFrame(pred)
-            df1["interval"] = "1yr"
-            df1['r2score'] = r2_score(df['Close'], df['prePred'])
-            df1.round(2).to_csv('website/data/'+symbol+'1yrpred.csv', index=False)
-
-            df.round(2).to_csv(r'website/data/'+symbol+'1yr.csv', index=False)
-            dr = csv.DictReader(fin)
-            to_db = [(i['Date'], i['Open'], i['High'], i['Low'], i['Close'], i['Adj Close'], i['Volume'], i['change'], i['finalpchange'], i['interval']) for i in dr]
-  
-            cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, volume, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?, ?,?,?,?);", to_db)
-            con.commit()
-        #--------------------------------------------------------------------
-        data3mo = yf.download(tickers=''+symbol+'', period='3mo', interval='1d')
-        data3mo.to_csv('website/data/'+symbol+'3mo.csv')
-
-        with open('website/data/'+symbol+'3mo.csv','r') as fin:
-            df = pd.read_csv('website/data/'+symbol+'3mo.csv')
-    
-            df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['prevClose'] = df['Adj Close'].shift(1)
-            df['change'] = (df['Adj Close']-df['prevClose'])
-            df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
-            df['finalpchange'] = (df['pchange'] * 100)
-            df["interval"] = "3mo"
-
-            fig = plt.figure()
-            #tmpfile = BytesIO()
-            df = df.set_index(pd.DatetimeIndex(df['Date'].values))
-            df['Numbers'] = list(range(0, len(df)))
-            x = np.array(df[['Numbers']])
-            y = df['Close'].values
-            lin_model = LinearRegression().fit(x,y)
-            y_pred = lin_model.coef_* x + lin_model.intercept_
-            df['prePred'] = y_pred
-            df['prePred'].plot(label="model")
-            df['Close'].plot(label="price")
-            plt.legend(loc="upper right")
-            plt.title('3 Months '+symbol+' Close Price History and Prediction')
-            #
-            fig.savefig('website/static/datavisual/'+symbol+'3mo.png')
-            #encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
-            #html = 'Some html head' + '<img src=\'data:image/png;base64,{}\'>'.format(encoded) + 'Some more html'
-
-            #with open('test.html','w') as f:
-                #f.write(html)
-
-            pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
- 
-            df1 = pd.DataFrame(pred)
-            df1["interval"] = "3mo"
-            df1['r2score'] = r2_score(df['Close'], df['prePred'])
-            df1.round(2).to_csv('website/data/'+symbol+'3mopred.csv', index=False)
-
-            df.round(2).to_csv(r'website/data/'+symbol+'3mo.csv', index=False)
-            dr = csv.DictReader(fin)
-            to_db = [(i['Date'], i['Open'], i['High'], i['Low'], i['Close'], i['Adj Close'], i['Volume'], i['change'], i['finalpchange'], i['interval']) for i in dr]
-  
-            cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, volume, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?, ?,?,?,?);", to_db)
-            con.commit()
+        #cur.execute("DELETE FROM Prediction where symbol=? and interval='1yr';", [symbol])
+        #cur.execute("DELETE FROM Prediction where symbol=? and interval='6mo';", [symbol])
+        #cur.execute("DELETE FROM Prediction where symbol=? and interval='3mo';", [symbol])
+        #cur.execute("DELETE FROM Prediction where symbol=? and interval='1mo';", [symbol])
+        #con.commit()
         
         #--------------------------------------------------------------------
         data30m = yf.download(tickers=''+symbol+'', period='1d', interval='30m')
@@ -174,25 +81,7 @@ def assetinfo(symbol):
             con.commit()
 
         #--------------------------------------------------------------------
-        data1mo = yf.download(tickers=''+symbol+'', interval='1wk')
-        data1mo.to_csv('website/data/'+symbol+'1wk.csv')
 
-        with open('website/data/'+symbol+'1wk.csv','r') as fin:
-            df = pd.read_csv('website/data/'+symbol+'1wk.csv')
-            df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['prevClose'] = df['Adj Close'].shift(1)
-            df['change'] = (df['Adj Close']-df['prevClose'])
-            df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
-            df['finalpchange'] = (df['pchange'] * 100)
-            df["interval"] = "1wk"
-
-            df.round(2).to_csv(r'website/data/'+symbol+'1wk.csv', index=False)
-            dr = csv.DictReader(fin)
-
-            to_db = [(i['Date'], i['Open'], i['High'], i['Low'], i['Close'], i['Adj Close'], i['Volume'], i['change'], i['finalpchange'], i['interval']) for i in dr]
-
-            cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, volume, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?, ?,?,?,?);", to_db)
-            con.commit()
         #---------------------------------------------------------------------
 
         data1wk = yf.download(tickers=''+symbol+'', interval='1wk')
@@ -255,7 +144,6 @@ def assetinfo(symbol):
             df['finalpchange'] = (df['pchange'] * 100)
             df["interval"] = "1min"
 
-            fig = plt.figure()
             df = df.set_index(pd.DatetimeIndex(df['Datetime'].values))
             df['Numbers'] = list(range(0, len(df)))
             x = np.array(df[['Numbers']])
@@ -265,11 +153,6 @@ def assetinfo(symbol):
             df['prePred'] = y_pred
             df['prePred'].plot(label="model")
             df['Close'].plot(label="price")
-
-            plt.legend(loc="upper right")
-            plt.title('24 Hours '+symbol+' Close Price History and Prediction')
-            #
-            fig.savefig('website/static/datavisual/'+symbol+'24hr.png')
 
             pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
  
@@ -311,49 +194,6 @@ def assetinfo(symbol):
             con.commit()
 
         #---------------------------------------------------------------------
-        data = yf.download(tickers=''+symbol+'', period='6mo', interval='1d')
-        data.to_csv('website/data/'+symbol+'6mo.csv')
-      
-        with open('website/data/'+symbol+'6mo.csv','r') as fin:
-            #--------------------------------------------------------------------------------
-            df = pd.read_csv('website/data/'+symbol+'6mo.csv')
-
-            df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
-            df['prevClose'] = df['Adj Close'].shift(1)
-            df['change'] = (df['Adj Close']-df['prevClose'])
-            df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
-            df['finalpchange'] = (df['pchange'] * 100)
-            df["interval"] = "6mo"
-
-            fig = plt.figure()
-            df = df.set_index(pd.DatetimeIndex(df['Date'].values))
-            df['Numbers'] = list(range(0, len(df)))
-            x = np.array(df[['Numbers']])
-            y = df['Close'].values
-            lin_model = LinearRegression().fit(x,y)
-            y_pred = lin_model.coef_* x + lin_model.intercept_
-            df['prePred'] = y_pred
-            df['prePred'].plot(label="model")
-            df['Close'].plot(label="price")
-            plt.legend(loc="upper right")
-            plt.title('6 Months '+symbol+' Close Price History and Prediction')
-            fig.savefig('website/static/datavisual/'+symbol+'6mo.png')
-
-            pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
- 
-            df1 = pd.DataFrame(pred)
-            df1["interval"] = "6mo"
-            df1['r2score'] = r2_score(df['Close'], df['prePred'])
-            df1.round(2).to_csv('website/data/'+symbol+'6mopred.csv', index=False)
-
-            df.round(2).to_csv(r'website/data/'+symbol+'6mo.csv', index=False)
-            dr = csv.DictReader(fin)
-
-            to_db = [(i['Date'], i['Open'], i['High'], i['Low'], i['Close'], i['Adj Close'], i['change'], i['finalpchange'], i['interval']) for i in dr]
-
-            cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?,?,?,?);", to_db)
-            con.commit()
-            #----------------------------------------------------------------------------------
 
         
         data1month = yf.download(tickers=''+symbol+'', period='1mo', interval='1d')
@@ -370,28 +210,6 @@ def assetinfo(symbol):
             df['finalpchange'] = (df['pchange'] * 100)
             df["interval"] = "1mo"
 
-            fig = plt.figure()
-            df = df.set_index(pd.DatetimeIndex(df['Date'].values))
-            df['Numbers'] = list(range(0, len(df)))
-            x = np.array(df[['Numbers']])
-            y = df['Close'].values
-            lin_model = LinearRegression().fit(x,y)
-            y_pred = lin_model.coef_* x + lin_model.intercept_
-            df['prePred'] = y_pred
-            df['prePred'].plot(label="model")
-            df['Close'].plot(label="price")
-            plt.legend(loc="upper right")
-            plt.title('1 Month '+symbol+' Close Price History and Prediction')
-
-            fig.savefig('website/static/datavisual/'+symbol+'1mo.png')
-
-            pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
- 
-            df1 = pd.DataFrame(pred)
-            df1["interval"] = "1mo"
-            df1['r2score'] = r2_score(df['Close'], df['prePred'])
-            df1.round(2).to_csv('website/data/'+symbol+'1mopred.csv', index=False)
-
             df.round(2).to_csv(r'website/data/'+symbol+'1mo.csv', index=False)
             dr = csv.DictReader(fin)
 
@@ -399,7 +217,24 @@ def assetinfo(symbol):
 
             cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?,?,?,?);", to_db)
             con.commit()
-      
+        
+        data99 = yf.download(tickers=''+symbol+'', period='max', interval='1d')
+        data99.to_csv('website/data/'+symbol+'raw.csv')
+        
+        with open('website/data/'+symbol+'raw.csv','r') as fin:
+
+            df = pd.read_csv('website/data/'+symbol+'raw.csv')
+            df = df[['Date','Close']]
+            df_train = df.rename(columns={"Date": "ds", "Close": "y"})
+            
+            period = 120
+            m = Prophet()
+            m.fit(df_train)
+            future = m.make_future_dataframe(period)
+            forecast = m.predict(future)
+            forecast.to_csv('website/data/'+symbol+'predicted.csv', index=False)
+        
+
         data = yf.download(tickers=''+symbol+'', period='max', interval='1d')
         data.to_csv('website/data/'+symbol+'.csv')
         with open('website/data/'+symbol+'.csv','r') as fin:
@@ -473,33 +308,50 @@ def assetinfo(symbol):
 
             graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
         
-        with open('website/data/'+symbol+'1yrpred.csv','r') as fin:
-            dr = csv.DictReader(fin)
-            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
+        with open('website/data/'+symbol+'predicted.csv','r') as fin:
+            fig = go.Figure()
+            df = pd.read_csv('website/data/'+symbol+'predicted.csv')
+            df1 = pd.read_sql_query("SELECT * FROM ChartData where symbol = '"+symbol+"' and interval='1d';",con=sqlite3.connect("system.db"))
 
-            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
-            con.commit()
 
-        with open('website/data/'+symbol+'6mopred.csv','r') as fin:
-            dr = csv.DictReader(fin)
-            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
+            fig = make_subplots(specs=[[{"secondary_y":True}]])
+            fig.add_trace(go.Scatter(x=df1.date, 
+                            y=df1['close'], name = 'Actual Price'),
+                            secondary_y=True)
+            
+            fig.add_trace(go.Scatter(x=df['ds'], y=df['yhat'], name = 'Predicted Price'),
+                                secondary_y=False)
 
-            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
-            con.commit()
 
-        with open('website/data/'+symbol+'3mopred.csv','r') as fin:
-            dr = csv.DictReader(fin)
-            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
+            #fig = go.Figure(go.Scatter(x = df.ds, 
+                                       #predicted = df['yhat'], 
+                                       #line=dict(color="#0000FF"), 
+                                       #name='Prediction'),
+                                       #secondary_y=False)
 
-            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
-            con.commit()
- 
-        with open('website/data/'+symbol+'1mopred.csv','r') as fin:
-            dr = csv.DictReader(fin)
-            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
-
-            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
-            con.commit()
+            
+            fig.update_layout(
+                title=symbol+' Prediction',
+                yaxis_title=symbol+' Stock Price (USD)',
+                xaxis_title='Date',
+                paper_bgcolor='rgba(0,0,0,0)')
+            
+            fig.update_xaxes(
+                rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=7, label="1wk", step="day", stepmode="backward"),
+                        dict(count=1, label="1mo", step="month", stepmode="backward"),
+                        dict(count=1, label="3mo", step="month", stepmode="backward"),
+                        dict(count=1, label="6mo", step="month", stepmode="backward"),
+                        dict(count=1, label="1yr", step="year", stepmode="backward"),
+                        dict(step="all", label="max")
+                    ])
+                )
+            )
+            
+            lineJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        
         
         with open('website/data/'+symbol+'1dpred.csv','r') as fin:
             dr = csv.DictReader(fin)
@@ -582,32 +434,32 @@ def assetinfo(symbol):
         h = cur.fetchall()
 
         #----------------------------------------------------------------------------------------------
-        cur.execute("SELECT * FROM Prediction where symbol=? and interval='1d' ORDER BY DATE DESC LIMIT 1", ([symbol]))
-        prediction = cur.fetchall()
+        #cur.execute("SELECT * FROM Prediction where symbol=? and interval='1d' ORDER BY DATE DESC LIMIT 1", ([symbol]))
+        #prediction = cur.fetchall()
 
         #cur.execute("SELECT error from ChartData WHERE symbol=? and interval='1min' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         #error= cur.fetchall()
         #---------------------------------------------------------------------------------------------
-        cur.execute("SELECT * FROM Prediction where symbol=? and interval='1mo'", ([symbol]))
-        onemopred = cur.fetchall()
+        #cur.execute("SELECT * FROM Prediction where symbol=? and interval='1mo'", ([symbol]))
+        #onemopred = cur.fetchall()
 
         #cur.execute("SELECT error from ChartData WHERE symbol=? and interval='1mo' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         #onemoerror= cur.fetchall()
         #---------------------------------------------------------------------------------------------
-        cur.execute("SELECT * FROM Prediction where symbol=? and interval='3mo'", ([symbol]))
-        threemopred = cur.fetchall()
+        #cur.execute("SELECT * FROM Prediction where symbol=? and interval='3mo'", ([symbol]))
+        #threemopred = cur.fetchall()
 
         #cur.execute("SELECT error from ChartData WHERE symbol=? and interval='3mo' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         #threemoerror= cur.fetchall()
         #---------------------------------------------------------------------------------------------
-        cur.execute("SELECT * FROM Prediction where symbol=? and interval='6mo'", ([symbol]))
-        sixmopred = cur.fetchall()
+        #cur.execute("SELECT * FROM Prediction where symbol=? and interval='6mo'", ([symbol]))
+        #sixmopred = cur.fetchall()
 
         #cur.execute("SELECT error from ChartData WHERE symbol=? and interval='6mo' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         #sixmoerror= cur.fetchall()
         #---------------------------------------------------------------------------------------------
-        cur.execute("SELECT * FROM Prediction where symbol=? and interval='1yr'", ([symbol]))
-        oneyrpred = cur.fetchall()
+        #cur.execute("SELECT * FROM Prediction where symbol=? and interval='1yr'", ([symbol]))
+        #oneyrpred = cur.fetchall()
 
         #cur.execute("SELECT error from ChartData WHERE symbol=? and interval='1yr' ORDER BY DATE DESC LIMIT 1", ([symbol]))
         #oneyrerror= cur.fetchall()
@@ -638,8 +490,8 @@ def assetinfo(symbol):
         cur.execute("SELECT * FROM Broker")
         market = cur.fetchall()
 
-        cur.execute("SELECT interval FROM ChartData")
-        interval = cur.fetchall()
+        #cur.execute("SELECT interval FROM ChartData")
+        #interval = cur.fetchall()
 
         cur.execute("SELECT * FROM Blog WHERE category=? ORDER BY DATE DESC LIMIT 3",[(symbol)])
         blog = cur.fetchall()
@@ -653,23 +505,14 @@ def assetinfo(symbol):
 
 
         return render_template(("assetinfo.html"),  blog = blog,
-                                                    interval = interval,
+                                                    lineJSON=lineJSON,
                                                     market=market,
                                                     onehourdata=onehourdata,
                                                     thirtymindata=thirtymindata,
                                                     fifteendata=fifteendata,
                                                     fivemindata= fivemindata,
                                                     onemindata = onemindata,
-                                                    
-                                                    sixmopred = sixmopred,
-                                                    
-                                                    onemopred = onemopred,
-                                                    
-                                                    threemopred = threemopred,
-                                                    
-                                                    oneyrpred = oneyrpred,
-                                                    
-                                                    prediction = prediction,  
+                                                      
                                                     fivedays = fivedays, 
                                                     fivemin=fivemin, 
                                                     onemin = onemin, 
@@ -686,7 +529,7 @@ def assetinfo(symbol):
                                                     data=data, profile=profile, 
                                                     broker=broker, 
                                                     hdata=hdata, 
-                                                    symbol=symbol)
+                                                    symbol=symbol)#interval = interval,onemopred = onemopred,threemopred = threemopred,oneyrpred = oneyrpred,prediction = prediction,)
     
     else:
         return redirect(url_for("auth.login"))

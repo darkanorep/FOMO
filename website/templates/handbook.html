@@ -43,6 +43,9 @@
                     </p>
                     <a id="more" href="{{url_for('auth.terms')}}" style="text-decoration: none;">Learn more</a>
                 </div>
+                {% for row in table %}
+                    {{row["name"]}}
+                {% endfor %}
             </di>
         </div>
     </body>

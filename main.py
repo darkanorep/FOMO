@@ -58,13 +58,14 @@ def uploadtutorial():
 
             tutorialId = 0;
             name = request.form.get('name')
+            link = request.form.get('link')
             image = request.files['image']
             numberOfStep = request.form.get('numberOfStep')
 
             if image.filename !=' ':
                 filepath=os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
                 image.save(filepath)
-                cur.execute("INSERT into Tutorial (name, image) values (?,?)",(name, image.filename,))
+                cur.execute("INSERT into Tutorial (name, image, link) values (?,?,?)",(name, image.filename, link))
                 con.commit()
                 tutorialId = cur.lastrowid
                 
@@ -102,6 +103,7 @@ def tutorialupdate(id):
             tut = {
                 'id': rs['id'],
                 'name': rs['name'],
+                'link': rs['link'],
                 'image': rs['image']
             }
 
@@ -119,6 +121,7 @@ def tutorialupdate(id):
         if request.method == 'POST':
             name = request.form['name']
             numberOfStep = request.form.get('numberOfStep')
+            link = request.form['link']
             image = request.files['image']
 
             
@@ -126,8 +129,12 @@ def tutorialupdate(id):
                     cur.execute("UPDATE Tutorial SET name=? where id=?",(name,id))
                     con.commit()
 
-                    flash("Successfully Updated", category="s")
             
+            if result:
+                    cur.execute("UPDATE Tutorial SET link=? where id=?",(link,id))
+                    con.commit()
+
+                    flash("Successfully Updated", category="s")
             
             if image:
                 filepath=os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
@@ -163,7 +170,7 @@ def tutorialarchived(id):
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute("INSERT INTO tempTutorial SELECT [id], [name], [image] FROM Tutorial WHERE id=?",([id]))
+        cur.execute("INSERT INTO tempTutorial SELECT [id], [name], [image], [link] FROM Tutorial WHERE id=?",([id]))
         con.commit()
         cur.execute("DELETE from Tutorial WHERE id=?",([id]))
         con.commit()
@@ -182,7 +189,7 @@ def tutorialrestore(id):
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute("INSERT INTO Tutorial SELECT [id], [name], [image] FROM tempTutorial WHERE id=?",([id]))
+        cur.execute("INSERT INTO Tutorial SELECT [id], [name], [image], [link] FROM tempTutorial WHERE id=?",([id]))
         con.commit()
         cur.execute("DELETE from tempTutorial WHERE id=?",([id]))
         con.commit()
@@ -821,5 +828,5 @@ def editpost(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, processes=1)
+    app.run(debug=True, threaded=True)
     #socketio.run(app, debug=True)

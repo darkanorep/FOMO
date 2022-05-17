@@ -24,6 +24,7 @@
                                    
                                 </div>
                                 <input type="file" name="image" enctype="multipart/form-data">
+                                <input type="text" name="link" placeholder="Tutorial Link" value="{{ tut['link'] }}" required autofocus>   
                                 <input type="button" name="test" class="btn" value="ADD STEP" onclick='addStep()'/>
                                 <input type="button" name="test" class="btn" value="REMOVE STEP" id="removebtn" onclick='removeStep()'/>
                                 <input type="submit" name="submit" class="btn" value="UPDATE"/>                        
