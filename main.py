@@ -311,11 +311,12 @@ def uploadpattern():
         name = request.form.get('name')
         description =  request.form.get('description')
         image = request.files['image']
+        link = request.form.get('link')
 
         if image.filename !=' ':
             filepath=os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
             image.save(filepath)
-            cur.execute("INSERT into Pattern (name, description, image) values (?,?,?)",(name, description, image.filename,))
+            cur.execute("INSERT into Pattern (name, description, image, link) values (?,?,?,?)",(name, description, image.filename, link))
             con.commit()
 
         flash("Successfully Added", category="s")
@@ -338,6 +339,7 @@ def patternupdate(id):
             name = request.form['name']
             description=request.form['description']
             image = request.files['image']
+            link = request.form['link']
 
 
             if data:
@@ -356,6 +358,10 @@ def patternupdate(id):
 
                 cur.execute("UPDATE Pattern SET image=? where id=?",(image.filename,id))
                 con.commit()
+            
+            if data:
+                cur.execute("UPDATE Pattern SET link=? where id=?",(link,id))
+                con.commit()
 
             return redirect(url_for("auth.admin_pattern"))
     
@@ -373,7 +379,7 @@ def patternarchived(name):
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute("INSERT INTO tempPattern SELECT [id], [name], [description], [image] FROM Pattern WHERE name=?",([name]))
+        cur.execute("INSERT INTO tempPattern SELECT [id], [name], [description], [image], [link] FROM Pattern WHERE name=?",([name]))
         con.commit()
         cur.execute("DELETE from Pattern WHERE name=?",([name]))
         con.commit()
@@ -392,7 +398,7 @@ def patternrestore(name):
         con=sqlite3.connect("system.db")
         con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute("INSERT INTO Pattern SELECT [id], [name], [description], [image] FROM tempPattern WHERE name=?",([name]))
+        cur.execute("INSERT INTO Pattern SELECT [id], [name], [description], [image], [link] FROM tempPattern WHERE name=?",([name]))
         con.commit()
         cur.execute("DELETE from tempPattern WHERE name=?",([name]))
         con.commit()

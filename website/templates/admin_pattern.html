@@ -25,6 +25,7 @@
                     <th>Name</th>
                     <th>Meaning</th>
                     <th>Image</th>
+                    <th>Link</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -36,6 +37,7 @@
                         <p>{{row["description"]}}</p>
                     </td>
                     <td data-label=Image> <img class = "img" id="img" src="/static/{{row['image']}}"></td>  
+                    <td data-label=Link>{{row["link"]}}</td>  
                     <td data-label=Action>
                         <a href="{{url_for('patternupdate',id=row['id'])}}" style="text-decoration: none;">
                             <button class="edit-button">Edit<i class='bx bxs-edit-alt'></i></button>
