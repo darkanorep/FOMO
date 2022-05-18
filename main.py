@@ -834,5 +834,5 @@ def editpost(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    app.run(debug=True, threaded=True, process=1)
     #socketio.run(app, debug=True)
