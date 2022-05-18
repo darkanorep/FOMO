@@ -8,7 +8,7 @@ from plotly.subplots import  make_subplots
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
-from fbprophet import Prophet
+#from fbprophet import Prophet
 
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
@@ -218,21 +218,21 @@ def assetinfo(symbol):
             cur.executemany("INSERT into ChartData (symbol, date, open, high, low, close, adj_close, change, finalpchange, interval) values ('"+symbol+"',?, ?, ?, ?, ?, ?,?,?,?);", to_db)
             con.commit()
         
-        data99 = yf.download(tickers=''+symbol+'', period='max', interval='1d')
-        data99.to_csv('website/data/'+symbol+'raw.csv')
+        #data99 = yf.download(tickers=''+symbol+'', period='max', interval='1d')
+        #data99.to_csv('website/data/'+symbol+'raw.csv')
         
-        with open('website/data/'+symbol+'raw.csv','r') as fin:
+        #with open('website/data/'+symbol+'raw.csv','r') as fin:
 
-            df = pd.read_csv('website/data/'+symbol+'raw.csv')
-            df = df[['Date','Close']]
-            df_train = df.rename(columns={"Date": "ds", "Close": "y"})
+            #df = pd.read_csv('website/data/'+symbol+'raw.csv')
+            #df = df[['Date','Close']]
+            #df_train = df.rename(columns={"Date": "ds", "Close": "y"})
             
-            period = 120
-            m = Prophet()
-            m.fit(df_train)
-            future = m.make_future_dataframe(period)
-            forecast = m.predict(future)
-            forecast.to_csv('website/data/'+symbol+'predicted.csv', index=False)
+            #period = 120
+            #m = Prophet()
+            #m.fit(df_train)
+            #future = m.make_future_dataframe(period)
+            #forecast = m.predict(future)
+            #forecast.to_csv('website/data/'+symbol+'predicted.csv', index=False)
         
 
         data = yf.download(tickers=''+symbol+'', period='max', interval='1d')
@@ -308,9 +308,9 @@ def assetinfo(symbol):
 
             graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
         
-        with open('website/data/'+symbol+'predicted.csv','r') as fin:
-            fig = go.Figure()
-            df = pd.read_csv('website/data/'+symbol+'predicted.csv')
+        #with open('website/data/'+symbol+'predicted.csv','r') as fin:
+            #fig = go.Figure()
+            #df = pd.read_csv('website/data/'+symbol+'predicted.csv')
             df1 = pd.read_sql_query("SELECT * FROM ChartData where symbol = '"+symbol+"' and interval='1d';",con=sqlite3.connect("system.db"))
 
 
