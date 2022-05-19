@@ -171,6 +171,39 @@ def assetinfo(symbol):
 
         
         #---------------------------------------------------------------------
+        data2 = yf.download(tickers=''+symbol+'', period='1y', interval='1d')
+        data2.index = data2.index.tz_localize(None)
+        data2.to_csv('website/data/'+symbol+'1yr.csv')
+      
+        with open('website/data/'+symbol+'1yr.csv','r') as fin:
+            df = pd.read_csv('website/data/'+symbol+'1yr.csv')
+    
+            df = df[['Date', 'Open', 'High', 'Low', 'Close', 'Volume', 'Adj Close']]
+            df['Date'] = pd.to_datetime(df['Date'])
+            df['prevClose'] = df['Adj Close'].shift(1)
+            df['change'] = (df['Adj Close']-df['prevClose'])
+            df['pchange'] = (df['Adj Close']/df['prevClose']) - 1
+            df['finalpchange'] = (df['pchange'] * 100)
+            df["interval"] = "1yr"
+
+            df = df.set_index(pd.DatetimeIndex(df['Date'].values))
+            df['Numbers'] = list(range(0, len(df)))
+            x = np.array(df[['Numbers']])
+            y = df['Close'].values
+            lin_model = LinearRegression().fit(x,y)
+            y_pred = lin_model.coef_* x + lin_model.intercept_
+            df['prePred'] = y_pred
+            df['prePred'].plot(label="model")
+            df['Close'].plot(label="price")
+
+            pred = lin_model.coef_* len(df)+1 + lin_model.intercept_
+ 
+            df1 = pd.DataFrame(pred)
+            df1["r2score"] = r2_score(df['Close'], df['prePred'])
+            df1["interval"] = "1yr"
+            df1.round(2).to_csv('website/data/'+symbol+'1yrpred.csv', index=False)
+
+        #--------------------------------------------------------------------
 
         data5 = yf.download(tickers=''+symbol+'', period='1d', interval='5m')
         data5.index = data5.index.tz_localize(None)
@@ -356,6 +389,13 @@ def assetinfo(symbol):
         
         
         with open('website/data/'+symbol+'1dpred.csv','r') as fin:
+            dr = csv.DictReader(fin)
+            to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
+
+            cur.executemany("INSERT into Prediction (symbol, prediction, interval, r2score) values ('"+symbol+"',?,?,?)", to_db)
+            con.commit()
+
+        with open('website/data/'+symbol+'1yrpred.csv','r') as fin:
             dr = csv.DictReader(fin)
             to_db = [(i['0'], i['interval'], i['r2score']) for i in dr]
 

@@ -163,7 +163,7 @@
                             <input type="submit" name="submit" class="btn btn-success" value="Submit"/>
                         </form>
                         <form method = "post" action="/resend" class="resend" style="text-align: center;">
-                            <button id="btnCounter" class="btnresend" disabled>Resend OTP</button>
+                            <button id="btnCounter" class="btnresend">Resend OTP</button>
                             <center><span id="timer"></span></center>
                         </form>
                     </div>
@@ -171,7 +171,7 @@
             </div>
         </div>
     </body>
-    <script>
+    <!--<script>
         let timerOn = true;
         var btn = document.getElementById("btnCounter");
 
@@ -208,7 +208,7 @@
             sec  = parseInt(window.localStorage.getItem("seconds"))
             min = parseInt(window.localStorage.getItem("minutes"))
         }
-    </script>
+    </script>-->
 </html>
 {% endblock %}
 
