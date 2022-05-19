@@ -457,7 +457,7 @@ def assetinfo(symbol):
         cur.execute("SELECT finalpchange FROM ChartData where symbol =? and interval='1hr' ORDER BY date desc LIMIT 1",([symbol]))
         hour = cur.fetchall()
 
-        cur.execute("SELECT finalpchange FROM ChartData where symbol =? and interval='6mo' ORDER BY date DESC LIMIT 1",([symbol]))
+        cur.execute("SELECT finalpchange FROM ChartData where symbol =? and interval='1d' ORDER BY date DESC LIMIT 1",([symbol]))
         phour = cur.fetchall()
 
         cur.execute("select * from Stocks WHERE symbol =?",([symbol]))
