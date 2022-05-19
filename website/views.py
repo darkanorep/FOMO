@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 #from fbprophet import Prophet
+#from neuralprophet import NeuralProphet
 
 views = Blueprint('views', __name__)
 auth = Blueprint('auth',__name__)
@@ -223,15 +224,16 @@ def assetinfo(symbol):
         
         #with open('website/data/'+symbol+'raw.csv','r') as fin:
 
-            #df = pd.read_csv('website/data/'+symbol+'raw.csv')
-            #df = df[['Date','Close']]
-            #df_train = df.rename(columns={"Date": "ds", "Close": "y"})
-            
-            #period = 120
-            #m = Prophet()
+            #data  = pd.read_csv('website/data/'+symbol+'raw.csv')
+
+            #df_train = data[['Date','Close']]
+            #df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
+
+            #m = NeuralProphet()
             #m.fit(df_train)
-            #future = m.make_future_dataframe(period)
-            #forecast = m.predict(future)
+            #future = m.make_future_dataframe(periods=period)
+            #forecast = m.predict(df_train)
+
             #forecast.to_csv('website/data/'+symbol+'predicted.csv', index=False)
         
 
@@ -308,9 +310,9 @@ def assetinfo(symbol):
 
             graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
         
-        #with open('website/data/'+symbol+'predicted.csv','r') as fin:
-            #fig = go.Figure()
-            #df = pd.read_csv('website/data/'+symbol+'predicted.csv')
+        with open('website/data/'+symbol+'predicted.csv','r') as fin:
+            fig = go.Figure()
+            df = pd.read_csv('website/data/'+symbol+'predicted.csv')
             df1 = pd.read_sql_query("SELECT * FROM ChartData where symbol = '"+symbol+"' and interval='1d';",con=sqlite3.connect("system.db"))
 
 
