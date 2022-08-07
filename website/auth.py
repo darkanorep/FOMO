@@ -279,14 +279,6 @@ def resset():
 
     return redirect(url_for('auth.login'))
 
-@auth.route('/user')
-def user():
-    if "email" in session:
-
-        return render_template("user.html")
-    
-    else:
-        return redirect(url_for("auth.login"))
 
 @auth.route('/handbook')
 def handbook():
@@ -1358,7 +1350,7 @@ def comment(id):
             cur.execute("INSERT into Comment (comment, comment_author, author, blog_id, date, author_email) values (?,?,?,?,?,?)",(comment, email, author, blog_id, dt, eaddress))
             con.commit()
             flash("Your comment has been posted.", category='s')
-            email_alert("Notification", "Hi "+author+". "+email+" has been comment to your post. Click the link to redirect. https://fomostockprediction.herokuapp.com/blog/"+str(id), eaddress)
+            email_alert("Notification", "Hi "+author+". "+email+" has been comment to your post. Click the link to redirect. www.fomostockpriceprediction.com/blog/"+str(id), eaddress)
             return redirect(url_for("auth.blog", id = blog_id))
 
         return render_template('post.html', blog=blog, user=user, blog_id=blog_id)

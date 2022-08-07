@@ -121,6 +121,30 @@
                 border-radius: 4px;
             }
 
+            /*.tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+            }*/
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #1c5003;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+
             @media (max-width: 768px) {
 
                 .positive:before { content: "+"; color: 
@@ -180,6 +204,22 @@
                     border: none;
                     border-radius: 4px;
                 }
+
+                .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #1c5003;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                left: 80%;
+                transform: translateX(-50%);
+            }
                 
 
             }
@@ -210,7 +250,7 @@
                 <div class="content">
                     <div class="wrapper">
                         <form method="post" action="/addportfolio">
-                            <section>
+                            <section class="tooltip">
                                 <label>Stocks</label>
                                 <select name="search_filter" id="search_filter" class="select">
                                     <option value="">-Select Stocks-</option>';
@@ -219,14 +259,17 @@
                                     {% endfor %}
                                 </select>
                                 <input type="hidden" name="symbol" id="hidden_value" required/>
+                                <span class="tooltiptext">Choose Stocks that you deal with it.</span>
                             </section>
-                            <div>
+                            <div class="tooltip">
                                 <label>Quantity</label>
                                 <input id="quantity" type="number" name="quantity" required>
+                                <span class="tooltiptext">Enter Quantity of Stocks that you deal with it.</span>
                             </div>
-                            <div>
+                            <div class="tooltip">
                                 <label>Initial Value</label>
                                 <input id="initial_value" type="numer" name="initial_value" required>
+                                <span class="tooltiptext">Enter Price of each Stock</span>
                             </div>
                             <div>
                                 <input type="submit" name="submit" class="btn btn-success" value="Add"/>
